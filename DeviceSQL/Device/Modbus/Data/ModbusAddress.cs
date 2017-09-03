@@ -49,8 +49,8 @@ namespace DeviceSQL.Device.Modbus.Data
 
         public ModbusAddress(ushort relativeAddress, bool isZeroBased)
         {
-            this.RelativeAddress = relativeAddress;
-            this.IsZeroBased = isZeroBased;
+            RelativeAddress = relativeAddress;
+            IsZeroBased = isZeroBased;
         }
 
         #endregion

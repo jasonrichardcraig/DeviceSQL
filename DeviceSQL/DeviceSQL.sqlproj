@@ -72,6 +72,21 @@
     <Folder Include="Device\ROC\FST" />
     <Folder Include="Device\ROC\FST\Arguments" />
     <Folder Include="Device\ROC\FST\Instructions" />
+    <Folder Include="Schemas" />
+    <Folder Include="Deployment" />
+    <Folder Include="Tests" />
+    <Folder Include="Tutorials" />
+    <Folder Include="IOC" />
+    <Folder Include="ServiceLocation" />
+    <Folder Include="Functions" />
+    <Folder Include="Functions\ChannelManager" />
+    <Folder Include="Functions\Watchdog" />
+    <Folder Include="Watchdog" />
+    <Folder Include="Functions\DeviceManager" />
+    <Folder Include="Types" />
+    <Folder Include="Types\ModbusMaster" />
+    <Folder Include="Functions\ModbusMaster" />
+    <Folder Include="Documentation" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -228,9 +243,74 @@
     <Compile Include="Device\ROC\FST\Arguments\DatabasePoint.cs" />
     <Compile Include="Device\ROC\FST\Arguments\DatabasePointOrConstantValueArgument.cs" />
     <Compile Include="Device\ROC\FST\Arguments\NullArgument.cs" />
+    <Compile Include="IOC\ISimpleIOC.cs" />
+    <Compile Include="IOC\PreferredConstructor.cs" />
+    <Compile Include="IOC\SimpleIOC.cs" />
+    <Compile Include="ServiceLocation\ActivationException.cs" />
+    <Compile Include="ServiceLocation\IServiceLocator.cs" />
+    <Compile Include="ServiceLocation\ServiceLocator.cs" />
+    <Compile Include="ServiceLocation\ServiceLocatorImplBase.cs" />
+    <Compile Include="ServiceLocation\ServiceLocatorProvider.cs" />
+    <Compile Include="Functions\ChannelManager\RegisterTcpChannel.cs" />
+    <Compile Include="Functions\ChannelManager\RegisterSerialPortChannel.cs" />
+    <Compile Include="Functions\ChannelManager\UnregisterChannel.cs" />
+    <Compile Include="Functions\ChannelManager\GetChannels.cs" />
+    <Compile Include="Functions\Watchdog\GetCounterValue.cs" />
+    <Compile Include="Functions\Watchdog\IsAlive.cs" />
+    <Compile Include="Functions\Watchdog\Run.cs" />
+    <Compile Include="Functions\Watchdog\Stop.cs" />
+    <Compile Include="Watchdog\Worker.cs" />
+    <Compile Include="Functions\DeviceManager\RegisterROCMaster.cs" />
+    <Compile Include="Functions\DeviceManager\RegisterModbusMaster.cs" />
+    <Compile Include="Functions\DeviceManager\UnregisterDevice.cs" />
+    <Compile Include="Functions\DeviceManager\GetDevices.cs" />
+    <Compile Include="Types\ModbusMaster\ModbusAddress.cs" />
+    <None Include="Types\ModbusMaster\CoilRegister.cs" />
+    <None Include="Types\ModbusMaster\CoilRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\DiscreteInputRegister.cs" />
+    <Compile Include="Types\ModbusMaster\BooleanRegister.cs" />
+    <None Include="Types\ModbusMaster\BooleanRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\DiscreteInputRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\HoldingRegister.cs" />
+    <None Include="Types\ModbusMaster\HoldingRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\InputRegister.cs" />
+    <None Include="Types\ModbusMaster\InputRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\ShortRegister.cs" />
+    <None Include="Types\ModbusMaster\ShortRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\LongRegister.cs" />
+    <None Include="Types\ModbusMaster\LongRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\FloatRegister.cs" />
+    <None Include="Types\ModbusMaster\FloatRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\StringRegister.cs" />
+    <None Include="Types\ModbusMaster\StringRegisterArray.cs" />
+    <None Include="Types\ModbusMaster\HistoryArchiveRecord.cs" />
+    <Compile Include="Device\Modbus\Data\HistoryArchiveRecordArray.cs" />
+    <None Include="Types\ModbusMaster\EventArchiveRecord.cs" />
+    <None Include="Types\ModbusMaster\EventArchiveRecordArray.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadCoils.cs" />
+    <None Include="Functions\ModbusMaster\ReadDiscreteInputs.cs" />
+    <None Include="Functions\ModbusMaster\WriteBoolean.cs" />
+    <None Include="Functions\ModbusMaster\ReadInputs.cs" />
+    <None Include="Functions\ModbusMaster\ReadHoldings.cs" />
+    <None Include="Functions\ModbusMaster\ReadShorts.cs" />
+    <None Include="Functions\ModbusMaster\ReadFloats.cs" />
+    <None Include="Functions\ModbusMaster\WriteFloats.cs" />
+    <None Include="Functions\ModbusMaster\ReadLongs.cs" />
+    <None Include="Functions\ModbusMaster\ReadString.cs" />
+    <None Include="Functions\ModbusMaster\ReadHistoryArchiveRecord.cs" />
+    <None Include="Functions\ModbusMaster\ReadEventArchiveRecords.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schemas\DeviceManager.sql" />
+    <Build Include="Schemas\ModbusMaster.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Documentation\Modbus_Application_Protocol_V1_1b3.pdf" />
   </ItemGroup>
 </Project>
