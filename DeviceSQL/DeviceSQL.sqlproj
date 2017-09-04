@@ -264,11 +264,11 @@
     <Compile Include="Functions\DeviceManager\RegisterModbusMaster.cs" />
     <Compile Include="Functions\DeviceManager\UnregisterDevice.cs" />
     <Compile Include="Functions\DeviceManager\GetDevices.cs" />
-    <Compile Include="Types\ModbusMaster\ModbusAddress.cs" />
+    <None Include="Types\ModbusMaster\ModbusAddress.cs" />
     <None Include="Types\ModbusMaster\CoilRegister.cs" />
     <None Include="Types\ModbusMaster\CoilRegisterArray.cs" />
     <None Include="Types\ModbusMaster\DiscreteInputRegister.cs" />
-    <Compile Include="Types\ModbusMaster\BooleanRegister.cs" />
+    <None Include="Types\ModbusMaster\BooleanRegister.cs" />
     <None Include="Types\ModbusMaster\BooleanRegisterArray.cs" />
     <None Include="Types\ModbusMaster\DiscreteInputRegisterArray.cs" />
     <None Include="Types\ModbusMaster\HoldingRegister.cs" />
@@ -284,10 +284,9 @@
     <None Include="Types\ModbusMaster\StringRegister.cs" />
     <None Include="Types\ModbusMaster\StringRegisterArray.cs" />
     <None Include="Types\ModbusMaster\HistoryArchiveRecord.cs" />
-    <Compile Include="Device\Modbus\Data\HistoryArchiveRecordArray.cs" />
     <None Include="Types\ModbusMaster\EventArchiveRecord.cs" />
     <None Include="Types\ModbusMaster\EventArchiveRecordArray.cs" />
-    <Compile Include="Functions\ModbusMaster\ReadCoils.cs" />
+    <None Include="Functions\ModbusMaster\ReadCoils.cs" />
     <None Include="Functions\ModbusMaster\ReadDiscreteInputs.cs" />
     <None Include="Functions\ModbusMaster\WriteBoolean.cs" />
     <None Include="Functions\ModbusMaster\ReadInputs.cs" />
@@ -299,6 +298,7 @@
     <None Include="Functions\ModbusMaster\ReadString.cs" />
     <None Include="Functions\ModbusMaster\ReadHistoryArchiveRecord.cs" />
     <None Include="Functions\ModbusMaster\ReadEventArchiveRecords.cs" />
+    <None Include="Types\ModbusMaster\HistoryArchiveRecordArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
