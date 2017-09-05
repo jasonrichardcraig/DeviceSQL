@@ -4,9 +4,9 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Data
+namespace DeviceSQL.Device.MODBUS.Data
 {
-    public class StringRegister : ModbusRegister<string>
+    public class StringRegister : MODBUSRegister<string>
     {
 
         #region Constructor(s)
@@ -17,14 +17,14 @@ namespace DeviceSQL.Device.Modbus.Data
             Value = "";
         }
 
-        public StringRegister(ModbusAddress address, byte length)
+        public StringRegister(MODBUSAddress address, byte length)
             : base(address)
         {
             Length = length;
             Value = "";
         }
 
-        public StringRegister(ModbusAddress address, bool byteSwap, bool wordSwap, byte length)
+        public StringRegister(MODBUSAddress address, bool byteSwap, bool wordSwap, byte length)
             : base(address)
         {
             Length = length;

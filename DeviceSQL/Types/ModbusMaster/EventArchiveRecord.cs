@@ -5,11 +5,11 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Text;
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 264)]
-    public struct EventArchiveRecord : INullable, IBinarySerialize
+    public struct MODBUSMaster_EventArchiveRecord : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -57,26 +57,26 @@ namespace DeviceSQL.Types.ModbusMaster
 
         public SqlInt16 GetShortValue(SqlByte index, SqlBoolean byteSwap, SqlBoolean wordSwap)
         {
-            return new DeviceSQL.Device.Modbus.Data.EventArchiveRecord(Convert.ToUInt16(Index), Data.Value).GetShortValue(index.Value, byteSwap.Value);
+            return new DeviceSQL.Device.MODBUS.Data.EventArchiveRecord(Convert.ToUInt16(Index), Data.Value).GetShortValue(index.Value, byteSwap.Value);
         }
 
         public static SqlDateTime GetDateTimeValue(SqlSingle dateValue, SqlSingle timeValue, SqlInt32 baseYear)
         {
-            var dateTime = DeviceSQL.Device.Modbus.Data.EventArchiveRecord.ParseNullableDateTimeValue(dateValue.Value, timeValue.Value, baseYear.Value);
+            var dateTime = DeviceSQL.Device.MODBUS.Data.EventArchiveRecord.ParseNullableDateTimeValue(dateValue.Value, timeValue.Value, baseYear.Value);
             return dateTime ?? SqlDateTime.Null;
         }
 
         public SqlSingle GetFloatValue(SqlByte index, SqlBoolean byteSwap, SqlBoolean wordSwap)
         {
-            var floatValue = new DeviceSQL.Device.Modbus.Data.EventArchiveRecord(Convert.ToUInt16(Index), Data.Value).GetNullableFloatValue(index.Value, byteSwap.Value, wordSwap.Value);
+            var floatValue = new DeviceSQL.Device.MODBUS.Data.EventArchiveRecord(Convert.ToUInt16(Index), Data.Value).GetNullableFloatValue(index.Value, byteSwap.Value, wordSwap.Value);
             return floatValue ?? SqlSingle.Null;
         }
 
-        public static EventArchiveRecord Null
+        public static MODBUSMaster_EventArchiveRecord Null
         {
             get
             {
-                return (new EventArchiveRecord() { IsNull = true });
+                return (new MODBUSMaster_EventArchiveRecord() { IsNull = true });
             }
         }
 
@@ -96,7 +96,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
         }
 
-        public static EventArchiveRecord Parse(SqlString eventArchiveToParse)
+        public static MODBUSMaster_EventArchiveRecord Parse(SqlString eventArchiveToParse)
         {
             if (eventArchiveToParse.IsNull)
             {
@@ -104,7 +104,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
 
             var parsedEventArchiveRecordData = eventArchiveToParse.Value.Split(",".ToCharArray());
-            var parsedEventArchiveRecord = new EventArchiveRecord() { Index = Int32.Parse(parsedEventArchiveRecordData[0]), Length = Int32.Parse(parsedEventArchiveRecordData[1]), Data = Convert.FromBase64String(parsedEventArchiveRecordData[2]) };
+            var parsedEventArchiveRecord = new MODBUSMaster_EventArchiveRecord() { Index = Int32.Parse(parsedEventArchiveRecordData[0]), Length = Int32.Parse(parsedEventArchiveRecordData[1]), Data = Convert.FromBase64String(parsedEventArchiveRecordData[2]) };
             return parsedEventArchiveRecord;
         }
 

@@ -1,8 +1,8 @@
-﻿namespace DeviceSQL.Device.Modbus.Message
+﻿namespace DeviceSQL.Device.MODBUS.Message
 {
-    internal interface IModbusResponseMessage : IModbusMessage
+    internal interface IMODBUSResponseMessage : IMODBUSMessage
     {
         void Initialize(byte[] frame, bool isExtendedUnitId);
-        void Initialize(byte[] frame, bool isExtendedUnitId, IModbusRequestMessage requestMessage);
+        void Initialize(byte[] frame, bool isExtendedUnitId, IMODBUSRequestMessage requestMessage);
     }
 }

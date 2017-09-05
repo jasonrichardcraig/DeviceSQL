@@ -5,11 +5,11 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Text;
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 10)]
-    public struct HoldingRegister : INullable, IBinarySerialize
+    public struct MODBUSMaster_HoldingRegister : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -36,7 +36,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
         }
 
-        public ModbusAddress Address
+        public MODBUSMaster_MODBUSAddress Address
         {
             get;
             set;
@@ -58,19 +58,19 @@ namespace DeviceSQL.Types.ModbusMaster
         {
             get
             {
-                return new DeviceSQL.Device.Modbus.Data.HoldingRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value).Value;
+                return new DeviceSQL.Device.MODBUS.Data.HoldingRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value).Value;
             }
             set
             {
-                Data = new DeviceSQL.Device.Modbus.Data.HoldingRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
+                Data = new DeviceSQL.Device.MODBUS.Data.HoldingRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
             }
         }
 
-        public static HoldingRegister Null
+        public static MODBUSMaster_HoldingRegister Null
         {
             get
             {
-                return (new HoldingRegister() { IsNull = true });
+                return (new MODBUSMaster_HoldingRegister() { IsNull = true });
             }
         }
 
@@ -90,7 +90,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
         }
 
-        public static HoldingRegister Parse(SqlString stringToParse)
+        public static MODBUSMaster_HoldingRegister Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
@@ -98,7 +98,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
 
             var parsedHoldingRegisterData = stringToParse.Value.Split(",".ToCharArray());
-            var parsedHoldingRegister = new HoldingRegister() { Address = ModbusAddress.Parse(parsedHoldingRegisterData[0]), ByteSwap = bool.Parse(parsedHoldingRegisterData[1]), Value = UInt16.Parse(parsedHoldingRegisterData[2]) };
+            var parsedHoldingRegister = new MODBUSMaster_HoldingRegister() { Address = MODBUSMaster_MODBUSAddress.Parse(parsedHoldingRegisterData[0]), ByteSwap = bool.Parse(parsedHoldingRegisterData[1]), Value = UInt16.Parse(parsedHoldingRegisterData[2]) };
             return parsedHoldingRegister;
         }
 

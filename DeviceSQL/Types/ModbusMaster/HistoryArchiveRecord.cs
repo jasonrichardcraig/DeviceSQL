@@ -5,11 +5,11 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Text;
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 264)]
-    public struct HistoryArchiveRecord : INullable, IBinarySerialize
+    public struct MODBUSMaster_HistoryArchiveRecord : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -55,11 +55,11 @@ namespace DeviceSQL.Types.ModbusMaster
             private set;
         }
 
-        public static HistoryArchiveRecord Null
+        public static MODBUSMaster_HistoryArchiveRecord Null
         {
             get
             {
-                return (new HistoryArchiveRecord() { IsNull = true });
+                return (new MODBUSMaster_HistoryArchiveRecord() { IsNull = true });
             }
         }
 
@@ -69,13 +69,13 @@ namespace DeviceSQL.Types.ModbusMaster
 
         public SqlSingle GetFloatValue(SqlByte index, SqlBoolean byteSwap, SqlBoolean wordSwap)
         {
-            var floatValue = new DeviceSQL.Device.Modbus.Data.HistoryArchiveRecord(Convert.ToUInt16(Index), Data.Value).GetNullableFloatValue(index.Value, byteSwap.Value, wordSwap.Value);
+            var floatValue = new DeviceSQL.Device.MODBUS.Data.HistoryArchiveRecord(Convert.ToUInt16(Index), Data.Value).GetNullableFloatValue(index.Value, byteSwap.Value, wordSwap.Value);
             return floatValue ?? SqlSingle.Null;
         }
 
         public static SqlDateTime GetDateTimeValue(SqlSingle dateValue, SqlSingle timeValue, SqlInt32 baseYear)
         {
-            var dateTime = DeviceSQL.Device.Modbus.Data.HistoryArchiveRecord.ParseNullableDateTimeValue(dateValue.Value, timeValue.Value, baseYear.Value);
+            var dateTime = DeviceSQL.Device.MODBUS.Data.HistoryArchiveRecord.ParseNullableDateTimeValue(dateValue.Value, timeValue.Value, baseYear.Value);
             return dateTime ?? SqlDateTime.Null;
         }
 
@@ -91,7 +91,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
         }
 
-        public static HistoryArchiveRecord Parse(SqlString historyArchiveToParse)
+        public static MODBUSMaster_HistoryArchiveRecord Parse(SqlString historyArchiveToParse)
         {
             if (historyArchiveToParse.IsNull)
             {
@@ -99,7 +99,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
 
             var parsedHistoryArchiveRecordData = historyArchiveToParse.Value.Split(",".ToCharArray());
-            var parsedHistoryArchiveRecord = new HistoryArchiveRecord() { Index = Int32.Parse(parsedHistoryArchiveRecordData[0]), Length = Int32.Parse(parsedHistoryArchiveRecordData[1]), Data = Convert.FromBase64String(parsedHistoryArchiveRecordData[2]) };
+            var parsedHistoryArchiveRecord = new MODBUSMaster_HistoryArchiveRecord() { Index = Int32.Parse(parsedHistoryArchiveRecordData[0]), Length = Int32.Parse(parsedHistoryArchiveRecordData[1]), Data = Convert.FromBase64String(parsedHistoryArchiveRecordData[2]) };
             return parsedHistoryArchiveRecord;
         }
 

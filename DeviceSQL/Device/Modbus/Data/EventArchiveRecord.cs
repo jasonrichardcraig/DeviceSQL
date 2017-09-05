@@ -5,7 +5,7 @@ using System.Diagnostics;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Data
+namespace DeviceSQL.Device.MODBUS.Data
 {
     public class EventArchiveRecord
     {
@@ -71,7 +71,7 @@ namespace DeviceSQL.Device.Modbus.Data
 
             if (!byteSwap)
             {
-                var words = ModbusConverter.NetworkBytesToHostUInt16(data);
+                var words = MODBUSConverter.NetworkBytesToHostUInt16(data);
                 word = words[0];
             }
             else
@@ -90,7 +90,7 @@ namespace DeviceSQL.Device.Modbus.Data
 
             if (!byteSwap)
             {
-                var words = ModbusConverter.NetworkBytesToHostUInt16(data);
+                var words = MODBUSConverter.NetworkBytesToHostUInt16(data);
                 highWord = words[1];
                 lowWord = words[0];
             }

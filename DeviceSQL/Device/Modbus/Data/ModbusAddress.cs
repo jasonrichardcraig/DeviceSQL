@@ -5,9 +5,9 @@ using System.Net;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Data
+namespace DeviceSQL.Device.MODBUS.Data
 {
-    public class ModbusAddress
+    public class MODBUSAddress
     {
 
         #region Properties
@@ -43,11 +43,11 @@ namespace DeviceSQL.Device.Modbus.Data
 
         #region Constructor
 
-        public ModbusAddress()
+        public MODBUSAddress()
         {
         }
 
-        public ModbusAddress(ushort relativeAddress, bool isZeroBased)
+        public MODBUSAddress(ushort relativeAddress, bool isZeroBased)
         {
             RelativeAddress = relativeAddress;
             IsZeroBased = isZeroBased;

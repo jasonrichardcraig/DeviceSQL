@@ -1,6 +1,6 @@
-﻿namespace DeviceSQL.Device.Modbus.Message
+﻿namespace DeviceSQL.Device.MODBUS.Message
 {
-    public interface IModbusMessage : IMessage
+    public interface IMODBUSMessage : IMessage
     {
         bool IsExtendedUnitId { get; }
         ushort UnitId { get; set; }

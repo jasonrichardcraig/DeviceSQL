@@ -1,15 +1,15 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.Modbus.Data;
+using DeviceSQL.Device.MODBUS.Data;
 using System;
 using System.Collections.Generic;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Message
+namespace DeviceSQL.Device.MODBUS.Message
 
 {
-    internal class ReadShortsResponse : ModbusMessage, IModbusResponseMessage
+    internal class ReadShortsResponse : MODBUSMessage, IMODBUSResponseMessage
     {
 
         #region Fields
@@ -54,12 +54,12 @@ namespace DeviceSQL.Device.Modbus.Message
 
         #region Helper Methods
 
-        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
+        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
         {
             base.Initialize(frame, isExtendedUnitId);
         }
 
-        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IModbusRequestMessage requestMessage)
+        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IMODBUSRequestMessage requestMessage)
         {
             base.Initialize(frame, isExtendedUnitId);
 
@@ -87,7 +87,7 @@ namespace DeviceSQL.Device.Modbus.Message
                 for (int i = 1; i < data.Length; i += 2)
                 {
                     var shortData = new byte[] { data[i], data[i + 1] };
-                    ((IModbusRegisterData)this.ShortRegisters[((i - 1) / 2)]).Data = shortData;
+                    ((IMODBUSRegisterData)this.ShortRegisters[((i - 1) / 2)]).Data = shortData;
                 }
 
             }

@@ -1,6 +1,6 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.Modbus.Data;
+using DeviceSQL.Device.MODBUS.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,10 +9,10 @@ using System.Net;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Message
+namespace DeviceSQL.Device.MODBUS.Message
 
 {
-    internal class ReadLongsRequest : ModbusMessage, IModbusRequestMessage
+    internal class ReadLongsRequest : MODBUSMessage, IMODBUSRequestMessage
     {
 
         #region Properties
@@ -71,7 +71,7 @@ namespace DeviceSQL.Device.Modbus.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IModbusResponseMessage response)
+        public void ValidateResponse(IMODBUSResponseMessage response)
         {
             var readLongsResponse = response as ReadLongsResponse;
             Debug.Assert(readLongsResponse != null, "Argument response should be of type ReadLongsResponse.");

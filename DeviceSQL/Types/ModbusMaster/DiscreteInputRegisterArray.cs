@@ -6,22 +6,22 @@ using System.IO;
 using System.Text;
 using System.Linq;
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct DiscreteInputRegisterArray : INullable, IBinarySerialize
+    public struct MODBUSMaster_DiscreteInputRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<DiscreteInputRegister> discreteInputRegisters;
+        internal List<MODBUSMaster_DiscreteInputRegister> discreteInputRegisters;
 
         #endregion
 
         #region Properties
 
-        internal DiscreteInputRegister this[int index]
+        internal MODBUSMaster_DiscreteInputRegister this[int index]
         {
             get
             {
@@ -51,23 +51,23 @@ namespace DeviceSQL.Types.ModbusMaster
 
         #region Helper Methods
 
-        private List<DiscreteInputRegister> DiscreteInputRegisters
+        private List<MODBUSMaster_DiscreteInputRegister> DiscreteInputRegisters
         {
             get
             {
                 if (discreteInputRegisters == null)
                 {
-                    discreteInputRegisters = new List<DiscreteInputRegister>();
+                    discreteInputRegisters = new List<MODBUSMaster_DiscreteInputRegister>();
                 }
                 return discreteInputRegisters;
             }
         }
 
-        public static DiscreteInputRegisterArray Null
+        public static MODBUSMaster_DiscreteInputRegisterArray Null
         {
             get
             {
-                return (new DiscreteInputRegisterArray() { IsNull = true });
+                return (new MODBUSMaster_DiscreteInputRegisterArray() { IsNull = true });
             }
         }
 
@@ -76,42 +76,42 @@ namespace DeviceSQL.Types.ModbusMaster
             return string.Join("|", DiscreteInputRegisters.Select(discreteInputRegister => discreteInputRegister.ToString()));
         }
 
-        public DiscreteInputRegisterArray AddDiscreteInputRegister(DiscreteInputRegister discreteInputRegister)
+        public MODBUSMaster_DiscreteInputRegisterArray AddDiscreteInputRegister(MODBUSMaster_DiscreteInputRegister discreteInputRegister)
         {
             DiscreteInputRegisters.Add(discreteInputRegister);
             return this;
         }
 
-        public static DiscreteInputRegisterArray Parse(SqlString stringToParse)
+        public static MODBUSMaster_DiscreteInputRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedDiscreteInputRegisterArray = new DiscreteInputRegisterArray()
+            var parsedDiscreteInputRegisterArray = new MODBUSMaster_DiscreteInputRegisterArray()
             {
-                discreteInputRegisters = new List<DiscreteInputRegister>()
+                discreteInputRegisters = new List<MODBUSMaster_DiscreteInputRegister>()
             };
 
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedDiscreteInputRegisterArray.DiscreteInputRegisters.Add(DiscreteInputRegister.Parse(parsedString[i]));
+                parsedDiscreteInputRegisterArray.DiscreteInputRegisters.Add(MODBUSMaster_DiscreteInputRegister.Parse(parsedString[i]));
             }
 
             return parsedDiscreteInputRegisterArray;
         }
 
-        public DiscreteInputRegister GetDiscreteInputRegister(SqlInt32 index)
+        public MODBUSMaster_DiscreteInputRegister GetDiscreteInputRegister(SqlInt32 index)
         {
             return DiscreteInputRegisters[index.Value];
         }
 
-        public static DiscreteInputRegisterArray Empty()
+        public static MODBUSMaster_DiscreteInputRegisterArray Empty()
         {
-            var discreteInputRegisterArray = new DiscreteInputRegisterArray() { discreteInputRegisters = new List<DiscreteInputRegister>() };
+            var discreteInputRegisterArray = new MODBUSMaster_DiscreteInputRegisterArray() { discreteInputRegisters = new List<MODBUSMaster_DiscreteInputRegister>() };
             return discreteInputRegisterArray;
         }
 
@@ -134,7 +134,7 @@ namespace DeviceSQL.Types.ModbusMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var discreteInputRegister = new DiscreteInputRegister();
+                    var discreteInputRegister = new MODBUSMaster_DiscreteInputRegister();
                     discreteInputRegister.Read(binaryReader);
                     DiscreteInputRegisters.Add(discreteInputRegister);
                 }

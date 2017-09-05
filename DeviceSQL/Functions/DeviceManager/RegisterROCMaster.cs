@@ -1,4 +1,3 @@
-using DeviceSQL.Device.ROC;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
@@ -21,7 +20,7 @@ namespace DeviceSQL.Functions
                 if (devices.Where(device => device.Name == deviceNameValue).Count() == 0)
                 {
                     var channelNameValue = channelName.Value;
-                    var rocMaster = new ROCMaster(DeviceSQL.Watchdog.Worker.Channels.First(channel => channel.Name == channelNameValue))
+                    var rocMaster = new Device.ROC.ROCMaster(DeviceSQL.Watchdog.Worker.Channels.First(channel => channel.Name == channelNameValue))
                     {
                         Name = deviceNameValue,
                         DeviceAddress = deviceAddress.Value,

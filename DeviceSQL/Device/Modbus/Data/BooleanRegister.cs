@@ -4,9 +4,9 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Data
+namespace DeviceSQL.Device.MODBUS.Data
 {
-    public class BooleanRegister : ModbusRegister<bool>
+    public class BooleanRegister : MODBUSRegister<bool>
     {
 
         #region Constructor(s)
@@ -17,7 +17,7 @@ namespace DeviceSQL.Device.Modbus.Data
             Value = false;
         }
 
-        public BooleanRegister(ModbusAddress address)
+        public BooleanRegister(MODBUSAddress address)
             : base(address)
         {
             Value = false;

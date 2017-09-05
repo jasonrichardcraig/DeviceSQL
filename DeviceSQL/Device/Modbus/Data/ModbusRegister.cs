@@ -4,21 +4,21 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Data
+namespace DeviceSQL.Device.MODBUS.Data
 {
-    public abstract class ModbusRegister : IModbusRegisterData
+    public abstract class MODBUSRegister : IMODBUSRegisterData
     {
 
         #region Fields
 
-        private ModbusAddress address;
+        private MODBUSAddress address;
         private byte[] data;
 
         #endregion
 
         #region Properties
 
-        public ModbusAddress Address
+        public MODBUSAddress Address
         {
             get { return this.address; }
             set { this.address = value; }
@@ -28,11 +28,11 @@ namespace DeviceSQL.Device.Modbus.Data
         {
             get
             {
-                return ((IModbusRegisterData)this).Data;
+                return ((IMODBUSRegisterData)this).Data;
             }
             set
             {
-                ((IModbusRegisterData)this).Data = value;
+                ((IMODBUSRegisterData)this).Data = value;
             }
         }
 
@@ -40,12 +40,12 @@ namespace DeviceSQL.Device.Modbus.Data
 
         #region Constructor
 
-        public ModbusRegister()
-            : this(new ModbusAddress())
+        public MODBUSRegister()
+            : this(new MODBUSAddress())
         {
         }
 
-        internal ModbusRegister(ModbusAddress address)
+        internal MODBUSRegister(MODBUSAddress address)
         {
             this.address = address;
             this.data = null;
@@ -53,9 +53,9 @@ namespace DeviceSQL.Device.Modbus.Data
 
         #endregion
 
-        #region IModbusRegisterData Members
+        #region IMODBUSRegisterData Members
 
-        byte[] IModbusRegisterData.Data
+        byte[] IMODBUSRegisterData.Data
         {
             get
             {
@@ -71,7 +71,7 @@ namespace DeviceSQL.Device.Modbus.Data
 
         #region Conversion Methods
 
-        public T ConvertTo<T>() where T : ModbusRegister, new()
+        public T ConvertTo<T>() where T : MODBUSRegister, new()
         {
             return (T)this;
         }
@@ -80,17 +80,17 @@ namespace DeviceSQL.Device.Modbus.Data
 
     }
 
-    public class ModbusRegister<T> : ModbusRegister
+    public class MODBUSRegister<T> : MODBUSRegister
     {
 
         #region Constructor(s)
 
-        public ModbusRegister()
+        public MODBUSRegister()
             : base()
         {
         }
 
-        public ModbusRegister(ModbusAddress address)
+        public MODBUSRegister(MODBUSAddress address)
             : base(address)
         {
         }
@@ -115,7 +115,7 @@ namespace DeviceSQL.Device.Modbus.Data
 
         #region Implicit Conversions
 
-        public static implicit operator T(ModbusRegister<T> r)
+        public static implicit operator T(MODBUSRegister<T> r)
         {
             return r.Value;
         }

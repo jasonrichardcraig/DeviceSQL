@@ -1,16 +1,16 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.Modbus.Data;
+using DeviceSQL.Device.MODBUS.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Message
+namespace DeviceSQL.Device.MODBUS.Message
 
 {
-    internal class WriteBooleanRequest : ModbusMessage, IModbusRequestMessage
+    internal class WriteBooleanRequest : MODBUSMessage, IMODBUSRequestMessage
     {
 
         #region Properties
@@ -76,7 +76,7 @@ namespace DeviceSQL.Device.Modbus.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IModbusResponseMessage response)
+        public void ValidateResponse(IMODBUSResponseMessage response)
         {
             var writeBooleanResponse = response as WriteBooleanResponse;
             Debug.Assert(writeBooleanResponse != null, "Argument response should be of type ReadFloatsResponse.");

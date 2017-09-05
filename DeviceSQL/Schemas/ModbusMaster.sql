@@ -1,1 +1,1 @@
-﻿CREATE SCHEMA [ModbusMaster]
+﻿CREATE SCHEMA [MODBUSMaster]

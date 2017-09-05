@@ -7,11 +7,11 @@ using System.IO;
 
 #endregion
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 8)]
-    public struct BooleanRegister : INullable, IBinarySerialize
+    public struct MODBUSMaster_BooleanRegister : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -38,7 +38,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
         }
 
-        public ModbusAddress Address
+        public MODBUSMaster_MODBUSAddress Address
         {
             get;
             set;
@@ -54,19 +54,19 @@ namespace DeviceSQL.Types.ModbusMaster
         {
             get
             {
-                return new DeviceSQL.Device.Modbus.Data.BooleanRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)).Value;
+                return new DeviceSQL.Device.MODBUS.Data.BooleanRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)).Value;
             }
             set
             {
-                Data = new DeviceSQL.Device.Modbus.Data.BooleanRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)) { Value = value.Value }.Data;
+                Data = new DeviceSQL.Device.MODBUS.Data.BooleanRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)) { Value = value.Value }.Data;
             }
         }
 
-        public static BooleanRegister Null
+        public static MODBUSMaster_BooleanRegister Null
         {
             get
             {
-                return (new BooleanRegister() { IsNull = true });
+                return (new MODBUSMaster_BooleanRegister() { IsNull = true });
             }
         }
 
@@ -86,7 +86,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
         }
 
-        public static BooleanRegister Parse(SqlString stringToParse)
+        public static MODBUSMaster_BooleanRegister Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
@@ -94,7 +94,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
 
             var parsedBooleanRegisterData = stringToParse.Value.Split(",".ToCharArray());
-            var parsedBooleanRegister = new BooleanRegister() { Address = ModbusAddress.Parse(parsedBooleanRegisterData[0]), Value = bool.Parse(parsedBooleanRegisterData[1]) };
+            var parsedBooleanRegister = new MODBUSMaster_BooleanRegister() { Address = MODBUSMaster_MODBUSAddress.Parse(parsedBooleanRegisterData[0]), Value = bool.Parse(parsedBooleanRegisterData[1]) };
             return parsedBooleanRegister;
         }
 

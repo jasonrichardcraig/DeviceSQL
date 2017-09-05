@@ -6,22 +6,22 @@ using System.Text;
 using System.Linq;
 using System.IO;
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct EventArchiveRecordArray : INullable, IBinarySerialize
+    public struct MODBUSMaster_EventArchiveRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<EventArchiveRecord> eventArchiveRecords;
+        internal List<MODBUSMaster_EventArchiveRecord> eventArchiveRecords;
 
         #endregion
 
         #region Properties
 
-        internal EventArchiveRecord this[int index]
+        internal MODBUSMaster_EventArchiveRecord this[int index]
         {
             get
             {
@@ -51,23 +51,23 @@ namespace DeviceSQL.Types.ModbusMaster
 
         #region Helper Methods
 
-        private List<EventArchiveRecord> EventArchiveRecords
+        private List<MODBUSMaster_EventArchiveRecord> EventArchiveRecords
         {
             get
             {
                 if (eventArchiveRecords == null)
                 {
-                    eventArchiveRecords = new List<EventArchiveRecord>();
+                    eventArchiveRecords = new List<MODBUSMaster_EventArchiveRecord>();
                 }
                 return eventArchiveRecords;
             }
         }
 
-        public static EventArchiveRecordArray Null
+        public static MODBUSMaster_EventArchiveRecordArray Null
         {
             get
             {
-                return (new EventArchiveRecordArray() { IsNull = true });
+                return (new MODBUSMaster_EventArchiveRecordArray() { IsNull = true });
             }
         }
 
@@ -76,42 +76,42 @@ namespace DeviceSQL.Types.ModbusMaster
             return string.Join("|", EventArchiveRecords.Select(eventArchiveRecord => eventArchiveRecord.ToString()));
         }
 
-        public EventArchiveRecordArray AddEventArchiveRecord(EventArchiveRecord eventArchiveRecord)
+        public MODBUSMaster_EventArchiveRecordArray AddEventArchiveRecord(MODBUSMaster_EventArchiveRecord eventArchiveRecord)
         {
             EventArchiveRecords.Add(eventArchiveRecord);
             return this;
         }
 
-        public static EventArchiveRecordArray Parse(SqlString eventArchiveToParse)
+        public static MODBUSMaster_EventArchiveRecordArray Parse(SqlString eventArchiveToParse)
         {
             if (eventArchiveToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedEventArchiveRecordArray = new EventArchiveRecordArray()
+            var parsedEventArchiveRecordArray = new MODBUSMaster_EventArchiveRecordArray()
             {
-                eventArchiveRecords = new List<EventArchiveRecord>()
+                eventArchiveRecords = new List<MODBUSMaster_EventArchiveRecord>()
             };
 
             var parsedEventArchive = eventArchiveToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedEventArchive.Length > i; i++)
             {
-                parsedEventArchiveRecordArray.EventArchiveRecords.Add(EventArchiveRecord.Parse(parsedEventArchive[i]));
+                parsedEventArchiveRecordArray.EventArchiveRecords.Add(MODBUSMaster_EventArchiveRecord.Parse(parsedEventArchive[i]));
             }
 
             return parsedEventArchiveRecordArray;
         }
 
-        public EventArchiveRecord GetEventArchiveRecord(SqlInt32 index)
+        public MODBUSMaster_EventArchiveRecord GetEventArchiveRecord(SqlInt32 index)
         {
             return EventArchiveRecords[index.Value];
         }
 
-        public static EventArchiveRecordArray Empty()
+        public static MODBUSMaster_EventArchiveRecordArray Empty()
         {
-            var eventArchiveRecordArray = new EventArchiveRecordArray() { eventArchiveRecords = new List<EventArchiveRecord>() };
+            var eventArchiveRecordArray = new MODBUSMaster_EventArchiveRecordArray() { eventArchiveRecords = new List<MODBUSMaster_EventArchiveRecord>() };
             return eventArchiveRecordArray;
         }
 
@@ -134,7 +134,7 @@ namespace DeviceSQL.Types.ModbusMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var eventArchiveRecord = new EventArchiveRecord();
+                    var eventArchiveRecord = new MODBUSMaster_EventArchiveRecord();
                     eventArchiveRecord.Read(binaryReader);
                     EventArchiveRecords.Add(eventArchiveRecord);
                 }

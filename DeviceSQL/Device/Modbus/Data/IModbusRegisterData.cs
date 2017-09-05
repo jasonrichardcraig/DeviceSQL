@@ -1,6 +1,6 @@
-﻿namespace DeviceSQL.Device.Modbus.Data
+﻿namespace DeviceSQL.Device.MODBUS.Data
 {
-    public interface IModbusRegisterData
+    public interface IMODBUSRegisterData
     {
         byte[] Data
         { get; set; }

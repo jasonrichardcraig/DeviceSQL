@@ -6,9 +6,9 @@ using System.Globalization;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Message
+namespace DeviceSQL.Device.MODBUS.Message
 {
-    internal class ModbusErrorResponse : ModbusMessage, IModbusResponseMessage
+    internal class MODBUSErrorResponse : MODBUSMessage, IMODBUSResponseMessage
     {
 
         #region Fields
@@ -93,12 +93,12 @@ namespace DeviceSQL.Device.Modbus.Message
             return messages;
         }
 
-        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
+        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
         {
             base.Initialize(frame, isExtendedUnitId);
         }
 
-        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IModbusRequestMessage requestMessage)
+        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IMODBUSRequestMessage requestMessage)
         {
             base.Initialize(frame, isExtendedUnitId);
 

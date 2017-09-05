@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct BooleanRegisterArray : INullable, IBinarySerialize
+    public struct MODBUSMaster_BooleanRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        private List<BooleanRegister> booleanRegisters;
+        private List<MODBUSMaster_BooleanRegister> booleanRegisters;
 
         #endregion
 
         #region Properties
 
-        internal BooleanRegister this[int index]
+        internal MODBUSMaster_BooleanRegister this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.ModbusMaster
 
         #region Helper Methods
 
-        private List<BooleanRegister> BooleanRegisters
+        private List<MODBUSMaster_BooleanRegister> BooleanRegisters
         {
             get
             {
                 if (booleanRegisters == null)
                 {
-                    booleanRegisters = new List<BooleanRegister>();
+                    booleanRegisters = new List<MODBUSMaster_BooleanRegister>();
                 }
                 return booleanRegisters;
             }
         }
 
-        public static BooleanRegisterArray Null
+        public static MODBUSMaster_BooleanRegisterArray Null
         {
             get
             {
-                return (new BooleanRegisterArray() { IsNull = true });
+                return (new MODBUSMaster_BooleanRegisterArray() { IsNull = true });
             }
         }
 
@@ -79,42 +79,42 @@ namespace DeviceSQL.Types.ModbusMaster
             return string.Join("|", BooleanRegisters.Select(booleanRegister => booleanRegister.ToString()));
         }
 
-        public BooleanRegisterArray AddBooleanRegister(BooleanRegister booleanRegister)
+        public MODBUSMaster_BooleanRegisterArray AddBooleanRegister(MODBUSMaster_BooleanRegister booleanRegister)
         {
             BooleanRegisters.Add(booleanRegister);
             return this;
         }
 
-        public static BooleanRegisterArray Parse(SqlString stringToParse)
+        public static MODBUSMaster_BooleanRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedBooleanRegisterArray = new BooleanRegisterArray()
+            var parsedBooleanRegisterArray = new MODBUSMaster_BooleanRegisterArray()
             {
-                booleanRegisters = new List<BooleanRegister>()
+                booleanRegisters = new List<MODBUSMaster_BooleanRegister>()
             };
 
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedBooleanRegisterArray.BooleanRegisters.Add(BooleanRegister.Parse(parsedString[i]));
+                parsedBooleanRegisterArray.BooleanRegisters.Add(MODBUSMaster_BooleanRegister.Parse(parsedString[i]));
             }
 
             return parsedBooleanRegisterArray;
         }
 
-        public BooleanRegister GetBooleanRegister(SqlInt32 index)
+        public MODBUSMaster_BooleanRegister GetBooleanRegister(SqlInt32 index)
         {
             return BooleanRegisters[index.Value];
         }
 
-        public static BooleanRegisterArray Empty()
+        public static MODBUSMaster_BooleanRegisterArray Empty()
         {
-            var booleanRegisterArray = new BooleanRegisterArray() { booleanRegisters = new List<BooleanRegister>() };
+            var booleanRegisterArray = new MODBUSMaster_BooleanRegisterArray() { booleanRegisters = new List<MODBUSMaster_BooleanRegister>() };
             return booleanRegisterArray;
         }
 
@@ -137,7 +137,7 @@ namespace DeviceSQL.Types.ModbusMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var booleanRegister = new BooleanRegister();
+                    var booleanRegister = new MODBUSMaster_BooleanRegister();
                     booleanRegister.Read(binaryReader);
                     BooleanRegisters.Add(booleanRegister);
                 }

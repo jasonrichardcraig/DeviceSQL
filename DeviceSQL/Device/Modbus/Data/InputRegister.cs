@@ -4,9 +4,9 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus.Data
+namespace DeviceSQL.Device.MODBUS.Data
 {
-    public class InputRegister : ModbusRegister<ushort>
+    public class InputRegister : MODBUSRegister<ushort>
     {
 
         #region Constructor(s)
@@ -17,13 +17,13 @@ namespace DeviceSQL.Device.Modbus.Data
             Value = 0;
         }
 
-        public InputRegister(ModbusAddress address)
+        public InputRegister(MODBUSAddress address)
             : base(address)
         {
             Value = 0;
         }
 
-        public InputRegister(ModbusAddress address, bool byteSwap)
+        public InputRegister(MODBUSAddress address, bool byteSwap)
             : base(address)
         {
             this.ByteSwap = byteSwap;
@@ -48,7 +48,7 @@ namespace DeviceSQL.Device.Modbus.Data
 
                 if (!ByteSwap)
                 {
-                    var words = ModbusConverter.NetworkBytesToHostUInt16(base.Data);
+                    var words = MODBUSConverter.NetworkBytesToHostUInt16(base.Data);
                     word = words[0];
                 }
                 else
@@ -67,7 +67,7 @@ namespace DeviceSQL.Device.Modbus.Data
 
                 if (!ByteSwap)
                 {
-                    var words = ModbusConverter.NetworkBytesToHostUInt16(valueBytes);
+                    var words = MODBUSConverter.NetworkBytesToHostUInt16(valueBytes);
                     word = words[0];
                 }
                 else

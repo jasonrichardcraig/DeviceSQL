@@ -86,9 +86,11 @@
     <Folder Include="Watchdog" />
     <Folder Include="Functions\DeviceManager" />
     <Folder Include="Types" />
-    <Folder Include="Types\ModbusMaster" />
-    <Folder Include="Functions\ModbusMaster" />
+    <Folder Include="Types\MODBUSMaster" />
+    <Folder Include="Functions\MODBUSMaster" />
     <Folder Include="Documentation" />
+    <Folder Include="Types\ROCMaster" />
+    <Folder Include="Functions\ROCMaster" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -301,6 +303,66 @@
     <Compile Include="Functions\ModbusMaster\ReadHistoryArchiveRecord.cs" />
     <Compile Include="Functions\ModbusMaster\ReadEventArchiveRecords.cs" />
     <Compile Include="Types\ModbusMaster\HistoryArchiveRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\Parameter.cs" />
+    <Compile Include="Types\ROCMaster\ParameterArray.cs" />
+    <Compile Include="Types\ROCMaster\ArchiveInformation.cs" />
+    <Compile Include="Types\ROCMaster\AlarmRecord.cs" />
+    <Compile Include="Types\ROCMaster\AlarmRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\EventRecord.cs" />
+    <Compile Include="Types\ROCMaster\EventRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\AuditLogRecord.cs" />
+    <Compile Include="Types\ROCMaster\AuditLogRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\ROCPlusAlarmRecord.cs" />
+    <Compile Include="Types\ROCMaster\ROCPlusAlarmRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\ROCPlusEventRecord.cs" />
+    <Compile Include="Types\ROCMaster\ROCPlusEventRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\HistoryRecord.cs" />
+    <Compile Include="Types\ROCMaster\HistoryRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\ROCPlusHistoryRecord.cs" />
+    <Compile Include="Types\ROCMaster\ROCPlusHistoryRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\ROCPlusHistoryPointArray.cs" />
+    <Compile Include="Types\ROCMaster\FSTInformation.cs" />
+    <Compile Include="Functions\ROCMaster\SetOperatorIdentification.cs" />
+    <Compile Include="Functions\ROCMaster\GetRealTimeClockValueWithCentury.cs" />
+    <Compile Include="Functions\ROCMaster\GetRealTimeClockValue.cs" />
+    <Compile Include="Functions\ROCMaster\SetRealTimeClock.cs" />
+    <Compile Include="Functions\ROCMaster\ReadParameters.cs" />
+    <Compile Include="Functions\ROCMaster\GetTimeValue.cs" />
+    <Compile Include="Functions\ROCMaster\GetStringValue.cs" />
+    <Compile Include="Functions\ROCMaster\GetFloatValue.cs" />
+    <Compile Include="Functions\ROCMaster\GetDoubleValue.cs" />
+    <Compile Include="Functions\ROCMaster\GetUInt8Value.cs" />
+    <Compile Include="Functions\GetInt8Value.cs" />
+    <Compile Include="Functions\ROCMaster\GetInt16Value.cs" />
+    <Compile Include="Functions\ROCMaster\GetUInt16Value.cs" />
+    <Compile Include="Functions\ROCMaster\GetInt32Value.cs" />
+    <Compile Include="Functions\ROCMaster\GetUInt32Value.cs" />
+    <Compile Include="Functions\ROCMaster\WriteParameters.cs" />
+    <Compile Include="Functions\ROCMaster\SetTimeValue.cs" />
+    <Compile Include="Functions\ROCMaster\SetStringValue.cs" />
+    <Compile Include="Functions\ROCMaster\SetFloatValue.cs" />
+    <Compile Include="Functions\ROCMaster\SetUInt8Value.cs" />
+    <Compile Include="Functions\ROCMaster\SetInt8Value.cs" />
+    <Compile Include="Functions\ROCMaster\SetInt16Value.cs" />
+    <Compile Include="Functions\ROCMaster\SetUInt16Value.cs" />
+    <Compile Include="Functions\ROCMaster\SetInt32Value.cs" />
+    <Compile Include="Functions\ROCMaster\SetUInt32Value.cs" />
+    <Compile Include="Functions\ROCMaster\GetArchiveInfo.cs" />
+    <Compile Include="Functions\ROCMaster\GetCurrentROCPlusAlarmIndex.cs" />
+    <Compile Include="Functions\ROCMaster\ClearAuditLogEventFlags.cs" />
+    <Compile Include="Functions\ROCMaster\GetCurrentROCPlusEventIndex.cs" />
+    <Compile Include="Functions\ROCMaster\GetCurrentROCPlusHistorySegmentIndex.cs" />
+    <Compile Include="Functions\ROCMaster\GetROCPlusConfiguredHistoryPoints.cs" />
+    <Compile Include="Functions\ROCMaster\GetAlarms.cs" />
+    <Compile Include="Functions\ROCMaster\GetROCPlusAlarms.cs" />
+    <Compile Include="Functions\ROCMaster\GetEvents.cs" />
+    <Compile Include="Functions\ROCMaster\GetROCPlusEvents.cs" />
+    <Compile Include="Functions\ROCMaster\GetAuditLogRecords.cs" />
+    <Compile Include="Functions\ROCMaster\GetMinutelyHistory.cs" />
+    <Compile Include="Functions\ROCMaster\GetHistory.cs" />
+    <Compile Include="Functions\ROCMaster\GetROCPlusHistory.cs" />
+    <Compile Include="Functions\ROCMaster\GetROCPlusHistoryByHistoryPointArray.cs" />
+    <Compile Include="Functions\ROCMaster\GetFstInformation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -310,7 +372,8 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\DeviceManager.sql" />
-    <Build Include="Schemas\ModbusMaster.sql" />
+    <Build Include="Schemas\MODBUSMaster.sql" />
+    <Build Include="Schemas\ROCMaster.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Documentation\Modbus_Application_Protocol_V1_1b3.pdf" />

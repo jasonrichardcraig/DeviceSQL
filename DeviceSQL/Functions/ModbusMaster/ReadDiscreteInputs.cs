@@ -10,15 +10,15 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ModbusMaster
+    public partial class MODBUSMaster
     {
         [SqlFunction]
-        public static Types.ModbusMaster.DiscreteInputRegisterArray ReadDiscreteInputs(SqlString deviceName, Types.ModbusMaster.DiscreteInputRegisterArray discreteInputRegisterArray)
+        public static Types.MODBUSMaster.MODBUSMaster_DiscreteInputRegisterArray ReadDiscreteInputs(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_DiscreteInputRegisterArray discreteInputRegisterArray)
         {
             var deviceNameValue = deviceName.Value;
-            var discreteInputRegisters = new List<Device.Modbus.Data.DiscreteInputRegister>(discreteInputRegisterArray.discreteInputRegisters.Select(discreteInputRegister => new Device.Modbus.Data.DiscreteInputRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(discreteInputRegister.Address.RelativeAddress.Value), discreteInputRegister.Address.IsZeroBased.Value))));
-            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.Modbus.ModbusMaster).ReadDiscreteInputRegisters(null, ref discreteInputRegisters, null);
-            return new Types.ModbusMaster.DiscreteInputRegisterArray() { discreteInputRegisters = discreteInputRegisters.Select(discreteInputRegister => new Types.ModbusMaster.DiscreteInputRegister() { Address = new Types.ModbusMaster.ModbusAddress { RelativeAddress = discreteInputRegister.Address.RelativeAddress, IsZeroBased = discreteInputRegister.Address.IsZeroBased }, Data = discreteInputRegister.Data }).ToList() };
+            var discreteInputRegisters = new List<Device.MODBUS.Data.DiscreteInputRegister>(discreteInputRegisterArray.discreteInputRegisters.Select(discreteInputRegister => new Device.MODBUS.Data.DiscreteInputRegister(new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(discreteInputRegister.Address.RelativeAddress.Value), discreteInputRegister.Address.IsZeroBased.Value))));
+            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.MODBUS.MODBUSMaster).ReadDiscreteInputRegisters(null, ref discreteInputRegisters, null);
+            return new Types.MODBUSMaster.MODBUSMaster_DiscreteInputRegisterArray() { discreteInputRegisters = discreteInputRegisters.Select(discreteInputRegister => new Types.MODBUSMaster.MODBUSMaster_DiscreteInputRegister() { Address = new Types.MODBUSMaster.MODBUSMaster_MODBUSAddress { RelativeAddress = discreteInputRegister.Address.RelativeAddress, IsZeroBased = discreteInputRegister.Address.IsZeroBased }, Data = discreteInputRegister.Data }).ToList() };
         }
     }
 }

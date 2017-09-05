@@ -10,14 +10,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ModbusMaster
+    public partial class MODBUSMaster
     {
         [SqlFunction]
-        public static Types.ModbusMaster.HistoryArchiveRecord ReadHistoryArchiveRecord(SqlString deviceName, Types.ModbusMaster.ModbusAddress historyArchiveAddress, SqlInt32 index, SqlByte recordSize)
+        public static Types.MODBUSMaster.MODBUSMaster_HistoryArchiveRecord ReadHistoryArchiveRecord(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_MODBUSAddress historyArchiveAddress, SqlInt32 index, SqlByte recordSize)
         {
             var deviceNameValue = deviceName.Value;
-            var historyArchiveRecord = (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.Modbus.ModbusMaster).ReadHistoryArchiveRecord(null, new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(historyArchiveAddress.RelativeAddress.Value), historyArchiveAddress.IsZeroBased.Value), Convert.ToUInt16(index.Value), recordSize.Value, null);
-            return new Types.ModbusMaster.HistoryArchiveRecord() { Index = historyArchiveRecord.Index, Data = historyArchiveRecord.Data };
+            var historyArchiveRecord = (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.MODBUS.MODBUSMaster).ReadHistoryArchiveRecord(null, new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(historyArchiveAddress.RelativeAddress.Value), historyArchiveAddress.IsZeroBased.Value), Convert.ToUInt16(index.Value), recordSize.Value, null);
+            return new Types.MODBUSMaster.MODBUSMaster_HistoryArchiveRecord() { Index = historyArchiveRecord.Index, Data = historyArchiveRecord.Data };
         }
     }
 }

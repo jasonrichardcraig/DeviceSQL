@@ -5,11 +5,11 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Text;
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 13)]
-    public struct FloatRegister : INullable, IBinarySerialize
+    public struct MODBUSMaster_FloatRegister : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -36,7 +36,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
         }
 
-        public ModbusAddress Address
+        public MODBUSMaster_MODBUSAddress Address
         {
             get;
             set;
@@ -64,19 +64,19 @@ namespace DeviceSQL.Types.ModbusMaster
         {
             get
             {
-                return new DeviceSQL.Device.Modbus.Data.FloatRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value).Value;
+                return new DeviceSQL.Device.MODBUS.Data.FloatRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value).Value;
             }
             set
             {
-                Data = new DeviceSQL.Device.Modbus.Data.FloatRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
+                Data = new DeviceSQL.Device.MODBUS.Data.FloatRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
             }
         }
 
-        public static FloatRegister Null
+        public static MODBUSMaster_FloatRegister Null
         {
             get
             {
-                return (new FloatRegister() { IsNull = true });
+                return (new MODBUSMaster_FloatRegister() { IsNull = true });
             }
         }
 
@@ -96,7 +96,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
         }
 
-        public static FloatRegister Parse(SqlString stringToParse)
+        public static MODBUSMaster_FloatRegister Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
@@ -104,7 +104,7 @@ namespace DeviceSQL.Types.ModbusMaster
             }
 
             var parsedFloatRegisterData = stringToParse.Value.Split(",".ToCharArray());
-            var parsedFloatRegister = new FloatRegister() { Address = ModbusAddress.Parse(parsedFloatRegisterData[0]), ByteSwap = bool.Parse(parsedFloatRegisterData[1]), WordSwap = bool.Parse(parsedFloatRegisterData[2]), Value = Int32.Parse(parsedFloatRegisterData[3]) };
+            var parsedFloatRegister = new MODBUSMaster_FloatRegister() { Address = MODBUSMaster_MODBUSAddress.Parse(parsedFloatRegisterData[0]), ByteSwap = bool.Parse(parsedFloatRegisterData[1]), WordSwap = bool.Parse(parsedFloatRegisterData[2]), Value = Int32.Parse(parsedFloatRegisterData[3]) };
             return parsedFloatRegister;
         }
 

@@ -6,22 +6,22 @@ using System.Text;
 using System.Linq;
 using System.IO;
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct CoilRegisterArray : INullable, IBinarySerialize
+    public struct MODBUSMaster_CoilRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<CoilRegister> coilRegisters;
+        internal List<MODBUSMaster_CoilRegister> coilRegisters;
 
         #endregion
 
         #region Properties
 
-        internal CoilRegister this[int index]
+        internal MODBUSMaster_CoilRegister this[int index]
         {
             get
             {
@@ -51,23 +51,23 @@ namespace DeviceSQL.Types.ModbusMaster
 
         #region Helper Methods
 
-        private List<CoilRegister> CoilRegisters
+        private List<MODBUSMaster_CoilRegister> CoilRegisters
         {
             get
             {
                 if (coilRegisters == null)
                 {
-                    coilRegisters = new List<CoilRegister>();
+                    coilRegisters = new List<MODBUSMaster_CoilRegister>();
                 }
                 return coilRegisters;
             }
         }
 
-        public static CoilRegisterArray Null
+        public static MODBUSMaster_CoilRegisterArray Null
         {
             get
             {
-                return (new CoilRegisterArray() { IsNull = true });
+                return (new MODBUSMaster_CoilRegisterArray() { IsNull = true });
             }
         }
 
@@ -76,41 +76,41 @@ namespace DeviceSQL.Types.ModbusMaster
             return string.Join("|", CoilRegisters.Select(coilRegister => coilRegister.ToString()));
         }
 
-        public CoilRegisterArray AddCoilRegister(CoilRegister coilRegister)
+        public MODBUSMaster_CoilRegisterArray AddCoilRegister(MODBUSMaster_CoilRegister coilRegister)
         {
             CoilRegisters.Add(coilRegister);
             return this;
         }
 
-        public static CoilRegisterArray Parse(SqlString stringToParse)
+        public static MODBUSMaster_CoilRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedCoilRegisterArray = new CoilRegisterArray()
+            var parsedCoilRegisterArray = new MODBUSMaster_CoilRegisterArray()
             {
-                coilRegisters = new List<CoilRegister>()
+                coilRegisters = new List<MODBUSMaster_CoilRegister>()
             };
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedCoilRegisterArray.CoilRegisters.Add(CoilRegister.Parse(parsedString[i]));
+                parsedCoilRegisterArray.CoilRegisters.Add(MODBUSMaster_CoilRegister.Parse(parsedString[i]));
             }
 
             return parsedCoilRegisterArray;
         }
 
-        public CoilRegister GetCoilRegister(SqlInt32 index)
+        public MODBUSMaster_CoilRegister GetCoilRegister(SqlInt32 index)
         {
             return CoilRegisters[index.Value];
         }
 
-        public static CoilRegisterArray Empty()
+        public static MODBUSMaster_CoilRegisterArray Empty()
         {
-            var coilRegisterArray = new CoilRegisterArray() { coilRegisters = new List<CoilRegister>() };
+            var coilRegisterArray = new MODBUSMaster_CoilRegisterArray() { coilRegisters = new List<MODBUSMaster_CoilRegister>() };
             return coilRegisterArray;
         }
 
@@ -133,7 +133,7 @@ namespace DeviceSQL.Types.ModbusMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var coilRegister = new CoilRegister();
+                    var coilRegister = new MODBUSMaster_CoilRegister();
                     coilRegister.Read(binaryReader);
                     CoilRegisters.Add(coilRegister);
                 }

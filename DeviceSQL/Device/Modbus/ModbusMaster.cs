@@ -1,7 +1,7 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.Modbus.Data;
-using DeviceSQL.Device.Modbus.Message;
+using DeviceSQL.Device.MODBUS.Data;
+using DeviceSQL.Device.MODBUS.Message;
 using DeviceSQL.IO.Channels;
 using DeviceSQL.IO.Channels.Transport;
 using System;
@@ -10,9 +10,9 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Device.Modbus
+namespace DeviceSQL.Device.MODBUS
 {
-    public class ModbusMaster : IMaster
+    public class MODBUSMaster : IMaster
     {
 
         #region Fields
@@ -77,20 +77,20 @@ namespace DeviceSQL.Device.Modbus
 
         #region Constructor(s)
 
-        public ModbusMaster()
+        public MODBUSMaster()
         {
         }
 
-        public ModbusMaster(IChannel channel)
+        public MODBUSMaster(IChannel channel)
         {
-            this.transport = new Modbus.Transport(channel);
+            this.transport = new MODBUS.Transport(channel);
         }
 
         #endregion
 
         #region Register Methods
 
-        internal bool RegisterListIsContiguous<T>(List<T> registers) where T : ModbusRegister
+        internal bool RegisterListIsContiguous<T>(List<T> registers) where T : MODBUSRegister
         {
             var registerCount = registers.Count;
 
@@ -233,14 +233,14 @@ namespace DeviceSQL.Device.Modbus
 
         #region Archive Methods
 
-        public HistoryArchiveRecord ReadHistoryArchiveRecord(ushort? unitId, ModbusAddress historyArchiveAddress, ushort index, byte recordSize, bool? isExtendedUnitId)
+        public HistoryArchiveRecord ReadHistoryArchiveRecord(ushort? unitId, MODBUSAddress historyArchiveAddress, ushort index, byte recordSize, bool? isExtendedUnitId)
         {
             var request = new ReadHistoryArchiveRequest(unitId.HasValue ? unitId.Value : UnitId, historyArchiveAddress, index, recordSize, isExtendedUnitId.HasValue ? isExtendedUnitId.Value : UseExtendedAddressing);
             var response = Transport.UnicastMessage<ReadHistoryArchiveResponse>(request);
             return response.HistoryArchiveRecord;
         }
 
-        public List<EventArchiveRecord> ReadEventArchiveRecord(ushort? unitId, ModbusAddress eventArchiveAddress, ushort index, bool? isExtendedUnitId)
+        public List<EventArchiveRecord> ReadEventArchiveRecord(ushort? unitId, MODBUSAddress eventArchiveAddress, ushort index, bool? isExtendedUnitId)
         {
             var request = new ReadEventArchiveRequest(unitId.HasValue ? unitId.Value : UnitId, eventArchiveAddress, index, isExtendedUnitId.HasValue ? isExtendedUnitId.Value : UseExtendedAddressing);
             var response = Transport.UnicastMessage<ReadEventArchiveResponse>(request);

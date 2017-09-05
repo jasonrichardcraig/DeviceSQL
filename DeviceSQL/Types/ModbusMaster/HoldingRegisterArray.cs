@@ -6,22 +6,22 @@ using System.IO;
 using System.Text;
 using System.Linq;
 
-namespace DeviceSQL.Types.ModbusMaster
+namespace DeviceSQL.Types.MODBUSMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct HoldingRegisterArray : INullable, IBinarySerialize
+    public struct MODBUSMaster_HoldingRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<HoldingRegister> holdingRegisters;
+        internal List<MODBUSMaster_HoldingRegister> holdingRegisters;
 
         #endregion
 
         #region Properties
 
-        internal HoldingRegister this[int index]
+        internal MODBUSMaster_HoldingRegister this[int index]
         {
             get
             {
@@ -72,45 +72,45 @@ namespace DeviceSQL.Types.ModbusMaster
         public SqlInt16 GetShort(SqlByte registerIndex, SqlBoolean byteSwap)
         {
             var address = HoldingRegisters[registerIndex.Value].Address;
-            return new DeviceSQL.Device.Modbus.Data.ShortRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, Data = holdingRegisters[Convert.ToByte(registerIndex.Value)].data }.Value;
+            return new DeviceSQL.Device.MODBUS.Data.ShortRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, Data = holdingRegisters[Convert.ToByte(registerIndex.Value)].data }.Value;
         }
 
         public SqlSingle GetFloat(SqlByte registerIndex, SqlBoolean byteSwap, SqlBoolean wordSwap)
         {
             var address = HoldingRegisters[registerIndex.Value].Address;
-            var floatRegisterValue = new DeviceSQL.Device.Modbus.Data.FloatRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = holdingRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(holdingRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.NullableValue;
+            var floatRegisterValue = new DeviceSQL.Device.MODBUS.Data.FloatRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = holdingRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(holdingRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.NullableValue;
             return floatRegisterValue ?? SqlSingle.Null;
         }
 
         public SqlInt32 GetLong(SqlByte registerIndex, SqlBoolean byteSwap, SqlBoolean wordSwap)
         {
             var address = HoldingRegisters[registerIndex.Value].Address;
-            return new DeviceSQL.Device.Modbus.Data.LongRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = holdingRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(holdingRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.Value;
+            return new DeviceSQL.Device.MODBUS.Data.LongRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = holdingRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(holdingRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.Value;
         }
 
         public SqlString GetString(SqlByte registerIndex, SqlBoolean byteSwap, SqlBoolean wordSwap, SqlByte length)
         {
             var address = HoldingRegisters[registerIndex.Value].Address;
-            return new DeviceSQL.Device.Modbus.Data.StringRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value), length.Value) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = holdingRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(holdingRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.Value;
+            return new DeviceSQL.Device.MODBUS.Data.StringRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value), length.Value) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = holdingRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(holdingRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.Value;
         }
 
-        private List<HoldingRegister> HoldingRegisters
+        private List<MODBUSMaster_HoldingRegister> HoldingRegisters
         {
             get
             {
                 if (holdingRegisters == null)
                 {
-                    holdingRegisters = new List<HoldingRegister>();
+                    holdingRegisters = new List<MODBUSMaster_HoldingRegister>();
                 }
                 return holdingRegisters;
             }
         }
 
-        public static HoldingRegisterArray Null
+        public static MODBUSMaster_HoldingRegisterArray Null
         {
             get
             {
-                return (new HoldingRegisterArray() { IsNull = true });
+                return (new MODBUSMaster_HoldingRegisterArray() { IsNull = true });
             }
         }
 
@@ -119,42 +119,42 @@ namespace DeviceSQL.Types.ModbusMaster
             return string.Join("|", HoldingRegisters.Select(holdingRegister => holdingRegister.ToString()));
         }
 
-        public HoldingRegisterArray AddHoldingRegister(HoldingRegister holdingRegister)
+        public MODBUSMaster_HoldingRegisterArray AddHoldingRegister(MODBUSMaster_HoldingRegister holdingRegister)
         {
             HoldingRegisters.Add(holdingRegister);
             return this;
         }
 
-        public static HoldingRegisterArray Parse(SqlString stringToParse)
+        public static MODBUSMaster_HoldingRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedHoldingRegisterArray = new HoldingRegisterArray()
+            var parsedHoldingRegisterArray = new MODBUSMaster_HoldingRegisterArray()
             {
-                holdingRegisters = new List<HoldingRegister>()
+                holdingRegisters = new List<MODBUSMaster_HoldingRegister>()
             };
 
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedHoldingRegisterArray.HoldingRegisters.Add(HoldingRegister.Parse(parsedString[i]));
+                parsedHoldingRegisterArray.HoldingRegisters.Add(MODBUSMaster_HoldingRegister.Parse(parsedString[i]));
             }
 
             return parsedHoldingRegisterArray;
         }
 
-        public HoldingRegister GetHoldingRegister(SqlInt32 index)
+        public MODBUSMaster_HoldingRegister GetHoldingRegister(SqlInt32 index)
         {
             return HoldingRegisters[index.Value];
         }
 
-        public static HoldingRegisterArray Empty()
+        public static MODBUSMaster_HoldingRegisterArray Empty()
         {
-            var holdingRegisterArray = new HoldingRegisterArray() { holdingRegisters = new List<HoldingRegister>() };
+            var holdingRegisterArray = new MODBUSMaster_HoldingRegisterArray() { holdingRegisters = new List<MODBUSMaster_HoldingRegister>() };
             return holdingRegisterArray;
         }
 
@@ -177,7 +177,7 @@ namespace DeviceSQL.Types.ModbusMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var holdingRegister = new HoldingRegister();
+                    var holdingRegister = new MODBUSMaster_HoldingRegister();
                     holdingRegister.Read(binaryReader);
                     HoldingRegisters.Add(holdingRegister);
                 }
