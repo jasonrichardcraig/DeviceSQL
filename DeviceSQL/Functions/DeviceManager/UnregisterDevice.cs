@@ -6,9 +6,9 @@ using System.Diagnostics;
 using System.Text;
 using System.Linq;
 
-namespace DeviceSQL.DeviceManager
+namespace DeviceSQL.Functions
 {
-    public partial class Functions
+    public partial class DeviceManager
     {
         [SqlFunction]
         public static SqlBoolean DeviceManager_UnregisterDevice(SqlString deviceName)
@@ -16,7 +16,7 @@ namespace DeviceSQL.DeviceManager
             try
             {
                 var deviceNameValue = deviceName.Value;
-                var devices = Watchdog.Worker.Devices;
+                var devices = DeviceSQL.Watchdog.Worker.Devices;
                 var devicesToRemove = devices.Where(channel => channel.Name == deviceNameValue).ToList();
                 devicesToRemove.ForEach((device) =>
                 {

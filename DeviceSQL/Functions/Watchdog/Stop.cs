@@ -6,16 +6,16 @@ using System.Diagnostics;
 using System.Text;
 using System.Linq;
 
-namespace DeviceSQL
+namespace DeviceSQL.Functions
 {
-    public partial class Functions
+    public partial class Watchdog
     {
         [SqlFunction]
         public static SqlBoolean Watchdog_Stop()
         {
             try
             {
-                var channels = Watchdog.Worker.Channels;
+                var channels = DeviceSQL.Watchdog.Worker.Channels;
                 var channelList = channels.ToList();
                 channelList.ForEach((channel) =>
                 {
@@ -29,7 +29,7 @@ namespace DeviceSQL
                         Trace.TraceError(string.Format("Error disposing channel: {0}", ex.Message));
                     }
                 });
-                Watchdog.Worker.Stop();
+                DeviceSQL.Watchdog.Worker.Stop();
             }
             catch (Exception ex)
             {

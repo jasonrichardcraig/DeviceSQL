@@ -1,12 +1,15 @@
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.IO;
-using System.Text;
 using System.Linq;
 
-public partial class UserDefinedTypes
+#endregion
+
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
@@ -89,7 +92,7 @@ public partial class UserDefinedTypes
                 return Null;
             }
 
-            var parsedModbusMaster_BooleanRegisterArray = new BooleanRegisterArray()
+            var parsedBooleanRegisterArray = new BooleanRegisterArray()
             {
                 booleanRegisters = new List<BooleanRegister>()
             };
@@ -98,10 +101,10 @@ public partial class UserDefinedTypes
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedModbusMaster_BooleanRegisterArray.BooleanRegisters.Add(BooleanRegister.Parse(parsedString[i]));
+                parsedBooleanRegisterArray.BooleanRegisters.Add(BooleanRegister.Parse(parsedString[i]));
             }
 
-            return parsedModbusMaster_BooleanRegisterArray;
+            return parsedBooleanRegisterArray;
         }
 
         public BooleanRegister GetBooleanRegister(SqlInt32 index)

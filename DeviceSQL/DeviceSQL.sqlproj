@@ -24,6 +24,8 @@
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <PermissionSet>UNSAFE</PermissionSet>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>DeviceSQL-Key.pfx</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -264,41 +266,41 @@
     <Compile Include="Functions\DeviceManager\RegisterModbusMaster.cs" />
     <Compile Include="Functions\DeviceManager\UnregisterDevice.cs" />
     <Compile Include="Functions\DeviceManager\GetDevices.cs" />
-    <None Include="Types\ModbusMaster\ModbusAddress.cs" />
-    <None Include="Types\ModbusMaster\CoilRegister.cs" />
-    <None Include="Types\ModbusMaster\CoilRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\DiscreteInputRegister.cs" />
-    <None Include="Types\ModbusMaster\BooleanRegister.cs" />
-    <None Include="Types\ModbusMaster\BooleanRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\DiscreteInputRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\HoldingRegister.cs" />
-    <None Include="Types\ModbusMaster\HoldingRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\InputRegister.cs" />
-    <None Include="Types\ModbusMaster\InputRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\ShortRegister.cs" />
-    <None Include="Types\ModbusMaster\ShortRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\LongRegister.cs" />
-    <None Include="Types\ModbusMaster\LongRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\FloatRegister.cs" />
-    <None Include="Types\ModbusMaster\FloatRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\StringRegister.cs" />
-    <None Include="Types\ModbusMaster\StringRegisterArray.cs" />
-    <None Include="Types\ModbusMaster\HistoryArchiveRecord.cs" />
-    <None Include="Types\ModbusMaster\EventArchiveRecord.cs" />
-    <None Include="Types\ModbusMaster\EventArchiveRecordArray.cs" />
-    <None Include="Functions\ModbusMaster\ReadCoils.cs" />
-    <None Include="Functions\ModbusMaster\ReadDiscreteInputs.cs" />
-    <None Include="Functions\ModbusMaster\WriteBoolean.cs" />
-    <None Include="Functions\ModbusMaster\ReadInputs.cs" />
-    <None Include="Functions\ModbusMaster\ReadHoldings.cs" />
-    <None Include="Functions\ModbusMaster\ReadShorts.cs" />
-    <None Include="Functions\ModbusMaster\ReadFloats.cs" />
-    <None Include="Functions\ModbusMaster\WriteFloats.cs" />
-    <None Include="Functions\ModbusMaster\ReadLongs.cs" />
-    <None Include="Functions\ModbusMaster\ReadString.cs" />
-    <None Include="Functions\ModbusMaster\ReadHistoryArchiveRecord.cs" />
-    <None Include="Functions\ModbusMaster\ReadEventArchiveRecords.cs" />
-    <None Include="Types\ModbusMaster\HistoryArchiveRecordArray.cs" />
+    <Compile Include="Types\ModbusMaster\ModbusAddress.cs" />
+    <Compile Include="Types\ModbusMaster\CoilRegister.cs" />
+    <Compile Include="Types\ModbusMaster\CoilRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\DiscreteInputRegister.cs" />
+    <Compile Include="Types\ModbusMaster\BooleanRegister.cs" />
+    <Compile Include="Types\ModbusMaster\BooleanRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\DiscreteInputRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\HoldingRegister.cs" />
+    <Compile Include="Types\ModbusMaster\HoldingRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\InputRegister.cs" />
+    <Compile Include="Types\ModbusMaster\InputRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\ShortRegister.cs" />
+    <Compile Include="Types\ModbusMaster\ShortRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\LongRegister.cs" />
+    <Compile Include="Types\ModbusMaster\LongRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\FloatRegister.cs" />
+    <Compile Include="Types\ModbusMaster\FloatRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\StringRegister.cs" />
+    <Compile Include="Types\ModbusMaster\StringRegisterArray.cs" />
+    <Compile Include="Types\ModbusMaster\HistoryArchiveRecord.cs" />
+    <Compile Include="Types\ModbusMaster\EventArchiveRecord.cs" />
+    <Compile Include="Types\ModbusMaster\EventArchiveRecordArray.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadCoils.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadDiscreteInputs.cs" />
+    <Compile Include="Functions\ModbusMaster\WriteBoolean.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadInputs.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadHoldings.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadShorts.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadFloats.cs" />
+    <Compile Include="Functions\ModbusMaster\WriteFloats.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadLongs.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadString.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadHistoryArchiveRecord.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadEventArchiveRecords.cs" />
+    <Compile Include="Types\ModbusMaster\HistoryArchiveRecordArray.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -312,5 +314,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Documentation\Modbus_Application_Protocol_V1_1b3.pdf" />
+    <None Include="DeviceSQL-Key.pfx" />
+    <None Include="Deployment\Run Once.sql" />
   </ItemGroup>
 </Project>

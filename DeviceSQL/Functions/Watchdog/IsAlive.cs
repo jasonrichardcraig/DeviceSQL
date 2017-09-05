@@ -5,16 +5,17 @@ using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Text;
 
-namespace DeviceSQL.Watchdog
+namespace DeviceSQL.Functions
 {
-    public partial class Functions
+    public partial class Watchdog
+  
     {
         [SqlFunction]
         public static SqlBoolean IsAlive()
         {
             try
             {
-                return new SqlBoolean(Watchdog.Worker.IsAlive);
+                return new SqlBoolean(DeviceSQL.Watchdog.Worker.IsAlive);
             }
             catch (Exception ex)
             {

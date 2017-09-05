@@ -7,9 +7,9 @@ using System.Text;
 using System.Linq;
 using System.Diagnostics;
 
-namespace DeviceSQL.DeviceManager
+namespace DeviceSQL.Functions
 {
-    public partial class Functions
+    public partial class DeviceManager
     {
         [SqlFunction]
         public static SqlBoolean DeviceManager_RegisterROCMaster(SqlString channelName, SqlString deviceName, SqlByte deviceAddress, SqlByte deviceGroup, SqlByte hostAddress, SqlByte hostGroup, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
@@ -17,11 +17,11 @@ namespace DeviceSQL.DeviceManager
             try
             {
                 var deviceNameValue = deviceName.Value;
-                var devices = Watchdog.Worker.Devices;
+                var devices = DeviceSQL.Watchdog.Worker.Devices;
                 if (devices.Where(device => device.Name == deviceNameValue).Count() == 0)
                 {
                     var channelNameValue = channelName.Value;
-                    var rocMaster = new ROCMaster(Watchdog.Worker.Channels.First(channel => channel.Name == channelNameValue))
+                    var rocMaster = new ROCMaster(DeviceSQL.Watchdog.Worker.Channels.First(channel => channel.Name == channelNameValue))
                     {
                         Name = deviceNameValue,
                         DeviceAddress = deviceAddress.Value,

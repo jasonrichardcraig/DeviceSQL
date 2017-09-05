@@ -6,9 +6,9 @@ using System.Diagnostics;
 using System.Text;
 using System.Linq;
 
-namespace DeviceSQL.ChannelManager
+namespace DeviceSQL.Functions
 {
-    partial class Functions
+    partial class ChannelManager
     {
 
         [Microsoft.SqlServer.Server.SqlFunction]
@@ -17,7 +17,7 @@ namespace DeviceSQL.ChannelManager
             try
             {
                 var channelNameValue = channelName.Value;
-                var channels = Watchdog.Worker.Channels;
+                var channels = DeviceSQL.Watchdog.Worker.Channels;
                 channels.Where(channel => true);
                 if (channels.Where(channel => channel.Name == channelNameValue).Count() == 0)
                 {

@@ -6,16 +6,16 @@ using System.Data.SqlTypes;
 using System.Text;
 using System.Linq;
 
-namespace DeviceSQL.DeviceManager
+namespace DeviceSQL.Functions
 {
-    public partial class Functions
+    public partial class DeviceManager
     {
 
         [SqlFunction(FillRowMethodName = "GetDevices_FillRow", TableDefinition = "DeviceName nvarchar(512), ChannelName nvarchar(512), DeviceType nvarchar(512), Address nvarchar(512), NumberOfRetries int, WaitToRetry int, RequestWriteDelay int, ResponseReadDelay int")]
         public static IEnumerable DeviceManager_GetDevices()
         {
             ArrayList resultCollection = new ArrayList();
-            var devices = Watchdog.Worker.Devices;
+            var devices = DeviceSQL.Watchdog.Worker.Devices;
             devices.ToList().ForEach(device => resultCollection.Add(new GetDevices_Result(device.Name, device.Transport.Channel.Name, device.GetType().Name, device.Address, device.Transport.NumberOfRetries, device.Transport.WaitToRetryMilliseconds, device.Transport.RequestWriteDelayMilliseconds, device.Transport.ResponseReadDelayMilliseconds)));
             return resultCollection;
         }

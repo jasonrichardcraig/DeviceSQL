@@ -8,16 +8,16 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.ModbusMaster
+namespace DeviceSQL.Functions
 {
-    public partial class Functions
+    public partial class ModbusMaster
     {
         [SqlFunction]
-        public static SqlBoolean WriteBoolean(SqlString deviceName, UserDefinedTypes.BooleanRegister booleanRegister)
+        public static SqlBoolean WriteBoolean(SqlString deviceName, Types.ModbusMaster.BooleanRegister booleanRegister)
         {
             var deviceNameValue = deviceName.Value;
             var booleanRegisterRaw = new Device.Modbus.Data.BooleanRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(booleanRegister.Address.RelativeAddress.Value), booleanRegister.Address.IsZeroBased.Value));
-            (Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.Modbus.ModbusMaster).WriteBooleanRegister(null, booleanRegisterRaw, null);
+            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.Modbus.ModbusMaster).WriteBooleanRegister(null, booleanRegisterRaw, null);
             return true;
         }
     }

@@ -1,19 +1,14 @@
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.IO;
-using System.Text;
-using static DeviceSQL.ModbusMaster.UserDefinedTypes;
 
-public partial class UserDefinedTypes
+#endregion
+
+namespace DeviceSQL.Types.ModbusMaster
 {
-
-    public UserDefinedTypes()
-    {
-
-    }
-
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 8)]
     public struct BooleanRegister : INullable, IBinarySerialize
@@ -43,7 +38,7 @@ public partial class UserDefinedTypes
             }
         }
 
-        public DeviceSQL.ModbusMaster.UserDefinedTypes.ModbusAddress Address
+        public ModbusAddress Address
         {
             get;
             set;
@@ -133,5 +128,4 @@ public partial class UserDefinedTypes
         #endregion
 
     }
-
 }

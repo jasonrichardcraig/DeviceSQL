@@ -5,142 +5,141 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Text;
 
-    public partial class UserDefinedTypes
+namespace DeviceSQL.Types.ModbusMaster
+{
+    [Serializable()]
+    [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 13)]
+    public struct FloatRegister : INullable, IBinarySerialize
     {
-        [Serializable()]
-        [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 13)]
-        public struct FloatRegister : INullable, IBinarySerialize
+
+        #region Fields
+
+        internal byte[] data;
+
+        #endregion
+
+        #region Properties
+
+        public SqlBinary Data
         {
-
-            #region Fields
-
-            internal byte[] data;
-
-            #endregion
-
-            #region Properties
-
-            public SqlBinary Data
+            get
             {
-                get
+                if (data == null)
                 {
-                    if (data == null)
-                    {
-                        data = new byte[4];
-                    }
-                    return data;
+                    data = new byte[4];
                 }
-                set
-                {
-                    data = value.Value;
-                }
+                return data;
             }
-
-            public ModbusAddress Address
+            set
             {
-                get;
-                set;
+                data = value.Value;
             }
+        }
 
-            public SqlBoolean ByteSwap
+        public ModbusAddress Address
+        {
+            get;
+            set;
+        }
+
+        public SqlBoolean ByteSwap
+        {
+            get;
+            set;
+        }
+
+        public SqlBoolean WordSwap
+        {
+            get;
+            set;
+        }
+
+        public bool IsNull
+        {
+            get;
+            private set;
+        }
+
+        public SqlSingle Value
+        {
+            get
             {
-                get;
-                set;
+                return new DeviceSQL.Device.Modbus.Data.FloatRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value).Value;
             }
-
-            public SqlBoolean WordSwap
+            set
             {
-                get;
-                set;
+                Data = new DeviceSQL.Device.Modbus.Data.FloatRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
             }
+        }
 
-            public bool IsNull
+        public static FloatRegister Null
+        {
+            get
             {
-                get;
-                private set;
+                return (new FloatRegister() { IsNull = true });
             }
+        }
 
-            public SqlSingle Value
+        #endregion
+
+        #region Helper Methods
+
+        public override string ToString()
+        {
+            if (this.IsNull)
             {
-                get
-                {
-                    return new Device.Modbus.Data.FloatRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value).Value;
-                }
-                set
-                {
-                    Data = new Device.Modbus.Data.FloatRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
-                }
+                return "NULL";
             }
-
-            public static FloatRegister Null
+            else
             {
-                get
-                {
-                    return (new FloatRegister() { IsNull = true });
-                }
+                return string.Format("Address=[{0}];Byte Swap={1};Word Swap={2};Value={3};", Address.ToString(), ByteSwap.Value, Value.Value);
             }
+        }
 
-            #endregion
-
-            #region Helper Methods
-
-            public override string ToString()
+        public static FloatRegister Parse(SqlString stringToParse)
+        {
+            if (stringToParse.IsNull)
             {
-                if (this.IsNull)
-                {
-                    return "NULL";
-                }
-                else
-                {
-                    return string.Format("Address=[{0}];Byte Swap={1};Word Swap={2};Value={3};", Address.ToString(), ByteSwap.Value, Value.Value);
-                }
+                return Null;
             }
 
-            public static FloatRegister Parse(SqlString stringToParse)
+            var parsedFloatRegisterData = stringToParse.Value.Split(",".ToCharArray());
+            var parsedFloatRegister = new FloatRegister() { Address = ModbusAddress.Parse(parsedFloatRegisterData[0]), ByteSwap = bool.Parse(parsedFloatRegisterData[1]), WordSwap = bool.Parse(parsedFloatRegisterData[2]), Value = Int32.Parse(parsedFloatRegisterData[3]) };
+            return parsedFloatRegister;
+        }
+
+        #endregion
+
+        #region Serialization Methods
+
+        public void Read(BinaryReader binaryReader)
+        {
+            IsNull = binaryReader.ReadBoolean();
+
+            if (!IsNull)
             {
-                if (stringToParse.IsNull)
-                {
-                    return Null;
-                }
-
-                var parsedFloatRegisterData = stringToParse.Value.Split(",".ToCharArray());
-                var parsedFloatRegister = new FloatRegister() { Address = ModbusAddress.Parse(parsedFloatRegisterData[0]), ByteSwap = bool.Parse(parsedFloatRegisterData[1]), WordSwap = bool.Parse(parsedFloatRegisterData[2]), Value = Int32.Parse(parsedFloatRegisterData[3]) };
-                return parsedFloatRegister;
+                Address.Read(binaryReader);
+                ByteSwap = binaryReader.ReadBoolean();
+                WordSwap = binaryReader.ReadBoolean();
+                Data = binaryReader.ReadBytes(4);
             }
-
-            #endregion
-
-            #region Serialization Methods
-
-            public void Read(BinaryReader binaryReader)
-            {
-                IsNull = binaryReader.ReadBoolean();
-
-                if (!IsNull)
-                {
-                    Address.Read(binaryReader);
-                    ByteSwap = binaryReader.ReadBoolean();
-                    WordSwap = binaryReader.ReadBoolean();
-                    Data = binaryReader.ReadBytes(4);
-                }
-
-            }
-
-            public void Write(BinaryWriter binaryWriter)
-            {
-                binaryWriter.Write(IsNull);
-
-                if (!IsNull)
-                {
-                    Address.Write(binaryWriter);
-                    binaryWriter.Write(ByteSwap.Value);
-                    binaryWriter.Write(WordSwap.Value);
-                    binaryWriter.Write(Data.Value, 0, 4);
-                }
-            }
-
-            #endregion
 
         }
 
+        public void Write(BinaryWriter binaryWriter)
+        {
+            binaryWriter.Write(IsNull);
+
+            if (!IsNull)
+            {
+                Address.Write(binaryWriter);
+                binaryWriter.Write(ByteSwap.Value);
+                binaryWriter.Write(WordSwap.Value);
+                binaryWriter.Write(Data.Value, 0, 4);
+            }
+        }
+
+        #endregion
+
     }
+}   

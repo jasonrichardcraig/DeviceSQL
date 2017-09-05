@@ -5,16 +5,16 @@ using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Text;
 
-namespace DeviceSQL.Watchdog
+namespace DeviceSQL.Functions
 {
-    public partial class Functions
+    public partial class Watchdog
     {
         [SqlFunction]
         public static SqlInt32 GetCounterValue()
         {
             try
             {
-                return new SqlInt32(Watchdog.Worker.WatchdogCounter);
+                return new SqlInt32(DeviceSQL.Watchdog.Worker.WatchdogCounter);
             }
             catch (Exception ex)
             {

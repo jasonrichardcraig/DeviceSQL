@@ -5,16 +5,16 @@ using System.Diagnostics;
 using System.Text;
 using System.Linq;
 
-namespace DeviceSQL.ChannelManager
+namespace DeviceSQL.Functions
 {
-    partial class Functions
+    partial class ChannelManager
     {
         public static SqlBoolean UnregisterChannel(SqlString channelName)
         {
             try
             {
                 var channelNameValue = channelName.Value;
-                var channels = Watchdog.Worker.Channels;
+                var channels = DeviceSQL.Watchdog.Worker.Channels;
                 var channelsToRemove = channels.Where(channel => channel.Name == channelNameValue).ToList();
                 channelsToRemove.ForEach((channel) =>
                 {

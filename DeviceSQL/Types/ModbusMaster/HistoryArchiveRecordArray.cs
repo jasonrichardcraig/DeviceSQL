@@ -6,7 +6,7 @@ using System.Text;
 using System.Linq;
 using System.IO;
 
-public partial class UserDefinedTypes
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
@@ -21,7 +21,7 @@ public partial class UserDefinedTypes
 
         #region Properties
 
-        internal DeviceSQL.Device.Modbus.Data.HistoryArchiveRecord this[int index]
+        internal HistoryArchiveRecord this[int index]
         {
             get
             {
@@ -51,7 +51,7 @@ public partial class UserDefinedTypes
 
         #region Helper Methods
 
-        private List<Device.Modbus.Data.HistoryArchiveRecord> HistoryArchiveRecords
+        private List<HistoryArchiveRecord> HistoryArchiveRecords
         {
             get
             {

@@ -5,144 +5,141 @@ using System.Data.SqlTypes;
 using System.IO;
 using System.Text;
 
-namespace DeviceSQL.ModbusMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
-    public partial class UserDefinedTypes
+    [Serializable()]
+    [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 13)]
+    public struct LongRegister : INullable, IBinarySerialize
     {
-        [Serializable()]
-        [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 13)]
-        public struct LongRegister : INullable, IBinarySerialize
+
+        #region Fields
+
+        internal byte[] data;
+
+        #endregion
+
+        #region Properties
+
+        public SqlBinary Data
         {
-
-            #region Fields
-
-            internal byte[] data;
-
-            #endregion
-
-            #region Properties
-
-            public SqlBinary Data
+            get
             {
-                get
+                if (data == null)
                 {
-                    if (data == null)
-                    {
-                        data = new byte[4];
-                    }
-                    return data;
+                    data = new byte[4];
                 }
-                set
-                {
-                    data = value.Value;
-                }
+                return data;
             }
-
-            public ModbusAddress Address
+            set
             {
-                get;
-                set;
+                data = value.Value;
             }
+        }
 
-            public SqlBoolean ByteSwap
+        public ModbusAddress Address
+        {
+            get;
+            set;
+        }
+
+        public SqlBoolean ByteSwap
+        {
+            get;
+            set;
+        }
+
+        public SqlBoolean WordSwap
+        {
+            get;
+            set;
+        }
+
+        public bool IsNull
+        {
+            get;
+            private set;
+        }
+
+        public SqlInt32 Value
+        {
+            get
             {
-                get;
-                set;
+                return new DeviceSQL.Device.Modbus.Data.LongRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value).Value;
             }
-
-            public SqlBoolean WordSwap
+            set
             {
-                get;
-                set;
+                Data = new DeviceSQL.Device.Modbus.Data.LongRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
             }
+        }
 
-            public bool IsNull
+        public static LongRegister Null
+        {
+            get
             {
-                get;
-                private set;
+                return (new LongRegister() { IsNull = true });
             }
+        }
 
-            public SqlInt32 Value
+        #endregion
+
+        #region Helper Methods
+
+        public override string ToString()
+        {
+            if (this.IsNull)
             {
-                get
-                {
-                    return new Device.Modbus.Data.LongRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value).Value;
-                }
-                set
-                {
-                    Data = new Device.Modbus.Data.LongRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
-                }
+                return "NULL";
             }
-
-            public static LongRegister Null
+            else
             {
-                get
-                {
-                    return (new LongRegister() { IsNull = true });
-                }
+                return string.Format("Address=[{0}];Byte Swap={1};Word Swap={2};Value={3};", Address.ToString(), ByteSwap.Value, Value.Value);
             }
+        }
 
-            #endregion
-
-            #region Helper Methods
-
-            public override string ToString()
+        public static LongRegister Parse(SqlString stringToParse)
+        {
+            if (stringToParse.IsNull)
             {
-                if (this.IsNull)
-                {
-                    return "NULL";
-                }
-                else
-                {
-                    return string.Format("Address=[{0}];Byte Swap={1};Word Swap={2};Value={3};", Address.ToString(), ByteSwap.Value, Value.Value);
-                }
+                return Null;
             }
 
-            public static LongRegister Parse(SqlString stringToParse)
+            var parsedLongRegisterData = stringToParse.Value.Split(",".ToCharArray());
+            var parsedLongRegister = new LongRegister() { Address = ModbusAddress.Parse(parsedLongRegisterData[0]), ByteSwap = bool.Parse(parsedLongRegisterData[1]), WordSwap = bool.Parse(parsedLongRegisterData[2]), Value = Int32.Parse(parsedLongRegisterData[3]) };
+            return parsedLongRegister;
+        }
+
+        #endregion
+
+        #region Serialization Methods
+
+        public void Read(BinaryReader binaryReader)
+        {
+            IsNull = binaryReader.ReadBoolean();
+
+            if (!IsNull)
             {
-                if (stringToParse.IsNull)
-                {
-                    return Null;
-                }
-
-                var parsedLongRegisterData = stringToParse.Value.Split(",".ToCharArray());
-                var parsedLongRegister = new LongRegister() { Address = ModbusAddress.Parse(parsedLongRegisterData[0]), ByteSwap = bool.Parse(parsedLongRegisterData[1]), WordSwap = bool.Parse(parsedLongRegisterData[2]), Value = Int32.Parse(parsedLongRegisterData[3]) };
-                return parsedLongRegister;
+                Address.Read(binaryReader);
+                ByteSwap = binaryReader.ReadBoolean();
+                WordSwap = binaryReader.ReadBoolean();
+                Data = binaryReader.ReadBytes(4);
             }
-
-            #endregion
-
-            #region Serialization Methods
-
-            public void Read(BinaryReader binaryReader)
-            {
-                IsNull = binaryReader.ReadBoolean();
-
-                if (!IsNull)
-                {
-                    Address.Read(binaryReader);
-                    ByteSwap = binaryReader.ReadBoolean();
-                    WordSwap = binaryReader.ReadBoolean();
-                    Data = binaryReader.ReadBytes(4);
-                }
-
-            }
-
-            public void Write(BinaryWriter binaryWriter)
-            {
-                binaryWriter.Write(IsNull);
-
-                if (!IsNull)
-                {
-                    Address.Write(binaryWriter);
-                    binaryWriter.Write(ByteSwap.Value);
-                    binaryWriter.Write(WordSwap.Value);
-                    binaryWriter.Write(Data.Value, 0, 4);
-                }
-            }
-
-            #endregion
 
         }
+
+        public void Write(BinaryWriter binaryWriter)
+        {
+            binaryWriter.Write(IsNull);
+
+            if (!IsNull)
+            {
+                Address.Write(binaryWriter);
+                binaryWriter.Write(ByteSwap.Value);
+                binaryWriter.Write(WordSwap.Value);
+                binaryWriter.Write(Data.Value, 0, 4);
+            }
+        }
+
+        #endregion
+
     }
-}
+}   

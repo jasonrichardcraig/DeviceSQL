@@ -6,15 +6,15 @@ using System.Data.SqlTypes;
 using System.Text;
 using System.Linq;
 
-namespace DeviceSQL.ChannelManager
+namespace DeviceSQL.Functions
 {
-    public partial class Functions
+    partial class ChannelManager
     {
         [SqlFunction(FillRowMethodName = "GetChannels_FillRow", TableDefinition = "ChannelName nvarchar(512), ChannelType nvarchar(512), ReadTimeout int, WriteTimeout int, ConnectionString nvarchar(512)")]
         public static IEnumerable GetChannels()
         {
             ArrayList resultCollection = new ArrayList();
-            var channels = Watchdog.Worker.Channels;
+            var channels = DeviceSQL.Watchdog.Worker.Channels;
             channels.ToList().ForEach(channel => resultCollection.Add(new GetChannels_Result(channel.Name, channel.GetType().Name, channel.ReadTimeout, channel.WriteTimeout, channel.ConnectionString)));
             return resultCollection;
         }

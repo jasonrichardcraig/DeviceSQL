@@ -7,9 +7,9 @@ using System.Text;
 using System.Linq;
 using Microsoft.SqlServer.Server;
 
-namespace DeviceSQL.ChannelManager
+namespace DeviceSQL.Functions
 {
-    partial class Functions
+    partial class ChannelManager
     {
         [SqlFunction]
         public static SqlBoolean RegisterSerialPortChannel(SqlString channelName, SqlString portName, SqlInt32 baudRate, SqlByte dataBits, SqlByte parity, SqlByte stopBits, SqlInt32 readTimeout, SqlInt32 writeTimeout)
@@ -17,7 +17,7 @@ namespace DeviceSQL.ChannelManager
             try
             {
                 var channelNameValue = channelName.Value;
-                var channels = Watchdog.Worker.Channels;
+                var channels = DeviceSQL.Watchdog.Worker.Channels;
                 if (channels.Where(serialPortChannel => serialPortChannel.Name == channelNameValue).Count() == 0)
                 {
                     var serialPortChannel = new SerialPortChannel()

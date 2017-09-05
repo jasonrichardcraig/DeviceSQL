@@ -6,7 +6,7 @@ using System.Text;
 using System.Linq;
 using System.IO;
 
-public partial class UserDefinedTypes
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
