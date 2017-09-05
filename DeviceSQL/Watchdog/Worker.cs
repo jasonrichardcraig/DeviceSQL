@@ -1,14 +1,16 @@
+#region Imported Types
+
 using DeviceSQL.Device;
 using DeviceSQL.IO.Channels;
 using DeviceSQL.IOC;
 using DeviceSQL.ServiceLocation;
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
-using System.Threading;
 using System.Linq;
+using System.Threading;
+
+#endregion
 
 namespace DeviceSQL.Watchdog
 {

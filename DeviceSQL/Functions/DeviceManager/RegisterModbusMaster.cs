@@ -1,18 +1,19 @@
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Text;
 using System.Linq;
-using DeviceSQL.Device.MODBUS;
+
+#endregion
 
 namespace DeviceSQL.Functions
 {
     public partial class DeviceManager
     {
         [SqlFunction]
-        public static SqlBoolean RegisterMODBUSMaster(SqlString channelName, SqlString deviceName, SqlInt32 unitId, SqlBoolean useExtendedAddressing, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
+        public static SqlBoolean DeviceManager_RegisterMODBUSMaster(SqlString channelName, SqlString deviceName, SqlInt32 unitId, SqlBoolean useExtendedAddressing, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
         {
             try
             {

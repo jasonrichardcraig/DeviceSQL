@@ -1,11 +1,12 @@
+#region Imported Types
+
 using DeviceSQL.IO.Channels;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Text;
 using System.Linq;
 
+#endregion
 namespace DeviceSQL.Functions
 {
     partial class ChannelManager

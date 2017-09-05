@@ -13,7 +13,7 @@ namespace DeviceSQL.Functions
     public partial class MODBUSMaster
     {
         [SqlFunction]
-        public static SqlBoolean WriteFloats(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_FloatRegisterArray floatRegisterArray)
+        public static SqlBoolean MODBUSMaster_WriteFloats(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_FloatRegisterArray floatRegisterArray)
         {
             var deviceNameValue = deviceName.Value;
             var floatRegisters = new List<Device.MODBUS.Data.FloatRegister>(floatRegisterArray.floatRegisters.Select(floatRegister => new Device.MODBUS.Data.FloatRegister(new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(floatRegister.Address.RelativeAddress.Value), floatRegister.Address.IsZeroBased.Value), floatRegister.ByteSwap.Value, floatRegister.WordSwap.Value)));

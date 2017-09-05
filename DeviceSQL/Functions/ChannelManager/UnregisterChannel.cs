@@ -1,15 +1,17 @@
+#region Imported Types
+
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Text;
 using System.Linq;
+
+#endregion
 
 namespace DeviceSQL.Functions
 {
     partial class ChannelManager
     {
-        public static SqlBoolean UnregisterChannel(SqlString channelName)
+        public static SqlBoolean ChannelManager_UnregisterChannel(SqlString channelName)
         {
             try
             {

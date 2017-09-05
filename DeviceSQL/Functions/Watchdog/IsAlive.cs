@@ -1,9 +1,11 @@
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Text;
+
+#endregion
 
 namespace DeviceSQL.Functions
 {
@@ -11,7 +13,7 @@ namespace DeviceSQL.Functions
   
     {
         [SqlFunction]
-        public static SqlBoolean IsAlive()
+        public static SqlBoolean Watchdog_IsAlive()
         {
             try
             {

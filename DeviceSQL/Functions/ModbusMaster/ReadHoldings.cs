@@ -13,7 +13,7 @@ namespace DeviceSQL.Functions
     public partial class MODBUSMaster
     {
         [SqlFunction]
-        public static Types.MODBUSMaster.MODBUSMaster_HoldingRegisterArray ReadHoldings(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_HoldingRegisterArray holdingRegisterArray)
+        public static Types.MODBUSMaster.MODBUSMaster_HoldingRegisterArray MODBUSMaster_ReadHoldings(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_HoldingRegisterArray holdingRegisterArray)
         {
             var deviceNameValue = deviceName.Value;
             var holdingRegisters = new List<Device.MODBUS.Data.HoldingRegister>(holdingRegisterArray.holdingRegisters.Select(holdingRegister => new Device.MODBUS.Data.HoldingRegister(new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(holdingRegister.Address.RelativeAddress.Value), holdingRegister.Address.IsZeroBased.Value), holdingRegister.ByteSwap.Value)));

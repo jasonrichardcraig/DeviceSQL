@@ -1,16 +1,18 @@
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Text;
+
+#endregion
 
 namespace DeviceSQL.Functions
 {
     public partial class Watchdog
     {
         [SqlFunction]
-        public static SqlBoolean Run()
+        public static SqlBoolean Watchdog_Run()
         {
             try
             {

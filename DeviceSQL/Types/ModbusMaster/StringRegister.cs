@@ -1,9 +1,11 @@
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.IO;
-using System.Text;
+
+#endregion  
 
 namespace DeviceSQL.Types.MODBUSMaster
 {

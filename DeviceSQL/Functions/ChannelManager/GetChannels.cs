@@ -1,17 +1,18 @@
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
-using System.Text;
 using System.Linq;
+
+#endregion
 
 namespace DeviceSQL.Functions
 {
     partial class ChannelManager
     {
         [SqlFunction(FillRowMethodName = "GetChannels_FillRow", TableDefinition = "ChannelName nvarchar(512), ChannelType nvarchar(512), ReadTimeout int, WriteTimeout int, ConnectionString nvarchar(512)")]
-        public static IEnumerable GetChannels()
+        public static IEnumerable ChannelManager_GetChannels()
         {
             ArrayList resultCollection = new ArrayList();
             var channels = DeviceSQL.Watchdog.Worker.Channels;

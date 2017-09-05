@@ -1,11 +1,11 @@
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
-using System.Diagnostics;
-using System.Text;
 using System.Linq;
-using DeviceSQL.Device.ROC.Data;
+
+#endregion
 
 namespace DeviceSQL.Functions
 {

@@ -13,7 +13,7 @@ namespace DeviceSQL.Functions
     public partial class MODBUSMaster
     {
         [SqlFunction]
-        public static Types.MODBUSMaster.MODBUSMaster_DiscreteInputRegisterArray ReadDiscreteInputs(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_DiscreteInputRegisterArray discreteInputRegisterArray)
+        public static Types.MODBUSMaster.MODBUSMaster_DiscreteInputRegisterArray MODBUSMaster_ReadDiscreteInputs(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_DiscreteInputRegisterArray discreteInputRegisterArray)
         {
             var deviceNameValue = deviceName.Value;
             var discreteInputRegisters = new List<Device.MODBUS.Data.DiscreteInputRegister>(discreteInputRegisterArray.discreteInputRegisters.Select(discreteInputRegister => new Device.MODBUS.Data.DiscreteInputRegister(new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(discreteInputRegister.Address.RelativeAddress.Value), discreteInputRegister.Address.IsZeroBased.Value))));

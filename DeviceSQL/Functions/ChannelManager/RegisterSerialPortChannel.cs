@@ -1,18 +1,20 @@
+#region Imported Types
+
 using DeviceSQL.IO.Channels;
+using Microsoft.SqlServer.Server;
 using System;
-using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Text;
 using System.Linq;
-using Microsoft.SqlServer.Server;
+
+#endregion
 
 namespace DeviceSQL.Functions
 {
     partial class ChannelManager
     {
         [SqlFunction]
-        public static SqlBoolean RegisterSerialPortChannel(SqlString channelName, SqlString portName, SqlInt32 baudRate, SqlByte dataBits, SqlByte parity, SqlByte stopBits, SqlInt32 readTimeout, SqlInt32 writeTimeout)
+        public static SqlBoolean ChannelManager_RegisterSerialPortChannel(SqlString channelName, SqlString portName, SqlInt32 baudRate, SqlByte dataBits, SqlByte parity, SqlByte stopBits, SqlInt32 readTimeout, SqlInt32 writeTimeout)
         {
             try
             {

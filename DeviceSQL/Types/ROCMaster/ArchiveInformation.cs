@@ -1,8 +1,12 @@
+#region Imported Types
+
 using DeviceSQL.Device.ROC.Data;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
 using System.IO;
+
+#endregion
 
 namespace DeviceSQL.Types.ROCMaster
 {

@@ -1,8 +1,11 @@
-using DeviceSQL.Device.ROC.Data;
+#region Imported Types
+
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
 using System.IO;
+
+#endregion
 
 namespace DeviceSQL.Types.ROCMaster
 {
@@ -16,7 +19,6 @@ namespace DeviceSQL.Types.ROCMaster
         private byte fstNumber;
         private string version;
         private string description;
-        private int fstCodeLength;
         private byte[] fstCode;
 
         #endregion
