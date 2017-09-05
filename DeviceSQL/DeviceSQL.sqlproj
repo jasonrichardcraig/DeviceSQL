@@ -332,7 +332,6 @@
     <Compile Include="Functions\ROCMaster\GetFloatValue.cs" />
     <Compile Include="Functions\ROCMaster\GetDoubleValue.cs" />
     <Compile Include="Functions\ROCMaster\GetUInt8Value.cs" />
-    <Compile Include="Functions\GetInt8Value.cs" />
     <Compile Include="Functions\ROCMaster\GetInt16Value.cs" />
     <Compile Include="Functions\ROCMaster\GetUInt16Value.cs" />
     <Compile Include="Functions\ROCMaster\GetInt32Value.cs" />
@@ -363,6 +362,7 @@
     <Compile Include="Functions\ROCMaster\GetROCPlusHistory.cs" />
     <Compile Include="Functions\ROCMaster\GetROCPlusHistoryByHistoryPointArray.cs" />
     <Compile Include="Functions\ROCMaster\GetFstInformation.cs" />
+    <Compile Include="Functions\ROCMaster\GetInt8Value.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
