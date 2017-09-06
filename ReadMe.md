@@ -1,1 +1,1 @@
-This project requires SQL Server 2016 Express (or later);
+Version 1.0 is available
