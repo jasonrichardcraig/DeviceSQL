@@ -374,10 +374,13 @@
     <Build Include="Schemas\DeviceManager.sql" />
     <Build Include="Schemas\MODBUSMaster.sql" />
     <Build Include="Schemas\ROCMaster.sql" />
+    <Build Include="Schemas\ChannelManager.sql" />
+    <Build Include="Schemas\Watchdog.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Documentation\Modbus_Application_Protocol_V1_1b3.pdf" />
     <None Include="DeviceSQL-Key.pfx" />
     <None Include="Deployment\Run Once.sql" />
+    <None Include="Deployment\Rename.sql" />
   </ItemGroup>
 </Project>

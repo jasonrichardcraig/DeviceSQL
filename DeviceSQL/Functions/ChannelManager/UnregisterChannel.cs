@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    partial class ChannelManager
+    public partial class ChannelManager
     {
         public static SqlBoolean ChannelManager_UnregisterChannel(SqlString channelName)
         {

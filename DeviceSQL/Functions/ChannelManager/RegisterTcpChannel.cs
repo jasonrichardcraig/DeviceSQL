@@ -9,7 +9,7 @@ using System.Linq;
 #endregion
 namespace DeviceSQL.Functions
 {
-    partial class ChannelManager
+    public partial class ChannelManager
     {
 
         [Microsoft.SqlServer.Server.SqlFunction]

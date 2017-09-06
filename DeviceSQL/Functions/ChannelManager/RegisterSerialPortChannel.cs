@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    partial class ChannelManager
+    public partial class ChannelManager
     {
         [SqlFunction]
         public static SqlBoolean ChannelManager_RegisterSerialPortChannel(SqlString channelName, SqlString portName, SqlInt32 baudRate, SqlByte dataBits, SqlByte parity, SqlByte stopBits, SqlInt32 readTimeout, SqlInt32 writeTimeout)

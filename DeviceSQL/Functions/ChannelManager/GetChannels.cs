@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    partial class ChannelManager
+    public partial class ChannelManager
     {
         [SqlFunction(FillRowMethodName = "GetChannels_FillRow", TableDefinition = "ChannelName nvarchar(512), ChannelType nvarchar(512), ReadTimeout int, WriteTimeout int, ConnectionString nvarchar(512)")]
         public static IEnumerable ChannelManager_GetChannels()
