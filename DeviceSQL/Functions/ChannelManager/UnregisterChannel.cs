@@ -11,6 +11,7 @@ namespace DeviceSQL.Functions
 {
     public partial class ChannelManager
     {
+        [Microsoft.SqlServer.Server.SqlFunction]
         public static SqlBoolean ChannelManager_UnregisterChannel(SqlString channelName)
         {
             try

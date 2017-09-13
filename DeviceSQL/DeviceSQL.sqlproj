@@ -26,6 +26,7 @@
     <PermissionSet>UNSAFE</PermissionSet>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>DeviceSQL-Key.pfx</AssemblyOriginatorKeyFile>
+    <GenerateSqlClrSymbols>False</GenerateSqlClrSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -36,7 +37,7 @@
     <DefineDebug>false</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <OutputPath>bin\Debug\</OutputPath>
