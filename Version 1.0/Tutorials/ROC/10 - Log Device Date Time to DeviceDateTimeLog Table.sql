@@ -29,7 +29,7 @@ PRINT [DeviceManager].[RegisterROCMaster] (@channelName, @deviceName, @deviceAdd
 	WHILE (@samples < @maxSamples)
 	BEGIN
 		WAITFOR DELAY @delay
-		INSERT INTO DeviceDateTimeLog ([DateTimeStamp], [DeviceDateTime]) VALUES (SYSDATETIME(), [ROCMaster].[GetDateTimeWithCentury] (@deviceName, @century));
+		INSERT INTO DeviceDateTimeLog ([DateTimeStamp], [DeviceDateTime]) VALUES (SYSDATETIME(), [ROCMaster].[GetRealTimeClockValueWithCentury] (@deviceName, @century));
 		SET @samples = @samples + 1
 	END
 PRINT [DeviceManager].[UnregisterDevice] (@deviceName);
