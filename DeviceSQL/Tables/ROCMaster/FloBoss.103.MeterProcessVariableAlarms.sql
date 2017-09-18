@@ -1,0 +1,26 @@
+﻿CREATE TABLE [ROCMaster].[FloBoss.103.MeterProcessVariableAlarms] (
+    [ROCMeterId]                         BIGINT                  NOT NULL,
+    [DateTimeStamp]                      DATETIMEOFFSET (7)      CONSTRAINT [DF_FloBoss.103.MeterProcessVariableAlarms_DateTimeStamp] DEFAULT (sysdatetime()) NOT NULL,
+    [DifferentialPressure.LowLowAlarm]   [ROCMaster].[Parameter] NOT NULL,
+    [DifferentialPressure.LowAlarm]      [ROCMaster].[Parameter] NOT NULL,
+    [DifferentialPressure.HighAlarm]     [ROCMaster].[Parameter] NOT NULL,
+    [DifferentialPressure.HighHighAlarm] [ROCMaster].[Parameter] NOT NULL,
+    [DifferentialPressure.RateAlarm]     [ROCMaster].[Parameter] NOT NULL,
+    [DifferentialPressure.Deadband]      [ROCMaster].[Parameter] NOT NULL,
+    [StaticPressure.LowLowAlarm]         [ROCMaster].[Parameter] NOT NULL,
+    [StaticPressure.LowAlarm]            [ROCMaster].[Parameter] NOT NULL,
+    [StaticPressure.HighAlarm]           [ROCMaster].[Parameter] NOT NULL,
+    [StaticPressure.HighHighAlarm]       [ROCMaster].[Parameter] NOT NULL,
+    [StaticPressure.RateAlarm]           [ROCMaster].[Parameter] NOT NULL,
+    [StaticPressure.Deadband]            [ROCMaster].[Parameter] NOT NULL,
+    [Temperature.LowLowAlarm]            [ROCMaster].[Parameter] NOT NULL,
+    [Temperature.LowAlarm]               [ROCMaster].[Parameter] NOT NULL,
+    [Temperature.HighAlarm]              [ROCMaster].[Parameter] NOT NULL,
+    [Temperature.HighHighAlarm]          [ROCMaster].[Parameter] NOT NULL,
+    [Temperature.RateAlarm]              [ROCMaster].[Parameter] NOT NULL,
+    [Temperature.Deadband]               [ROCMaster].[Parameter] NOT NULL,
+    [RowVersion]                         ROWVERSION              NOT NULL,
+    CONSTRAINT [PK_FloBoss.103.MeterProcessVariableAlarms_1] PRIMARY KEY CLUSTERED ([ROCMeterId] ASC),
+    CONSTRAINT [FK_FloBoss.103.MeterProcessVariableAlarms_ROCMeters] FOREIGN KEY ([ROCMeterId]) REFERENCES [ROCMaster].[ROCMeters] ([Id])
+);
+

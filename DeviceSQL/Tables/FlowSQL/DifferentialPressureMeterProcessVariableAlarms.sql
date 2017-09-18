@@ -1,0 +1,26 @@
+﻿CREATE TABLE [FlowSQL].[DifferentialPressureMeterProcessVariableAlarms] (
+    [MeterId]                            BIGINT             NOT NULL,
+    [DateTimeStamp]                      DATETIMEOFFSET (7) NOT NULL,
+    [DifferentialPressure.LowLowAlarm]   FLOAT (53)         NOT NULL,
+    [DifferentialPressure.LowAlarm]      FLOAT (53)         NOT NULL,
+    [DifferentialPressure.HighAlarm]     FLOAT (53)         NOT NULL,
+    [DifferentialPressure.HighHighAlarm] FLOAT (53)         NOT NULL,
+    [DifferentialPressure.RateAlarm]     FLOAT (53)         NOT NULL,
+    [DifferentialPressure.Deadband]      FLOAT (53)         NOT NULL,
+    [StaticPressure.LowLowAlarm]         FLOAT (53)         NOT NULL,
+    [StaticPressure.LowAlarm]            FLOAT (53)         NOT NULL,
+    [StaticPressure.HighAlarm]           FLOAT (53)         NOT NULL,
+    [StaticPressure.HighHighAlarm]       FLOAT (53)         NOT NULL,
+    [StaticPressure.RateAlarm]           FLOAT (53)         NOT NULL,
+    [StaticPressure.Deadband]            FLOAT (53)         NOT NULL,
+    [Temperature.LowLowAlarm]            FLOAT (53)         NOT NULL,
+    [Temperature.LowAlarm]               FLOAT (53)         NOT NULL,
+    [Temperature.HighAlarm]              FLOAT (53)         NOT NULL,
+    [Temperature.HighHighAlarm]          FLOAT (53)         NOT NULL,
+    [Temperature.RateAlarm]              FLOAT (53)         NOT NULL,
+    [Temperature.Deadband]               FLOAT (53)         NOT NULL,
+    [RowVersion]                         ROWVERSION         NULL,
+    CONSTRAINT [PK_DifferentialPressureMeterProcessVariableAlarms] PRIMARY KEY CLUSTERED ([MeterId] ASC, [DateTimeStamp] ASC),
+    CONSTRAINT [FK_DifferentialPressureMeterProcessVariableAlarms_Meters] FOREIGN KEY ([MeterId]) REFERENCES [FlowSQL].[Meters] ([Id])
+);
+
