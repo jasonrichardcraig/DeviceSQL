@@ -3,4 +3,4 @@
 
 
 
-[Version 1.0 is available](../blob/master/Version 1.0)
+![Version 1.0 is available](../blob/master/Version 1.0)
