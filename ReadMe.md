@@ -3,4 +3,4 @@
 
 
 
-[I'm an inline-style link with title](https://www.google.com "Google's Homepage")
+[Version 1.0 Now Available for Download](https://github.com/jasonrichardcraig/DeviceSQL/tree/master/Version%201.0 "1.0")
