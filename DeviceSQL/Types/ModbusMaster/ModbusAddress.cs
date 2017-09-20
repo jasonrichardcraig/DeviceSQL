@@ -80,7 +80,7 @@ namespace DeviceSQL.Types.MODBUSMaster
                 return Null;
             }
 
-            var parsedMODBUSAddressData = stringToParse.Value.Split(",".ToCharArray());
+            var parsedMODBUSAddressData = stringToParse.Value.Split("|".ToCharArray());
             var parsedMODBUSAddress = new MODBUSMaster_MODBUSAddress() { IsZeroBased = bool.Parse(parsedMODBUSAddressData[0]), RelativeAddress = int.Parse(parsedMODBUSAddressData[1]) };
             return parsedMODBUSAddress;
         }

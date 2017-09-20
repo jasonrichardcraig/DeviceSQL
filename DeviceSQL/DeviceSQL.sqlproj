@@ -380,16 +380,16 @@
     <Build Include="Schemas\ROCMaster.sql" />
     <Build Include="Schemas\ChannelManager.sql" />
     <Build Include="Schemas\Watchdog.sql" />
-    <Build Include="Tables\FlowSQL\DifferentialPressureMeterProcessVariableAlarms.sql" />
-    <Build Include="Tables\FlowSQL\DifferentialPressureMeterProcessVariableValues.sql" />
-    <Build Include="Tables\FlowSQL\MeterAttributes.sql" />
-    <Build Include="Tables\FlowSQL\Meters.sql" />
-    <Build Include="Tables\ROCMaster\FloBoss.103.MeterHistory.sql" />
-    <Build Include="Tables\ROCMaster\FloBoss.103.MeterProcessVariableAlarms.sql" />
-    <Build Include="Tables\ROCMaster\ROCChannelGroup.sql" />
-    <Build Include="Tables\ROCMaster\ROCChannels.sql" />
-    <Build Include="Tables\ROCMaster\ROCMeters.sql" />
-    <Build Include="Tables\ROCMaster\FloBoss.103.MeterProcessVariables.sql" />
+    <None Include="Tables\FlowSQL\DifferentialPressureMeterProcessVariableAlarms.sql" />
+    <None Include="Tables\FlowSQL\DifferentialPressureMeterProcessVariableValues.sql" />
+    <None Include="Tables\FlowSQL\MeterAttributes.sql" />
+    <None Include="Tables\FlowSQL\Meters.sql" />
+    <None Include="Tables\ROCMaster\FloBoss.103.MeterHistory.sql" />
+    <None Include="Tables\ROCMaster\FloBoss.103.MeterProcessVariableAlarms.sql" />
+    <None Include="Tables\ROCMaster\ROCChannelGroup.sql" />
+    <None Include="Tables\ROCMaster\ROCChannels.sql" />
+    <None Include="Tables\ROCMaster\ROCMeters.sql" />
+    <None Include="Tables\ROCMaster\FloBoss.103.MeterProcessVariables.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Documentation\Modbus_Application_Protocol_V1_1b3.pdf" />
