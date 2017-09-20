@@ -9,5 +9,5 @@
 #### Support (Mountain Time):
 
 ## Phone: 403-628-6945
-## Email: [Jason.Craig@Outlook.com](mailto://Jason.Craig@Outlook.com "1.0")
+## Email: Jason.Craig@Outlook.com
 ## Skype: JasonRichardCraig
