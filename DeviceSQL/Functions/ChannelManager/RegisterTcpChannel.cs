@@ -19,7 +19,23 @@ namespace DeviceSQL.Functions
             {
                 var channelNameValue = channelName.Value;
                 var channels = DeviceSQL.Watchdog.Worker.Channels;
-                channels.Where(channel => true);
+
+                if (channelNameValue.Count(c =>
+                {
+                    switch (c)
+                    {
+                        case '|':
+                        case ';':
+                        case ',':
+                            return true;
+                        default:
+                            return false;
+                    }
+                }) > 0)
+                {
+                    throw new ArgumentException("Invalid channel name");
+                }
+
                 if (channels.Where(channel => channel.Name == channelNameValue).Count() == 0)
                 {
                     var tcpChannel = new TcpChannel()

@@ -64,7 +64,7 @@ namespace DeviceSQL.Types.MODBUSMaster
             }
             set
             {
-                Data = new DeviceSQL.Device.MODBUS.Data.ShortRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value) { Value = Convert.ToInt16(value.Value) }.Data;
+                Data = new DeviceSQL.Device.MODBUS.Data.ShortRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value) { Value = Convert.ToInt16((int)value.Value) }.Data;
             }
         }
 

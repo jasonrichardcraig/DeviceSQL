@@ -16,7 +16,7 @@ namespace DeviceSQL.IO.Channels
         #region Fields
 
         private string name = "";
-        private bool loggingEnabled = false;
+        private bool tracingEnabled = false;
         private TcpClient tcpClient = new TcpClient();
 
         #endregion
@@ -29,15 +29,15 @@ namespace DeviceSQL.IO.Channels
             set { name = value; }
         }
 
-        public bool LoggingEnabled
+        public bool TracingEnabled
         {
             get
             {
-                return loggingEnabled;
+                return tracingEnabled;
             }
             set
             {
-                loggingEnabled = value;
+                tracingEnabled = value;
             }
         }
 
@@ -105,9 +105,9 @@ namespace DeviceSQL.IO.Channels
             Buffer.BlockCopy(buffer, 0, writeBuffer, 0, bufferLength);
             TcpClient.GetStream().Write(writeBuffer, offset, count);
             masterStopWatch.Stop();
-            if (LoggingEnabled)
+            if (TracingEnabled)
             {
-                Trace.WriteLine(string.Format("{0},{1},{2},ChannelWrite,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), 0, count, HexConverter.ToHexString(buffer)), "SerialPortChannel");
+                Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelWrite,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), 0, count, HexConverter.ToHexString(buffer)), "SerialPortChannel");
             }
         }
 
@@ -144,9 +144,9 @@ namespace DeviceSQL.IO.Channels
                         Buffer.BlockCopy(bytesRead.ToArray(), 0, buffer, offset, bytesRead.Count);
                     }
 
-                    if (LoggingEnabled)
+                    if (TracingEnabled)
                     {
-                        Trace.WriteLine(string.Format("{0},{1},{2},ChannelRead,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())), "SerialPortChannel");
+                        Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())), "SerialPortChannel");
                     }
 
                     throw new TimeoutException("Read Timeout", toex);
@@ -163,9 +163,9 @@ namespace DeviceSQL.IO.Channels
                 Buffer.BlockCopy(bytesRead.ToArray(), 0, buffer, offset, bytesRead.Count);
             }
 
-            if (LoggingEnabled)
+            if (TracingEnabled)
             {
-                Trace.WriteLine(string.Format("{0},{1},{2},ChannelRead,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())), "SerialPortChannel");
+                Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())), "SerialPortChannel");
             }
 
             if (count != bytesRead.Count)

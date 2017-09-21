@@ -9,7 +9,7 @@ namespace DeviceSQL.IO.Channels
     public interface IChannel : IDisposable
     {
         string Name { get; set; }
-        bool LoggingEnabled { get; set; }
+        bool TracingEnabled { get; set; }
         string ConnectionString { get; }
         int NumberOfBytesAvailable { get; }
         int ReadTimeout { get; set; }

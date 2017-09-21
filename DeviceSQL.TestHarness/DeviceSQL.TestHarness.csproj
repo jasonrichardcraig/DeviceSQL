@@ -48,5 +48,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeviceSQL\DeviceSQL.sqlproj">
+      <Project>{cb6f0884-5a58-432a-800e-4abfeeab6f46}</Project>
+      <Name>DeviceSQL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -20,8 +20,25 @@ namespace DeviceSQL.Functions
             {
                 var channelNameValue = channelName.Value;
                 var channels = DeviceSQL.Watchdog.Worker.Channels;
+
                 if (channels.Where(serialPortChannel => serialPortChannel.Name == channelNameValue).Count() == 0)
                 {
+                    if (channelNameValue.Count(c =>
+                    {
+                        switch (c)
+                        {
+                            case '|':
+                            case ';':
+                            case ',':
+                                return true;
+                            default:
+                                return false;
+                        }
+                    }) > 0)
+                    {
+                        throw new ArgumentException("Invalid channel name");
+                    }
+
                     var serialPortChannel = new SerialPortChannel()
                     {
                         Name = channelNameValue,

@@ -25,7 +25,7 @@
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <PermissionSet>UNSAFE</PermissionSet>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>DeviceSQL-Key.pfx</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>DeviceSQL-Key.snk</AssemblyOriginatorKeyFile>
     <GenerateSqlClrSymbols>False</GenerateSqlClrSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -367,6 +367,11 @@
     <Compile Include="Functions\ROCMaster\GetROCPlusHistoryByHistoryPointArray.cs" />
     <Compile Include="Functions\ROCMaster\GetFstInformation.cs" />
     <Compile Include="Functions\ROCMaster\GetInt8Value.cs" />
+    <Compile Include="Functions\ChannelManager\TraceChannels.cs" />
+    <Compile Include="IO\Channels\ChannelTraceListener.cs" />
+    <Compile Include="Functions\ChannelManager\EnableChannelTracing.cs" />
+    <Compile Include="Functions\ChannelManager\DisableChannelTracing.cs" />
+    <Compile Include="IO\Channels\ChannelTraceEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -393,8 +398,8 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Documentation\Modbus_Application_Protocol_V1_1b3.pdf" />
-    <None Include="DeviceSQL-Key.pfx" />
     <None Include="Deployment\Run Once.sql" />
     <None Include="Deployment\Rename.sql" />
+    <None Include="DeviceSQL-Key.snk" />
   </ItemGroup>
 </Project>
