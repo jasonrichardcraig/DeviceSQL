@@ -116,7 +116,7 @@ namespace DeviceSQL.IO.Channels
             masterStopWatch.Stop();
             if (TracingEnabled)
             {
-                Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelWrite,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), 0, count, HexConverter.ToHexString(buffer)), "SerialPortChannel");
+                Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelWrite,{3},{4},{5},SerialPortChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), 0, count, HexConverter.ToHexString(buffer)));
             }
         }
 
@@ -158,7 +158,7 @@ namespace DeviceSQL.IO.Channels
 
                     if (TracingEnabled)
                     {
-                        Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())), "SerialPortChannel");
+                        Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5},SerialPortChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())));
                     }
                     throw toex;
                 }
@@ -176,7 +176,7 @@ namespace DeviceSQL.IO.Channels
 
             if (TracingEnabled)
             {
-                Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5}", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())), "SerialPortChannel");
+                Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5},SerialPortChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())));
             }
 
             if (count != bytesRead.Count)

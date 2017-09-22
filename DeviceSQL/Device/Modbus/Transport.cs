@@ -34,7 +34,7 @@ namespace DeviceSQL.Device.MODBUS
         #endregion
 
         #region Properties
-        public bool LoggingEnabled
+        public bool TracingEnabled
         {
             get
             {
@@ -96,7 +96,7 @@ namespace DeviceSQL.Device.MODBUS
         internal virtual TResponseMessage UnicastMessage<TResponseMessage>(IMODBUSRequestMessage requestMessage)
 where TResponseMessage : IMODBUSResponseMessage, new()
         {
-            if (LoggingEnabled)
+            if (TracingEnabled)
             {
                 Trace.WriteLine(string.Format("Function {0} Request Started At: {1}", requestMessage.FunctionCode.ToString(), DateTime.Now.ToString("O"), "Transport"));
             }
@@ -114,7 +114,7 @@ where TResponseMessage : IMODBUSResponseMessage, new()
                         attempt++;
                         if (RequestWriteDelayMilliseconds > 0)
                         {
-                            if (LoggingEnabled)
+                            if (TracingEnabled)
                             {
                                 Trace.WriteLine(string.Format("Function {0} Request Write Delay: {1}ms", requestMessage.FunctionCode.ToString(), RequestWriteDelayMilliseconds.ToString("0.0")), "Transport");
                             }
@@ -123,7 +123,7 @@ where TResponseMessage : IMODBUSResponseMessage, new()
                         Write(requestMessage);
                         if (ResponseReadDelayMilliseconds > 0)
                         {
-                            if (LoggingEnabled)
+                            if (TracingEnabled)
                             {
                                 Trace.WriteLine(string.Format("Function {0} Request Read Delay: {1}", requestMessage.FunctionCode.ToString(), ResponseReadDelayMilliseconds.ToString("0.0")), "Transport");
                             }
@@ -138,7 +138,7 @@ where TResponseMessage : IMODBUSResponseMessage, new()
                         {
                             ValidateResponse(requestMessage, response);
                             transactionStopWatch.Stop();
-                            if (LoggingEnabled)
+                            if (TracingEnabled)
                             {
                                 Trace.WriteLine(string.Format("Function {0} Request Completed in: {1}ms", requestMessage.FunctionCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString()), "Transport");
                             }
@@ -169,7 +169,7 @@ where TResponseMessage : IMODBUSResponseMessage, new()
                             throw;
                         }
                     }
-                    if (LoggingEnabled)
+                    if (TracingEnabled)
                     {
                         Trace.WriteLine(string.Format("Function {0} Request Retry Number {1}", requestMessage.FunctionCode.ToString(), attempt.ToString()), "Transport");
                     }

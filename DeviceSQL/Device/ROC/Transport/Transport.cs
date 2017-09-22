@@ -48,7 +48,7 @@ namespace DeviceSQL.Device.ROC.IO
 
         #region Properties
 
-        public bool LoggingEnabled
+        public bool TracingEnabled
         {
             get
             {
@@ -97,13 +97,13 @@ namespace DeviceSQL.Device.ROC.IO
         internal virtual TResponseMessage UnicastMessage<TResponseMessage>(IROCRequestMessage requestMessage)
             where TResponseMessage : IROCResponseMessage, new()
         {
-            if (LoggingEnabled)
+            if (TracingEnabled)
             {
-                Trace.WriteLine(string.Format("Opcode {0} Request Started At: {1}", requestMessage.OpCode.ToString(), DateTime.Now.ToString("O"), "Transport"));
+                Trace.WriteLine(string.Format("ROCMaster.Transport,WriteDelay,{0},{1}", requestMessage.OpCode.ToString(), DateTime.Now.ToString("O"), "Transport"));
             }
             var lastException = (Exception)null;
             var transactionStopWatch = Stopwatch.StartNew();
-            IROCResponseMessage response = default(TResponseMessage);
+            IROCResponseMessage responseMessage = default(TResponseMessage);
             int attempt = 0;
             bool success = false;
             lock (channelLock)
@@ -115,25 +115,25 @@ namespace DeviceSQL.Device.ROC.IO
                         attempt++;
                         if (RequestWriteDelayMilliseconds > 0)
                         {
-                            if (LoggingEnabled)
-                            {
-                                Trace.WriteLine(string.Format("Opcode {0} Request Write Delay: {1}ms", requestMessage.OpCode.ToString(), RequestWriteDelayMilliseconds.ToString("0.0")), "Transport");
+                            if (TracingEnabled)
+                            {                                                   
+                                Trace.WriteLine(string.Format("ROCMaster.Transport,WriteDelay,{0},{1}", requestMessage.OpCode.ToString(), RequestWriteDelayMilliseconds.ToString("0.0")));
                             }
                             TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
                         }
                         Write(requestMessage);
                         if (ResponseReadDelayMilliseconds > 0)
                         {
-                            if (LoggingEnabled)
-                            {
-                                Trace.WriteLine(string.Format("Opcode {0} Request Read Delay: {1}", requestMessage.OpCode.ToString(), ResponseReadDelayMilliseconds.ToString("0.0")), "Transport");
+                            if (TracingEnabled)
+                            {                                                          
+                                Trace.WriteLine(string.Format("ROCMaster.Transport,ReadDelay,{0},{1}", requestMessage.OpCode.ToString(), ResponseReadDelayMilliseconds.ToString("0.0")));
                             }
                             TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
                         }
-                        response = ReadResponse<TResponseMessage>(requestMessage);
-                        if (response.OpCode == 255)
+                        responseMessage = ReadResponse<TResponseMessage>(requestMessage);
+                        if (responseMessage.OpCode == 255)
                         {
-                            var opCode255Response = response as OpCode255Response;
+                            var opCode255Response = responseMessage as OpCode255Response;
                             if (opCode255Response != null)
                             {
                                 throw new OpCode255Exception(opCode255Response);
@@ -141,20 +141,19 @@ namespace DeviceSQL.Device.ROC.IO
                         }
                         else
                         {
-                            ValidateResponse(requestMessage, response);
+                            ValidateResponse(requestMessage, responseMessage);
                             transactionStopWatch.Stop();
-                            if (LoggingEnabled)
+                            if (TracingEnabled)
                             {
-                                Trace.WriteLine(string.Format("Opcode {0} Request Completed in: {1}ms", requestMessage.OpCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString()), "Transport");
+                                Trace.WriteLine(string.Format("ROCMaster.Transport,Read,{0},{1},{3},{4}", requestMessage.OpCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString(), HexConverter.ToHexString(requestMessage.ProtocolDataUnit), HexConverter.ToHexString(responseMessage.ProtocolDataUnit)));
                             }
-
-                            return (TResponseMessage)response;
+                            return (TResponseMessage)responseMessage;
                         }
                     }
                     catch (Exception e)
                     {
                         lastException = e;
-                        Trace.WriteLine(string.Format("Opcode {0} Request Error: {1}", requestMessage.OpCode.ToString(), e.Message), "Transport");
+                        Trace.WriteLine(string.Format("ROCMaster.Transport.Error,{0},{1}", requestMessage.OpCode.ToString(), e.Message), "Transport");
                         if (e is FormatException ||
                             e is NotImplementedException ||
                             e is TimeoutException ||
@@ -174,9 +173,9 @@ namespace DeviceSQL.Device.ROC.IO
                             throw;
                         }
                     }
-                    if (LoggingEnabled)
+                    if (TracingEnabled)
                     {
-                        Trace.WriteLine(string.Format("Opcode {0} Request Retry Number {1}", requestMessage.OpCode.ToString(), attempt.ToString()), "Transport");
+                        Trace.WriteLine(string.Format("ROCMaster.Transport.Warning,Retry,{0},{1}", requestMessage.OpCode.ToString(), attempt.ToString()));
                     }
                 } while (!success && NumberOfRetries > attempt);
             }

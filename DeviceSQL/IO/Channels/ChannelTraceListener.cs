@@ -19,7 +19,7 @@ namespace DeviceSQL.IO.Channels
 
         #region Constants
 
-        public const string TRACE_CHANNEL_SUBSYSTEM = "Channel";
+        public const string TRACE_CATEGORY = "Channel";
 
         #endregion
 
@@ -55,23 +55,23 @@ namespace DeviceSQL.IO.Channels
         {
             try
             {
-                var parsedMessage = message.Split(new char[] { ',' });
-                if (parsedMessage.Length == 7)
+                if (message.StartsWith(TRACE_CATEGORY + ","))
                 {
-                    var traceSubSystem = parsedMessage[0];
-                    if (traceSubSystem == TRACE_CHANNEL_SUBSYSTEM)
+                    var parsedMessage = message.Split(new char[] { ',' });
+                    if (parsedMessage.Length == 9)
                     {
+
                         ChannelTraceMessageReceived?.Invoke(this, new ChannelTraceEventArgs()
                         {
                             StartTime = DateTime.Now,
-                            Name = parsedMessage[0],
-                            MessageDateTimeStamp = DateTime.Parse(parsedMessage[1]),
-                            Duration = double.Parse(parsedMessage[2]),
+                            Name = parsedMessage[1],
+                            MessageDateTimeStamp = DateTime.Parse(parsedMessage[2]),
+                            Duration = double.Parse(parsedMessage[3]),
                             Operation = parsedMessage[4],
                             Sequence = int.Parse(parsedMessage[5]),
                             Count = int.Parse(parsedMessage[6]),
                             Data = parsedMessage[7],
-                            ChannelType = parsedMessage[8]                            
+                            ChannelType = parsedMessage[8]
                         });
                     }
                 }
