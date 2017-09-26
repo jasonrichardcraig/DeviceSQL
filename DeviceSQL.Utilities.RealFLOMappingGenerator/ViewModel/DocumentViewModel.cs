@@ -4,7 +4,7 @@ using GalaSoft.MvvmLight;
 
 #endregion
 
-namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel.Enron
+namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 {
     public class DocumentViewModel : ViewModelBase
     {
