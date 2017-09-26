@@ -11,8 +11,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
     {
         public ViewModelLocator()
         {
-            ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-            SimpleIoc.Default.Register<MainViewModel>();
+
         }
 
         public MainViewModel Main

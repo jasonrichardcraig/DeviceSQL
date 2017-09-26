@@ -1,32 +1,33 @@
 ﻿#region Imported Types
 
+using DeviceSQL.Utilities.RealFLOMappingGenerator.Model;
 using GalaSoft.MvvmLight;
 
 #endregion
 
 namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 {
-    public class DocumentViewModel : ViewModelBase
+    public class MapViewModel : ViewModelBase
     {
 
         #region Fields
 
-        private string fileName;
+        private Map map;
 
         #endregion
 
         #region Properties
 
-        public string FileName
+        public Map Map
         {
             get
             {
-                return fileName;
+                return map;
             }
             set
             {
-                fileName = value;
-                RaisePropertyChanged("FileName");
+                map = value;
+                RaisePropertyChanged("Map");
             }
         }
 

@@ -1,45 +1,167 @@
-﻿<Window x:Class="DeviceSQL.Utilities.RealFLOMappingGenerator.MainWindow"
+﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation" x:Class="DeviceSQL.Utilities.RealFLOMappingGenerator.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:telerikDocking="clr-namespace:Telerik.Windows.Controls;assembly=Telerik.Windows.Controls.Docking"
+        xmlns:viewModel="clr-namespace:DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel"
+        xmlns:converter="clr-namespace:DeviceSQL.Utilities.RealFLOMappingGenerator.Converter"
         xmlns:local="clr-namespace:DeviceSQL.Utilities.RealFLOMappingGenerator" Icon="Resources/Images/RealFLO_24x24.png"
         mc:Ignorable="d"
-        Title="RealFLO Mapping Generator" Height="577" Width="965">
-    <Grid>
-        <telerikDocking:RadDocking>
+        Title="RealFLO Mapping Generator" Height="577" Width="965" Loaded="Window_Loaded">
+    <Window.Resources>
+        <viewModel:ViewModelLocator x:Key="Locator"/>
+        <converter:NegatedBoolToVisibilityConverter x:Key="NegatedBoolToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <telerik:RadRibbonView ApplicationButtonImageSource="Resources/Images/RealFLO_24x24.png"
+                       ApplicationName="RealFLO Mapping Generator" BackstageClippingElement="{Binding ElementName=MainGrid}"
+                       Title="{Binding Source={StaticResource Locator},Path=Main.IsInDesignMode}" Grid.Row="0" TitleBarVisibility="Collapsed" IsMinimized="True" Name="MainRibbonView">
+            <telerik:RadRibbonView.Backstage>
+                <telerik:RadRibbonBackstage BackstagePosition="Office2013">
+                    <telerik:RadRibbonBackstageItem Header="New" IsSelectable="False" Command="{Binding Source={StaticResource Locator},Path=Main.NewCommand}" />
+                    <telerik:RadRibbonBackstageItem Header="Open" IsSelectable="False" Command="{Binding Source={StaticResource Locator}, Path=Main.OpenCommand}" />
+                    <telerik:RadRibbonBackstageItem Header="Save" IsSelectable="False" Command="{Binding Source={StaticResource Locator},Path=Main.SaveCommand}" />
+                    <telerik:RadRibbonBackstageItem Header="Export" IsSelectable="False" Command="{Binding Source={StaticResource Locator},Path=Main.ExportCommand}" />                    
+                    <telerik:RadRibbonBackstageItem IsGroupSeparator="True" />
+                    <telerik:RadRibbonBackstageItem Header="Close" IsSelectable="False" Command="{Binding Source={StaticResource Locator}, Path=Main.CloseCommand}" />
+                    <telerik:RadRibbonBackstageItem IsGroupSeparator="True" />
+                    <telerik:RadRibbonBackstageItem Header="About" IsDefault="True">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Column="1" Grid.Row="1" Height="128" Width="128" Source="Resources/Images/RealFLO.ico" Panel.ZIndex="1000000"/>
+                            <TextBlock HorizontalAlignment="Center" Text="RealFLO Mapping Generator" FontSize="45" Grid.Column="1" Grid.Row="2"/>
+                            <TextBlock HorizontalAlignment="Center" Text="{Binding Source={StaticResource Locator},Path=Main.Version,StringFormat=Version {0}}" FontSize="24" Grid.Column="1" Grid.Row="3"/>
+                        </Grid>
+                    </telerik:RadRibbonBackstageItem>
+
+                </telerik:RadRibbonBackstage>
+
+            </telerik:RadRibbonView.Backstage>
+        </telerik:RadRibbonView>
+
+        <telerikDocking:RadDocking Grid.Row="1">
             <telerikDocking:RadDocking.DocumentHost>
                 <telerikDocking:RadSplitContainer>
                     <telerikDocking:RadPaneGroup>
-                        <telerikDocking:RadPane Header="Description">
-                            <TextBlock TextWrapping="Wrap" Text="On the Documents tab above press Ctrl + Mouse Left button to display the Popup Menu. You can use the same combination on every tab."/>
+                        <telerikDocking:RadPane Header="{Binding Source={StaticResource Locator}, Path=Main.MainWebBrowserPanelHeaderText}" CanUserClose="False">
+                            <telerik:RadTabControl TabStripPlacement="Bottom" >
+                                <telerik:RadTabItem Header="Viewer">
+                                    <WebBrowser Name="MainWebBrowser" Navigating="MainWebBrowser_Navigating" Navigated="MainWebBrowser_Navigated" Visibility="{Binding ElementName=MainRibbonView, Path=IsBackstageOpen, Converter={StaticResource NegatedBoolToVisibilityConverter}}" />
+                                </telerik:RadTabItem>
+                                <telerik:RadTabItem Header="Source">
+
+                                </telerik:RadTabItem>
+                            </telerik:RadTabControl>
                         </telerikDocking:RadPane>
-                        <telerikDocking:RadPane Header="NonDraggable" CanFloat="False">
-                            <TextBlock TextWrapping="Wrap" Text="This pane cannot be dragged, because it has its property CanFloat set 'False'."/>
+                        <telerikDocking:RadPane Header="TeleBUS" CanUserClose="False">
+                            <telerik:RadTabControl>
+                                <telerik:RadTabItem Header="Registers">
+                                    <telerik:RadGridView ShowGroupPanel="False">
+                                        <telerik:RadGridView.Columns>
+                                            <telerik:GridViewComboBoxColumn Header="Category" Width=".5*"/>
+                                            <telerik:GridViewColumn Header="Register" Width="120"/>
+                                            <telerik:GridViewComboBoxColumn Header="Data Type" Width="160"/>
+                                        </telerik:RadGridView.Columns>
+                                    </telerik:RadGridView>
+                                </telerik:RadTabItem>
+                                <telerik:RadTabItem Header="Configuration Commands">
+                                    <telerik:RadGridView ShowGroupPanel="False">
+                                        <telerik:RadGridView.Columns>
+                                            <telerik:GridViewComboBoxColumn Header="Category" Width=".5*"/>
+                                            <telerik:GridViewColumn Header="Register" Width="120"/>
+                                            <telerik:GridViewComboBoxColumn Header="Data Type" Width="160"/>
+                                        </telerik:RadGridView.Columns>
+                                    </telerik:RadGridView>
+                                </telerik:RadTabItem>
+                                <telerik:RadTabItem Header="Archive Commands">
+                                    <telerik:RadGridView ShowGroupPanel="False">
+                                        <telerik:RadGridView.Columns>
+                                            <telerik:GridViewComboBoxColumn Header="Category" Width=".5*"/>
+                                            <telerik:GridViewColumn Header="Register" Width="120"/>
+                                            <telerik:GridViewComboBoxColumn Header="Data Type" Width="160"/>
+                                        </telerik:RadGridView.Columns>
+                                    </telerik:RadGridView>
+                                </telerik:RadTabItem>
+                                <telerik:RadTabItem Header="Events">
+                                    <telerik:RadGridView ShowGroupPanel="False">
+                                        <telerik:RadGridView.Columns>
+                                            <telerik:GridViewComboBoxColumn Header="Category" Width=".5*"/>
+                                            <telerik:GridViewColumn Header="Register" Width="120"/>
+                                            <telerik:GridViewComboBoxColumn Header="Data Type" Width="160"/>
+                                        </telerik:RadGridView.Columns>
+                                    </telerik:RadGridView>
+                                </telerik:RadTabItem>
+                            </telerik:RadTabControl>
+                        </telerikDocking:RadPane>
+                        <telerikDocking:RadPane Header="Enron" CanUserClose="False">
+                            <telerik:RadTabControl>
+                                <telerik:RadTabItem Header="Registers">
+                                    <telerik:RadGridView ShowGroupPanel="False">
+                                        <telerik:RadGridView.Columns>
+                                            <telerik:GridViewComboBoxColumn Header="Category" Width=".5*"/>
+                                            <telerik:GridViewColumn Header="Register" Width="120"/>
+                                            <telerik:GridViewComboBoxColumn Header="Data Type" Width="160"/>
+                                        </telerik:RadGridView.Columns>
+                                    </telerik:RadGridView>
+                                </telerik:RadTabItem>
+                                <telerik:RadTabItem Header="Archives">
+                                    <telerik:RadGridView ShowGroupPanel="False">
+                                        <telerik:RadGridView.Columns>
+                                            <telerik:GridViewComboBoxColumn Header="Category" Width=".5*"/>
+                                            <telerik:GridViewColumn Header="Register" Width="120"/>
+                                            <telerik:GridViewComboBoxColumn Header="Data Type" Width="160"/>
+                                        </telerik:RadGridView.Columns>
+                                    </telerik:RadGridView>
+                                </telerik:RadTabItem>
+                                <telerik:RadTabItem Header="Events">
+                                    <telerik:RadGridView ShowGroupPanel="False">
+                                        <telerik:RadGridView.Columns>
+                                            <telerik:GridViewComboBoxColumn Header="Category" Width=".5*"/>
+                                            <telerik:GridViewColumn Header="Register" Width="120"/>
+                                            <telerik:GridViewComboBoxColumn Header="Data Type" Width="160"/>
+                                        </telerik:RadGridView.Columns>
+                                    </telerik:RadGridView>
+                                </telerik:RadTabItem>
+                            </telerik:RadTabControl>
                         </telerikDocking:RadPane>
                     </telerikDocking:RadPaneGroup>
                 </telerikDocking:RadSplitContainer>
             </telerikDocking:RadDocking.DocumentHost>
 
-            <telerikDocking:RadSplitContainer InitialPosition="DockedLeft">
+            <telerikDocking:RadSplitContainer InitialPosition="DockedLeft" Orientation="Vertical">
                 <telerikDocking:RadPaneGroup>
-                    <telerikDocking:RadPane Header="Toolbox"/>
-                    <telerikDocking:RadPane Header="Server Explorer"/>
+                    <telerikDocking:RadPane Header="Help Documents" CanUserClose="False">
+                        <telerik:RadListBox/>
+                    </telerikDocking:RadPane>
+                    <TextBlock Height="100" TextWrapping="Wrap" Text="TextBlock" Width="100"/>
+                </telerikDocking:RadPaneGroup>
+                <telerikDocking:RadPaneGroup>
+                    <telerikDocking:RadPane Header="Document Outline" CanUserClose="False">
+                        <telerik:RadTreeView>
+
+                        </telerik:RadTreeView>
+                    </telerikDocking:RadPane>
                 </telerikDocking:RadPaneGroup>
             </telerikDocking:RadSplitContainer>
 
             <telerikDocking:RadSplitContainer InitialPosition="DockedRight">
                 <telerikDocking:RadPaneGroup>
-                    <telerikDocking:RadPane Header="Properties"/>
-                    <telerikDocking:RadPane Header="Solution Explorer"/>
-                </telerikDocking:RadPaneGroup>
-            </telerikDocking:RadSplitContainer>
-
-            <telerikDocking:RadSplitContainer InitialPosition="DockedBottom">
-                <telerikDocking:RadPaneGroup>
-                    <telerikDocking:RadPane Header="Output"/>
-                    <telerikDocking:RadPane Header="Error List"/>
+                    <telerikDocking:RadPane Header="Properties" CanUserClose="False"/>
                 </telerikDocking:RadPaneGroup>
             </telerikDocking:RadSplitContainer>
         </telerikDocking:RadDocking>

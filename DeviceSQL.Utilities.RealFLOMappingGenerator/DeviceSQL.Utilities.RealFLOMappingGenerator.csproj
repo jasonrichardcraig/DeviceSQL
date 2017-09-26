@@ -103,6 +103,10 @@
       <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.Docking.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Telerik.Windows.Controls.FixedDocumentViewers">
+      <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.FixedDocumentViewers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Telerik.Windows.Controls.GridView">
       <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.GridView.dll</HintPath>
       <Private>True</Private>
@@ -115,8 +119,8 @@
       <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.Navigation.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Telerik.Windows.Controls.Spreadsheet">
-      <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.Spreadsheet.dll</HintPath>
+    <Reference Include="Telerik.Windows.Controls.RibbonView">
+      <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.RibbonView.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Windows.Data">
@@ -129,6 +133,10 @@
     </Reference>
     <Reference Include="Telerik.Windows.Documents.Core, Version=2017.3.907.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
       <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Documents.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Documents.Fixed, Version=2017.3.907.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
+      <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Documents.Fixed.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Telerik.Windows.Documents.Spreadsheet, Version=2017.3.907.40, Culture=neutral, PublicKeyToken=5803cfa389c90ce7, processorArchitecture=MSIL">
@@ -152,16 +160,28 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="ViewModel\DocumentViewModel.cs" />
+    <Compile Include="Converter\NegatedBoolToVisibilityConverter.cs" />
+    <Compile Include="Converter\BoolToVisibilityConverter.cs" />
+    <Compile Include="Model\DataService.cs" />
+    <Compile Include="Model\Enron\Archive.cs" />
+    <Compile Include="Model\Enron\ArchiveField.cs" />
+    <Compile Include="Model\Enron\Event.cs" />
+    <Compile Include="Model\Enron\Register.cs" />
+    <Compile Include="Model\Map.cs" />
+    <Compile Include="Model\TeleBUS\Archive.cs" />
+    <Compile Include="Model\TeleBUS\ArchiveField.cs" />
+    <Compile Include="Model\TeleBUS\ArchiveCommand.cs" />
+    <Compile Include="Model\TeleBUS\ConfigurationCommand.cs" />
+    <Compile Include="Model\TeleBUS\Event.cs" />
+    <Compile Include="Model\TeleBUS\Register.cs" />
+    <Compile Include="ViewModel\MapViewModel.cs" />
+    <Compile Include="ViewModel\Enron\ArchiveViewModel.cs" />
     <Compile Include="ViewModel\Enron\EventViewModel.cs" />
-    <Compile Include="ViewModel\Enron\LiquidBatchHistoryViewModel.cs" />
-    <Compile Include="ViewModel\Enron\Register.cs" />
-    <Compile Include="ViewModel\Enron\WaterBatchHistoryViewModel.cs" />
-    <Compile Include="ViewModel\Enron\GasBatchHistoryViewModel.cs" />
-    <Compile Include="ViewModel\Enron\LiquidHistoryViewModel.cs" />
-    <Compile Include="ViewModel\Enron\WaterHistoryViewModel.cs" />
-    <Compile Include="ViewModel\Enron\GasHistoryViewModel.cs" />
+    <Compile Include="ViewModel\Enron\RegisterViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\TeleBUS\ArchiveViewModel.cs" />
+    <Compile Include="ViewModel\TeleBUS\EventViewModel.cs" />
+    <Compile Include="ViewModel\TeleBUS\RegisterViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -210,7 +230,10 @@
     <Resource Include="Resources\Images\RealFLO_24x24.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Model\" />
+    <Folder Include="TemplateSelector\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\RealFLO_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

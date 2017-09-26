@@ -6,8 +6,7 @@ using GalaSoft.MvvmLight;
 
 namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel.Enron
 {
-    public class LiquidBatchHistoryViewModel : ViewModelBase
+    public class RegisterViewModel : ViewModelBase
     {
-
     }
 }
