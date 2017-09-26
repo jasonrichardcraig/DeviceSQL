@@ -163,6 +163,7 @@
     <Compile Include="Converter\NegatedBoolToVisibilityConverter.cs" />
     <Compile Include="Converter\BoolToVisibilityConverter.cs" />
     <Compile Include="Model\DataService.cs" />
+    <Compile Include="Model\DialogService.cs" />
     <Compile Include="Model\Enron\Archive.cs" />
     <Compile Include="Model\Enron\ArchiveField.cs" />
     <Compile Include="Model\Enron\Event.cs" />
@@ -174,15 +175,20 @@
     <Compile Include="Model\TeleBUS\ConfigurationCommand.cs" />
     <Compile Include="Model\TeleBUS\Event.cs" />
     <Compile Include="Model\TeleBUS\Register.cs" />
+    <Compile Include="ViewModel\ExportMapWizardViewModel.cs" />
     <Compile Include="ViewModel\MapViewModel.cs" />
     <Compile Include="ViewModel\Enron\ArchiveViewModel.cs" />
     <Compile Include="ViewModel\Enron\EventViewModel.cs" />
     <Compile Include="ViewModel\Enron\RegisterViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NewMapWizardViewModel.cs" />
     <Compile Include="ViewModel\TeleBUS\ArchiveViewModel.cs" />
     <Compile Include="ViewModel\TeleBUS\EventViewModel.cs" />
     <Compile Include="ViewModel\TeleBUS\RegisterViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="Wizard\NewMapWizard.xaml.cs">
+      <DependentUpon>NewMapWizard.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -195,6 +201,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Wizard\NewMapWizard.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">

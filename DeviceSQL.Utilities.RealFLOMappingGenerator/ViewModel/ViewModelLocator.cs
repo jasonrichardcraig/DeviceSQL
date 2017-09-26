@@ -14,6 +14,22 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         }
 
+        public ExportMapWizardViewModel ExportMapWizard
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ExportMapWizardViewModel>();
+            }
+        }
+
+        public NewMapWizardViewModel NewMapWizard
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<NewMapWizardViewModel>();
+            }
+        }
+
         public MainViewModel Main
         {
             get

@@ -16,6 +16,8 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
             SimpleIoc.Default.Register<DataService>();
+            SimpleIoc.Default.Register<DialogService>();
+            SimpleIoc.Default.Register<NewMapWizardViewModel>();
             SimpleIoc.Default.Register<MainViewModel>();
         }
     }

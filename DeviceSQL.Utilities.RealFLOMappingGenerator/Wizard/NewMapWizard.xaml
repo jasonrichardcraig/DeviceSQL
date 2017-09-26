@@ -1,0 +1,57 @@
+﻿<Window xmlns:telerik="http://schemas.telerik.com/2008/xaml/presentation"  x:Class="DeviceSQL.Utilities.RealFLOMappingGenerator.Wizard.NewMapWizard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wizard="clr-namespace:Telerik.Windows.Controls.Wizard;assembly=Telerik.Windows.Controls.Navigation"
+        xmlns:local="clr-namespace:DeviceSQL.Utilities.RealFLOMappingGenerator.Wizard"
+        mc:Ignorable="d"
+        Title="New Map" Height="457.321" Width="815.485" Icon="/DeviceSQL.Utilities.RealFLOMappingGenerator;component/Resources/Images/RealFLO_24x24.png">
+    <Grid>
+        <telerik:RadWizard >
+            <telerik:WizardPage SideHeaderWidth="200">
+                <telerik:WizardPage.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock VerticalAlignment="Bottom" Text="Documentation Source" FontSize="46"/>
+                    </DataTemplate>
+                </telerik:WizardPage.HeaderTemplate>
+                <telerik:WizardPage.SideHeaderTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="0.125*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="0.125*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Row="0" Grid.Column="0" Width="32" Height="32" Source="/DeviceSQL.Utilities.RealFLOMappingGenerator;component/Resources/Images/RealFLO_32x32.png"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Text="1.) Configure Documentation Source" FontSize="10"/>
+                        </Grid>
+                    </DataTemplate>
+                </telerik:WizardPage.SideHeaderTemplate>
+                <telerik:WizardPage.FooterTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <telerik:RadButton Content="Back"
+                                               Margin="4"
+                                               Width="70" 
+                                               Command="wizard:RadWizardCommands.MoveCurrentToPrevious"  
+                                               CommandParameter="{Binding}" />
+                            <telerik:RadButton Content="Next" Width="70" Margin="4"
+                                               Command="wizard:RadWizardCommands.MoveCurrentToNext" 
+                                               CommandParameter="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </telerik:WizardPage.FooterTemplate>
+                <Grid>
+                    
+                </Grid>
+            </telerik:WizardPage>
+            <telerik:WizardPage/>
+            <telerik:WizardPage/>
+        </telerik:RadWizard>
+    </Grid>
+</Window>

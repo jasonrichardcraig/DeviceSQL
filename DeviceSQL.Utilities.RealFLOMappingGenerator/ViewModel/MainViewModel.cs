@@ -1,11 +1,11 @@
 #region Imported Types
 
-using System.Linq;
+using DeviceSQL.Utilities.RealFLOMappingGenerator.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
-using DeviceSQL.Utilities.RealFLOMappingGenerator.Model;
 using Microsoft.Practices.ServiceLocation;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 #endregion
 
@@ -16,13 +16,24 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         #region Fields
 
+        private string currentMapFileName;
         private string mainWebBrowserPanelHeaderText = "about:blank";
         private object mainWebBrowserObjectForScripting;
+        public ObservableCollection<TeleBUS.RegisterViewModel> teleBUSRegisterViewModels;
+        private ObservableCollection<Enron.RegisterViewModel> enronRegisterViewModels;
         private Map map;
 
         #endregion
 
         #region Properties
+
+        public DialogService DialogService
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DialogService>();
+            }
+        }
 
         public DataService DataService
         {
@@ -32,11 +43,47 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
-        public List<Enron.RegisterViewModel> EnronRegisterViewModels
+        public ObservableCollection<Enron.RegisterViewModel> EnronRegisterViewModels
         {
             get
             {
+                return enronRegisterViewModels;
+            }
+            set
+            {
+                if (enronRegisterViewModels != null)
+                {
+                    enronRegisterViewModels.CollectionChanged -= EnronRegisterViewModels_CollectionChanged;
+                }
 
+                enronRegisterViewModels = value;
+
+                if (enronRegisterViewModels != null)
+                {
+                    enronRegisterViewModels.CollectionChanged += EnronRegisterViewModels_CollectionChanged;
+                }
+            }
+        }
+
+        public ObservableCollection<TeleBUS.RegisterViewModel> TeleBUSRegisterViewModels
+        {
+            get
+            {
+                return teleBUSRegisterViewModels;
+            }
+            set
+            {
+                if (teleBUSRegisterViewModels != null)
+                {
+                    teleBUSRegisterViewModels.CollectionChanged -= TeleBUSRegisterViewModels_CollectionChanged;
+                }
+
+                teleBUSRegisterViewModels = value;
+
+                if (teleBUSRegisterViewModels != null)
+                {
+                    teleBUSRegisterViewModels.CollectionChanged += TeleBUSRegisterViewModels_CollectionChanged;
+                }
             }
         }
 
@@ -104,6 +151,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
+        public string CurrentMapFileName
+        {
+            get
+            {
+                return currentMapFileName;
+            }
+            set
+            {
+                currentMapFileName = value;
+                RaisePropertyChanged("CurrentMapFileName");
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -123,13 +183,18 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         private void New()
         {
-            
+            var showSaveBeforeProceedingDialogResult = DialogService.ShowSaveBeforeProceedingDialog();
+            if (showSaveBeforeProceedingDialogResult.HasValue)
+            {
+                if (showSaveBeforeProceedingDialogResult.Value)
+                {
+                    DataService.SaveMap(map, CurrentMapFileName);
+                }
+            }
         }
 
         private void Open()
         {
-
-
 
         }
         private bool CanSave()
@@ -139,7 +204,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         private void Save()
         {
-            
+
         }
 
         private bool CanExport()
@@ -149,7 +214,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         private void Export()
         {
-            
+
         }
 
         private bool CanClose()
@@ -160,6 +225,44 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         private void Close()
         {
 
+        }
+
+        #endregion
+
+        #region Observable Collection Events
+
+        private void EnronRegisterViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+            }
+        }
+
+        private void TeleBUSRegisterViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+            }
         }
 
         #endregion
