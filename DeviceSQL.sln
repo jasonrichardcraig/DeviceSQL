@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.26430.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DeviceSQL", "DeviceSQL\DeviceSQL.sqlproj", "{CB6F0884-5A58-432A-800E-4ABFEEAB6F46}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.TestHarness", "DeviceSQL.TestHarness\DeviceSQL.TestHarness.csproj", "{FF09F40D-A515-4ABB-9DB1-21D9D1F2793E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Utilities.DeploymentScriptFormatter", "DeviceSQL.Utilities.DeploymentScriptFormatter\DeviceSQL.Utilities.DeploymentScriptFormatter.csproj", "{0EA05DA7-635F-4018-9F33-0D3419374C9F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Utilities.RealFLOMappingGenerator", "DeviceSQL.Utilities.RealFLOMappingGenerator\DeviceSQL.Utilities.RealFLOMappingGenerator.csproj", "{6037A772-F9F9-420A-B04E-24E4B646911A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +31,10 @@ Global
 		{0EA05DA7-635F-4018-9F33-0D3419374C9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EA05DA7-635F-4018-9F33-0D3419374C9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0EA05DA7-635F-4018-9F33-0D3419374C9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6037A772-F9F9-420A-B04E-24E4B646911A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6037A772-F9F9-420A-B04E-24E4B646911A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6037A772-F9F9-420A-B04E-24E4B646911A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6037A772-F9F9-420A-B04E-24E4B646911A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
