@@ -47,7 +47,24 @@
                     </DataTemplate>
                 </telerik:WizardPage.FooterTemplate>
                 <Grid>
-                    
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <telerik:GroupBox Grid.Row="1" Header="RealFLO Help File">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <telerik:RadWatermarkTextBox Grid.Column="0"/>
+                            <telerik:RadButton Grid.Column="1" Content="..."/>
+                        </Grid>
+                    </telerik:GroupBox>
                 </Grid>
             </telerik:WizardPage>
             <telerik:WizardPage/>

@@ -4,8 +4,11 @@ using DeviceSQL.Utilities.RealFLOMappingGenerator.Model;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.CommandWpf;
 using Microsoft.Practices.ServiceLocation;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.IO;
+using System.Linq;
 
 #endregion
 
@@ -19,9 +22,14 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         private string currentMapFileName;
         private string mainWebBrowserPanelHeaderText = "about:blank";
         private object mainWebBrowserObjectForScripting;
-        public ObservableCollection<TeleBUS.RegisterViewModel> teleBUSRegisterViewModels;
+
         private ObservableCollection<Enron.RegisterViewModel> enronRegisterViewModels;
-        private Map map;
+        private ObservableCollection<Enron.ArchiveViewModel> enronArchiveViewModels;
+        private ObservableCollection<Enron.EventViewModel> enronEventViewModels;
+        public ObservableCollection<TeleBUS.RegisterViewModel> teleBUSRegisterViewModels;
+        private ObservableCollection<TeleBUS.ArchiveViewModel> teleBUSArchiveViewModels;
+        private ObservableCollection<TeleBUS.EventViewModel> teleBUSEventViewModels;
+
 
         #endregion
 
@@ -65,6 +73,50 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
+        public ObservableCollection<Enron.ArchiveViewModel> EnronArchiveViewModels
+        {
+            get
+            {
+                return enronArchiveViewModels;
+            }
+            set
+            {
+                if (enronArchiveViewModels != null)
+                {
+                    enronArchiveViewModels.CollectionChanged -= EnronArchiveViewModels_CollectionChanged;
+                }
+
+                enronArchiveViewModels = value;
+
+                if (enronArchiveViewModels != null)
+                {
+                    enronArchiveViewModels.CollectionChanged += EnronArchiveViewModels_CollectionChanged;
+                }
+            }
+        }
+
+        public ObservableCollection<Enron.EventViewModel> EnronEventViewModels
+        {
+            get
+            {
+                return enronEventViewModels;
+            }
+            set
+            {
+                if (enronEventViewModels != null)
+                {
+                    enronEventViewModels.CollectionChanged -= EnronEventViewModels_CollectionChanged;
+                }
+
+                enronEventViewModels = value;
+
+                if (enronEventViewModels != null)
+                {
+                    enronEventViewModels.CollectionChanged += EnronEventViewModels_CollectionChanged;
+                }
+            }
+        }
+
         public ObservableCollection<TeleBUS.RegisterViewModel> TeleBUSRegisterViewModels
         {
             get
@@ -83,6 +135,50 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
                 if (teleBUSRegisterViewModels != null)
                 {
                     teleBUSRegisterViewModels.CollectionChanged += TeleBUSRegisterViewModels_CollectionChanged;
+                }
+            }
+        }
+
+        public ObservableCollection<TeleBUS.ArchiveViewModel> TeleBUSArchiveViewModels
+        {
+            get
+            {
+                return teleBUSArchiveViewModels;
+            }
+            set
+            {
+                if (teleBUSArchiveViewModels != null)
+                {
+                    teleBUSArchiveViewModels.CollectionChanged -= TeleBUSArchiveViewModels_CollectionChanged;
+                }
+
+                teleBUSArchiveViewModels = value;
+
+                if (teleBUSArchiveViewModels != null)
+                {
+                    teleBUSArchiveViewModels.CollectionChanged += TeleBUSArchiveViewModels_CollectionChanged;
+                }
+            }
+        }
+
+        public ObservableCollection<TeleBUS.EventViewModel> TeleBUSEventViewModels
+        {
+            get
+            {
+                return teleBUSEventViewModels;
+            }
+            set
+            {
+                if (teleBUSEventViewModels != null)
+                {
+                    teleBUSEventViewModels.CollectionChanged -= TeleBUSEventViewModels_CollectionChanged;
+                }
+
+                teleBUSEventViewModels = value;
+
+                if (teleBUSEventViewModels != null)
+                {
+                    teleBUSEventViewModels.CollectionChanged += TeleBUSEventViewModels_CollectionChanged;
                 }
             }
         }
@@ -183,14 +279,29 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         private void New()
         {
-            var showSaveBeforeProceedingDialogResult = DialogService.ShowSaveBeforeProceedingDialog();
-            if (showSaveBeforeProceedingDialogResult.HasValue)
+            if (CanSave())
             {
-                if (showSaveBeforeProceedingDialogResult.Value)
+                var showSaveBeforeProceedingDialogResult = DialogService.ShowSaveBeforeProceedingDialog();
+                if (showSaveBeforeProceedingDialogResult.HasValue)
                 {
-                    DataService.SaveMap(map, CurrentMapFileName);
+                    if (showSaveBeforeProceedingDialogResult.Value)
+                    {
+                        Save();
+                    }
+                }
+                else
+                {
+                    return;
                 }
             }
+
+            var map = DialogService.OpenNewMapWizardDialog();
+
+            if (map != null)
+            {
+
+            }
+            
         }
 
         private void Open()
@@ -199,12 +310,29 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         }
         private bool CanSave()
         {
-            return false;
+            return File.Exists(CurrentMapFileName);
         }
 
         private void Save()
         {
+            try
+            {
+                var map = new Map()
+                {
+                    EnronRegisters = EnronRegisterViewModels?.Select(enronRegisterViewModel => enronRegisterViewModel.Register).ToList(),
+                    EnronArchives = EnronArchiveViewModels?.Select(enronArchiveViewModel => enronArchiveViewModel.Archive).ToList(),
+                    EnronEvents = EnronEventViewModels?.Select(enronEventViewModel => enronEventViewModel.Event).ToList(),
+                    TeleBUSRegisters = TeleBUSRegisterViewModels?.Select(teleBUSRegisterViewModel => teleBUSRegisterViewModel.Register).ToList(),
+                    TeleBUSArchives = teleBUSArchiveViewModels?.Select(teleBUSArchiveViewModel => teleBUSArchiveViewModel.Archive).ToList(),
+                    TeleBUSEvents = TeleBUSEventViewModels?.Select(teleBUSEventViewModel => teleBUSEventViewModel.Event).ToList()
 
+                };
+                DataService.SaveMap(map, CurrentMapFileName);
+            }
+            catch (Exception ex)
+            {
+                DialogService.ShowErrorMessage($"Error saving map: {ex.Message}");
+            }
         }
 
         private bool CanExport()
@@ -248,7 +376,75 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
+        private void EnronArchiveViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+            }
+        }
+
+        private void EnronEventViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+            }
+        }
+
         private void TeleBUSRegisterViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+            }
+        }
+
+        private void TeleBUSArchiveViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    break;
+                case NotifyCollectionChangedAction.Move:
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    break;
+                case NotifyCollectionChangedAction.Replace:
+                    break;
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+            }
+        }
+
+        private void TeleBUSEventViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             switch (e.Action)
             {

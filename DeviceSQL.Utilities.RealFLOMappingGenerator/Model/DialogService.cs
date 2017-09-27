@@ -26,14 +26,26 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
 
         #region Dialog Methods
 
+        public void ShowErrorMessage(string errorMessage)
+        {
+            RadWindow.Alert(errorMessage);
+        }
+
         public bool? ShowSaveBeforeProceedingDialog()
         {
             var dialogResult = (bool?)null;
+            var dialogParameters = new DialogParameters()
+            {
+                Content = "Would you like to save before proceeding?",
+                OkButtonContent = "Yes",
+                CancelButtonContent = "No",
+                Closed = (s,e) =>
+                {
+                    dialogResult = e.DialogResult;
+                }
+            };
 
-            RadWindow.Confirm("Would you like to save before proceeding?", (s, e) =>
-             {
-                 dialogResult = e.DialogResult;
-             });
+            RadWindow.Confirm(dialogParameters);
 
             return dialogResult;
 
@@ -58,7 +70,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
                     }
                     catch (Exception ex)
                     {
-                        DialogParameters dialogParameters = new DialogParameters()
+                        var dialogParameters = new DialogParameters()
                         {
                             Content = $"Error creating new map: {ex.Message}"
                         };

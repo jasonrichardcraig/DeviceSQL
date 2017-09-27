@@ -30,7 +30,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             set;
         }
 
-        public List<TeleBUS.Register> TelebusRegisters
+        public List<TeleBUS.Register> TeleBUSRegisters
         {
             get;
             set;
@@ -54,7 +54,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             set;
         }
 
-        public List<TeleBUS.Event> TelebusEvents
+        public List<TeleBUS.Event> TeleBUSEvents
         {
             get;
             set;
