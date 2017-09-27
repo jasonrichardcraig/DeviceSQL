@@ -12,7 +12,7 @@
         <viewModel:ViewModelLocator x:Key="Locator"/>
     </Window.Resources>
     <Grid>
-        <telerik:RadWizard SelectedPageIndex="1" >
+        <telerik:RadWizard Finish="RadWizard_Finish">
             <telerik:WizardPage SideHeaderWidth="200" AllowNext="{Binding Source={StaticResource Locator}, Path=NewMapWizard.CHMFileExists}">
                 <telerik:WizardPage.HeaderTemplate>
                     <DataTemplate>
@@ -66,7 +66,7 @@
                     </telerik:GroupBox>
                 </Grid>
             </telerik:WizardPage>
-            <telerik:WizardPage SideHeaderWidth="200" AllowFinish="{Binding Source={StaticResource Locator},Path=NewMapWizard.FileExists}" AllowNext="{Binding Source={StaticResource Locator}, Path=NewMapWizard.CHMFileExists}">
+            <telerik:WizardPage SideHeaderWidth="200" AllowFinish="{Binding Source={StaticResource Locator},Path=NewMapWizard.FileExists}">
                 <telerik:WizardPage.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock VerticalAlignment="Bottom" Text="Map File Destination" FontSize="46"/>

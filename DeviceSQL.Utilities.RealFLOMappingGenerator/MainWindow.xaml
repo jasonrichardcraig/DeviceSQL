@@ -11,6 +11,7 @@
         Title="RealFLO Mapping Generator" Height="577" Width="965" Loaded="Window_Loaded">
     <Window.Resources>
         <viewModel:ViewModelLocator x:Key="Locator"/>
+        <converter:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <converter:NegatedBoolToVisibilityConverter x:Key="NegatedBoolToVisibilityConverter"/>
     </Window.Resources>
     <Grid x:Name="MainGrid">
@@ -20,7 +21,7 @@
         </Grid.RowDefinitions>
         <telerik:RadRibbonView ApplicationButtonImageSource="Resources/Images/RealFLO_24x24.png"
                        ApplicationName="RealFLO Mapping Generator" BackstageClippingElement="{Binding ElementName=MainGrid}"
-                       Title="{Binding Source={StaticResource Locator},Path=Main.IsInDesignMode}" Grid.Row="0" TitleBarVisibility="Collapsed" IsMinimized="True" Name="MainRibbonView">
+                       Title="{Binding Source={StaticResource Locator},Path=Main.CurrentMapFileName}" Grid.Row="0" TitleBarVisibility="{Binding Source={StaticResource Locator},Path=Main.CurrentMapFileExists,Converter={StaticResource BoolToVisibilityConverter}}"  IsMinimized="True" Name="MainRibbonView">
             <telerik:RadRibbonView.Backstage>
                 <telerik:RadRibbonBackstage BackstagePosition="Office2013">
                     <telerik:RadRibbonBackstageItem Header="New" IsSelectable="False" Command="{Binding Source={StaticResource Locator},Path=Main.NewCommand}" />
@@ -148,7 +149,6 @@
                     <telerikDocking:RadPane Header="Help Documents" CanUserClose="False">
                         <telerik:RadListBox/>
                     </telerikDocking:RadPane>
-                    <TextBlock Height="100" TextWrapping="Wrap" Text="TextBlock" Width="100"/>
                 </telerikDocking:RadPaneGroup>
                 <telerikDocking:RadPaneGroup>
                     <telerikDocking:RadPane Header="Document Outline" CanUserClose="False">

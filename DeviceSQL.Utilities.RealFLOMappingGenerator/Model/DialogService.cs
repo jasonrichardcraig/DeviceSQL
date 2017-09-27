@@ -52,7 +52,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
 
             if (dialogResult.HasValue && dialogResult.Value)
             {
-                return saveFileDialog.FileName;
+                try
+                {
+                    using (var fileStream = File.Create(saveFileDialog.FileName))
+                    {
+                        return saveFileDialog.FileName;
+                    }
+                }
+                catch(Exception ex)
+                {
+                    ShowErrorMessage($"Error creating map file: {ex.Message}");
+                    return null;
+                }
+                
             }
             else
             {

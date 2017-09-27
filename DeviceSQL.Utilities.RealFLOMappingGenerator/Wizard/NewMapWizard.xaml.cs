@@ -1,5 +1,7 @@
 ﻿#region Imported Types
 
+using DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel;
+using Microsoft.Practices.ServiceLocation;
 using System.Windows;
 
 #endregion
@@ -14,6 +16,17 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Wizard
         public NewMapWizard()
         {
             InitializeComponent();
+        }
+
+        #endregion
+
+        #region Wizard Events
+
+        private void RadWizard_Finish(object sender, Telerik.Windows.Controls.NavigationButtonsEventArgs e)
+        {
+            ServiceLocator.Current.GetInstance<NewMapWizardViewModel>().RaisePropertyChanged("FileExists");
+            DialogResult = true;
+            Close();
         }
 
         #endregion

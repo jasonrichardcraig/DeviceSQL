@@ -20,6 +20,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         #region Fields
 
         private string currentMapFileName;
+        private string currentCHMFileName;
         private string mainWebBrowserPanelHeaderText = "about:blank";
         private object mainWebBrowserObjectForScripting;
 
@@ -246,6 +247,14 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
+        public bool CurrentMapFileExists
+        {
+            get
+            {
+                return File.Exists(CurrentCHMFileName);
+            }
+        }
+
         public string CurrentMapFileName
         {
             get
@@ -256,6 +265,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             {
                 currentMapFileName = value;
                 RaisePropertyChanged("CurrentMapFileName");
+            }
+        }
+
+        public string CurrentCHMFileName
+        {
+            get
+            {
+                return currentCHMFileName;
+            }
+            set
+            {
+                currentCHMFileName = value;
+                RaisePropertyChanged("CurrentCHMFileName");
             }
         }
 
