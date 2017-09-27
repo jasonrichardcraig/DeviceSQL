@@ -58,7 +58,7 @@
             <telerikDocking:RadDocking.DocumentHost>
                 <telerikDocking:RadSplitContainer>
                     <telerikDocking:RadPaneGroup>
-                        <telerikDocking:RadPane Header="{Binding Source={StaticResource Locator}, Path=Main.MainWebBrowserPanelHeaderText}" CanUserClose="False">
+                        <telerikDocking:RadPane Header="{Binding Source={StaticResource Locator}, Path=Main.MainWebBrowserPanelHeaderText, FallbackValue=about:blank}" CanUserClose="False">
                             <telerik:RadTabControl TabStripPlacement="Bottom" >
                                 <telerik:RadTabItem Header="Viewer">
                                     <WebBrowser Name="MainWebBrowser" Navigating="MainWebBrowser_Navigating" Navigated="MainWebBrowser_Navigated" Visibility="{Binding ElementName=MainRibbonView, Path=IsBackstageOpen, Converter={StaticResource NegatedBoolToVisibilityConverter}}" />

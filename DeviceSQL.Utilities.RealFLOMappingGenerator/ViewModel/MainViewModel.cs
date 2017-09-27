@@ -26,10 +26,9 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         private ObservableCollection<Enron.RegisterViewModel> enronRegisterViewModels;
         private ObservableCollection<Enron.ArchiveViewModel> enronArchiveViewModels;
         private ObservableCollection<Enron.EventViewModel> enronEventViewModels;
-        public ObservableCollection<TeleBUS.RegisterViewModel> teleBUSRegisterViewModels;
+        private ObservableCollection<TeleBUS.RegisterViewModel> teleBUSRegisterViewModels;
         private ObservableCollection<TeleBUS.ArchiveViewModel> teleBUSArchiveViewModels;
         private ObservableCollection<TeleBUS.EventViewModel> teleBUSEventViewModels;
-
 
         #endregion
 

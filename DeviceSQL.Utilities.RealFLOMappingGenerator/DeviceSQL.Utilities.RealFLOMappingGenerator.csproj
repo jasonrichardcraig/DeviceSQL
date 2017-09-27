@@ -103,6 +103,10 @@
       <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.Docking.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Telerik.Windows.Controls.FileDialogs">
+      <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.FileDialogs.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Telerik.Windows.Controls.FixedDocumentViewers">
       <HintPath>..\lib\RCWPF\2017.3.913.45.NoXaml\Telerik.Windows.Controls.FixedDocumentViewers.dll</HintPath>
       <Private>True</Private>

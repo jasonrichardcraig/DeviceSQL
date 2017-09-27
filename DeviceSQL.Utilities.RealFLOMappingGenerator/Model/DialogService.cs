@@ -2,7 +2,9 @@
 
 using DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel;
 using Microsoft.Practices.ServiceLocation;
+using Microsoft.Win32;
 using System;
+using System.IO;
 using Telerik.Windows.Controls;
 
 #endregion
@@ -31,6 +33,60 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             RadWindow.Alert(errorMessage);
         }
 
+        public string OpenCreateMapFileDialog()
+        {
+            var saveFileDialog = new SaveFileDialog()
+            {
+                Title = "Set Map File Destination",
+                FileName = "RealFLO Map.rfm",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                DefaultExt = ".chm",
+                Filter = "RealFLO Map Files|*.rfm",
+                OverwritePrompt = true,
+                CreatePrompt = true,
+                ValidateNames = true,
+                CheckPathExists = true
+            };
+
+            var dialogResult = saveFileDialog.ShowDialog();
+
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                return saveFileDialog.FileName;
+            }
+            else
+            {
+                return null;
+            }
+
+        }
+
+        public string OpenSelectRealFLOHelpFileDialog(string fileName)
+        {
+
+            var fileInfo = new FileInfo(fileName);
+
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select RealFLO Help File",
+                FileName = fileInfo.Name,
+                InitialDirectory = fileInfo.DirectoryName,
+                DefaultExt = ".chm",
+                Filter = "Help Files|*.chm"
+            };
+
+            var dialogResult = openFileDialog.ShowDialog();
+
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                return openFileDialog.FileName;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         public bool? ShowSaveBeforeProceedingDialog()
         {
             var dialogResult = (bool?)null;
@@ -39,7 +95,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
                 Content = "Would you like to save before proceeding?",
                 OkButtonContent = "Yes",
                 CancelButtonContent = "No",
-                Closed = (s,e) =>
+                Closed = (s, e) =>
                 {
                     dialogResult = e.DialogResult;
                 }

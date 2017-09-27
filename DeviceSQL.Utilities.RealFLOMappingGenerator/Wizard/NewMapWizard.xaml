@@ -4,12 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wizard="clr-namespace:Telerik.Windows.Controls.Wizard;assembly=Telerik.Windows.Controls.Navigation"
+        xmlns:viewModel="clr-namespace:DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel"
         xmlns:local="clr-namespace:DeviceSQL.Utilities.RealFLOMappingGenerator.Wizard"
         mc:Ignorable="d"
-        Title="New Map" Height="457.321" Width="815.485" Icon="/DeviceSQL.Utilities.RealFLOMappingGenerator;component/Resources/Images/RealFLO_24x24.png">
+        Title="New Map" Height="480" Width="900" Icon="/DeviceSQL.Utilities.RealFLOMappingGenerator;component/Resources/Images/RealFLO_24x24.png" Topmost="True" WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <viewModel:ViewModelLocator x:Key="Locator"/>
+    </Window.Resources>
     <Grid>
-        <telerik:RadWizard >
-            <telerik:WizardPage SideHeaderWidth="200">
+        <telerik:RadWizard SelectedPageIndex="1" >
+            <telerik:WizardPage SideHeaderWidth="200" AllowNext="{Binding Source={StaticResource Locator}, Path=NewMapWizard.CHMFileExists}">
                 <telerik:WizardPage.HeaderTemplate>
                     <DataTemplate>
                         <TextBlock VerticalAlignment="Bottom" Text="Documentation Source" FontSize="46"/>
@@ -35,11 +39,6 @@
                 <telerik:WizardPage.FooterTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <telerik:RadButton Content="Back"
-                                               Margin="4"
-                                               Width="70" 
-                                               Command="wizard:RadWizardCommands.MoveCurrentToPrevious"  
-                                               CommandParameter="{Binding}" />
                             <telerik:RadButton Content="Next" Width="70" Margin="4"
                                                Command="wizard:RadWizardCommands.MoveCurrentToNext" 
                                                CommandParameter="{Binding}" />
@@ -55,20 +54,76 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <telerik:GroupBox Grid.Row="1" Header="RealFLO Help File">
+                    <telerik:GroupBox Grid.Row="1" Header="RealFLO Help File" Margin="16" Padding="4">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
-                            <telerik:RadWatermarkTextBox Grid.Column="0"/>
-                            <telerik:RadButton Grid.Column="1" Content="..."/>
+                            <telerik:RadWatermarkTextBox Grid.Column="0" Text="{Binding Source={StaticResource Locator},Path=NewMapWizard.CHMFileName}"/>
+                            <telerik:RadButton Grid.Column="1" Content="..." Command="{Binding Source={StaticResource Locator},Path=NewMapWizard.SelectRealFLOHelpFileCommand}"/>
                         </Grid>
                     </telerik:GroupBox>
                 </Grid>
             </telerik:WizardPage>
-            <telerik:WizardPage/>
-            <telerik:WizardPage/>
+            <telerik:WizardPage SideHeaderWidth="200" AllowFinish="{Binding Source={StaticResource Locator},Path=NewMapWizard.FileExists}" AllowNext="{Binding Source={StaticResource Locator}, Path=NewMapWizard.CHMFileExists}">
+                <telerik:WizardPage.HeaderTemplate>
+                    <DataTemplate>
+                        <TextBlock VerticalAlignment="Bottom" Text="Map File Destination" FontSize="46"/>
+                    </DataTemplate>
+                </telerik:WizardPage.HeaderTemplate>
+                <telerik:WizardPage.SideHeaderTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="0.125*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="0.125*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Image Grid.Row="0" Grid.Column="0" Width="32" Height="32" Source="/DeviceSQL.Utilities.RealFLOMappingGenerator;component/Resources/Images/RealFLO_32x32.png"/>
+                            <TextBlock Grid.Row="2" Grid.Column="0" HorizontalAlignment="Center" Text="2.) Configure Map File Destination" FontSize="10"/>
+                        </Grid>
+                    </DataTemplate>
+                </telerik:WizardPage.SideHeaderTemplate>
+                <telerik:WizardPage.FooterTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <telerik:RadButton Content="Back"
+                                               Margin="4"
+                                               Width="70" 
+                                               Command="wizard:RadWizardCommands.MoveCurrentToPrevious"  
+                                               CommandParameter="{Binding}" />
+                            <telerik:RadButton Content="Finish" Width="70" Margin="4"
+                                               Command="wizard:RadWizardCommands.Finish" 
+                                               CommandParameter="{Binding}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </telerik:WizardPage.FooterTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <telerik:GroupBox Grid.Row="1" Header="Map File" Margin="16" Padding="4">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <telerik:RadWatermarkTextBox Grid.Column="0" Text="{Binding Source={StaticResource Locator},Path=NewMapWizard.FileName}"/>
+                            <telerik:RadButton Grid.Column="1" Content="..." Command="{Binding Source={StaticResource Locator},Path=NewMapWizard.SelectMapFileNameCommand}"/>
+                        </Grid>
+                    </telerik:GroupBox>
+                </Grid>
+            </telerik:WizardPage>
         </telerik:RadWizard>
     </Grid>
 </Window>

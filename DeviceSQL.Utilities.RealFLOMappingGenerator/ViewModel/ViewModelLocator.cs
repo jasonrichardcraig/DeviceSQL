@@ -1,6 +1,6 @@
 #region Imported Types
 
-using GalaSoft.MvvmLight.Ioc;
+using GalaSoft.MvvmLight;
 using Microsoft.Practices.ServiceLocation;
 
 #endregion
@@ -18,7 +18,15 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<ExportMapWizardViewModel>();
+                if (!ViewModelBase.IsInDesignModeStatic)
+                {
+                    return ServiceLocator.Current.GetInstance<ExportMapWizardViewModel>();
+                }
+                else
+                {
+                    return null;
+                }
+
             }
         }
 
@@ -26,7 +34,14 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<NewMapWizardViewModel>();
+                if (!ViewModelBase.IsInDesignModeStatic)
+                {
+                    return ServiceLocator.Current.GetInstance<NewMapWizardViewModel>();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -34,7 +49,14 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         {
             get
             {
-                return ServiceLocator.Current.GetInstance<MainViewModel>();
+                if (!ViewModelBase.IsInDesignModeStatic)
+                {
+                    return ServiceLocator.Current.GetInstance<MainViewModel>();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
         
