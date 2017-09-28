@@ -18,9 +18,18 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         private string fileName;
         private string chmFileName = @"C:\Program Files (x86)\Schneider Electric\Realflo\Help\Realflo Reference Manual.chm";
+
         #endregion
 
         #region Properties
+
+        public DataService DataService
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<DataService>();
+            }
+        }
 
         public DialogService DialogService
         {
@@ -46,14 +55,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         {
             get
             {
-                if (File.Exists(FileName))
-                {
-                    return new FileInfo(fileName).Extension.ToLower() == ".rfm";
-                }
-                else
-                {
-                    return false;
-                }
+                return File.Exists(FileName);
             }
         }
 

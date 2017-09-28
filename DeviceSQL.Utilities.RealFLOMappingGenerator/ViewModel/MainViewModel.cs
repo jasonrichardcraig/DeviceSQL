@@ -320,7 +320,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
             if (map != null)
             {
-
+                
             }
             
         }

@@ -45,7 +45,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
                 OverwritePrompt = true,
                 CreatePrompt = true,
                 ValidateNames = true,
-                CheckPathExists = true
+                CheckPathExists = true,
             };
 
             var dialogResult = saveFileDialog.ShowDialog();
@@ -59,12 +59,12 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
                         return saveFileDialog.FileName;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     ShowErrorMessage($"Error creating map file: {ex.Message}");
                     return null;
                 }
-                
+
             }
             else
             {
@@ -121,34 +121,30 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
 
         public Map OpenNewMapWizardDialog()
         {
-            var newMapWizard = new Wizard.NewMapWizard();
+            var newMapWizard = new Wizard.NewMapWizard()
+            {
+                Owner = App.Current.MainWindow
+            };
 
             var dialogResult = newMapWizard.ShowDialog();
 
-            if (dialogResult.HasValue)
+            if (dialogResult.HasValue && dialogResult.Value)
             {
-                if (dialogResult.Value)
+                try
                 {
-                    try
-                    {
-                        var newMapWizardViewModel = ServiceLocator.Current.GetInstance<NewMapWizardViewModel>();
+                    var newMapWizardViewModel = ServiceLocator.Current.GetInstance<NewMapWizardViewModel>();
 
-                        return DataService.NewMap(newMapWizardViewModel.ToString(), newMapWizardViewModel.ToString());
+                    return DataService.NewMap(newMapWizardViewModel.FileName, newMapWizardViewModel.CHMFileName);
 
-                    }
-                    catch (Exception ex)
-                    {
-                        var dialogParameters = new DialogParameters()
-                        {
-                            Content = $"Error creating new map: {ex.Message}"
-                        };
-
-                        RadWindow.Alert(dialogParameters);
-                        return null;
-                    }
                 }
-                else
+                catch (Exception ex)
                 {
+                    var dialogParameters = new DialogParameters()
+                    {
+                        Content = $"Error creating new map: {ex.Message}"
+                    };
+
+                    RadWindow.Alert(dialogParameters);
                     return null;
                 }
             }

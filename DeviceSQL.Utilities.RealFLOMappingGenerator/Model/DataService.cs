@@ -1,5 +1,6 @@
 ﻿#region Imported Types
 
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -16,9 +17,22 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             return Assembly.GetEntryAssembly().GetName().Version.ToString();
         }
 
-        public Map NewMap(string fileName, string chmPath)
+        public Map NewMap(string fileName, string chmFileName)
         {
-            return null;
+            var map = new Map()
+            {
+                EnronArchives = new List<Enron.Archive>(),
+                EnronEvents = new List<Enron.Event>(),
+                EnronRegisters = new List<Enron.Register>(),
+                HelpFileBytes = File.ReadAllBytes(chmFileName),
+                TeleBUSArchives = new List<TeleBUS.Archive>(),
+                TeleBUSEvents = new List<TeleBUS.Event>(),
+                TeleBUSRegisters = new List<TeleBUS.Register>()
+            };
+
+            SaveMap(map, fileName);
+
+            return map;
         }
 
         public Map LoadMap(string fileName)

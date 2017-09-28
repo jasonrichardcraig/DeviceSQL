@@ -24,11 +24,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Wizard
 
         private void RadWizard_Finish(object sender, Telerik.Windows.Controls.NavigationButtonsEventArgs e)
         {
-            ServiceLocator.Current.GetInstance<NewMapWizardViewModel>().RaisePropertyChanged("FileExists");
             DialogResult = true;
             Close();
         }
 
+        #endregion
+
+        #region Base Class Events
+
+        private void Window_Closed(object sender, System.EventArgs e)
+        {
+            
+        }
+        
         #endregion
 
     }

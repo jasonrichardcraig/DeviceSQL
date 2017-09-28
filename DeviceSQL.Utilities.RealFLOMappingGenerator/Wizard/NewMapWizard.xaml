@@ -7,7 +7,12 @@
         xmlns:viewModel="clr-namespace:DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel"
         xmlns:local="clr-namespace:DeviceSQL.Utilities.RealFLOMappingGenerator.Wizard"
         mc:Ignorable="d"
-        Title="New Map" Height="480" Width="900" Icon="/DeviceSQL.Utilities.RealFLOMappingGenerator;component/Resources/Images/RealFLO_24x24.png" Topmost="True" WindowStartupLocation="CenterOwner">
+        Title="New Map"
+        Height="480"
+        Width="900"
+        Icon="/DeviceSQL.Utilities.RealFLOMappingGenerator;component/Resources/Images/RealFLO_24x24.png"
+        Topmost="True"
+        WindowStartupLocation="CenterOwner" Closed="Window_Closed">
     <Window.Resources>
         <viewModel:ViewModelLocator x:Key="Locator"/>
     </Window.Resources>

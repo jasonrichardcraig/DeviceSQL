@@ -1,8 +1,9 @@
-﻿using System;
+﻿#region Imported Types
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+#endregion
 
 namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
 {
@@ -12,13 +13,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
 
         #region Properties
 
-        public string FileName
-        {
-            get;
-            set;
-        }
-
-        public string HelpFolder
+        public byte[] HelpFileBytes
         {
             get;
             set;
