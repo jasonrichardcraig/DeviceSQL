@@ -1,31 +1,32 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="DeviceSQL.Utilities.RealFLOMappingGenerator.exe" version="1.0.0.1" publicKeyToken="a8dea72541eadd0a" language="en-US" processorArchitecture="msil" type="win32" />
-  <description asmv2:iconFile="Resources\Images\RealFLO.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
+  <asmv1:assemblyIdentity name="DeviceSQL.Utilities.RealFLOMappingGenerator.exe" version="1.0.0.2" publicKeyToken="a8dea72541eadd0a" language="en-US" processorArchitecture="msil" type="win32" />
+  <description asmv2:iconFile="Resources\Images\RealFLO.ico" asmv2:publisher="Jason Richard Craig" co.v1:suiteName="DeviceSQL" asmv2:product="RealFLO Mapping Generatoe" asmv2:supportUrl="https://github.com/jasonrichardcraig/DeviceSQL/blob/master/ReadMe.md" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="DeviceSQL.Utilities.RealFLOMappingGenerator" version="1.0.0.0" publicKeyToken="A8DEA72541EADD0A" language="neutral" processorArchitecture="msil" />
+    <assemblyIdentity name="DeviceSQL.Utilities.RealFLOMappingGenerator" version="1.0.0.0" publicKeyToken="55CC92ABD6329ED5" language="neutral" processorArchitecture="msil" />
     <commandLine file="DeviceSQL.Utilities.RealFLOMappingGenerator.exe" parameters="" />
   </entryPoint>
+  <co.v1:useManifestForTrust xmlns="urn:schemas-microsoft-com:asm.v1" />
   <trustInfo>
     <security>
       <applicationRequestMinimum>
-        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <PermissionSet version="1" class="System.Security.NamedPermissionSet" Name="Internet" Description="Default rights given to Internet applications" Unrestricted="true" ID="Custom" SameSite="site" />
         <defaultAssemblyRequest permissionSetReference="Custom" />
       </applicationRequestMinimum>
       <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
-        <!--
-          UAC Manifest Options
-          If you want to change the Windows User Account Control level replace the 
-          requestedExecutionLevel node with one of the following.
+        <!-- UAC Manifest Options
+             If you want to change the Windows User Account Control level replace the 
+             requestedExecutionLevel node with one of the following.
 
         <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
         <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
         <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
 
-         If you want to utilize File and Registry Virtualization for backward 
-         compatibility then delete the requestedExecutionLevel node.
-    -->
+            Specifying requestedExecutionLevel element will disable file and registry virtualization. 
+            Remove this element if your application requires this virtualization for backwards
+            compatibility.
+        -->
         <requestedExecutionLevel level="asInvoker" uiAccess="false" />
       </requestedPrivileges>
     </security>
@@ -44,13 +45,13 @@
   </dependency>
   <dependency>
     <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="DeviceSQL.Utilities.RealFLOMappingGenerator.exe" size="792544">
-      <assemblyIdentity name="DeviceSQL.Utilities.RealFLOMappingGenerator" version="1.0.0.0" publicKeyToken="A8DEA72541EADD0A" language="neutral" processorArchitecture="msil" />
+      <assemblyIdentity name="DeviceSQL.Utilities.RealFLOMappingGenerator" version="1.0.0.0" publicKeyToken="55CC92ABD6329ED5" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>Zy4UEDvbQeOBIr3D8kK+u/O72RuqRcgb6O49EriZzis=</dsig:DigestValue>
+        <dsig:DigestValue>F8GSHf8K4g+Fe8lNC2zE1B2ZgqLajB6pu1cCOKZu3Eg=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -409,4 +410,21 @@
     </hash>
   </file>
   <fileAssociation extension=".rfm" description="RealFLO Map" progid="RealFLOMappingGenerator" defaultIcon="Resources\Images\RealFLO.ico" xmlns="urn:schemas-microsoft-com:clickonce.v1" />
-<publisherIdentity name="CN=DESKTOP-KVQ66SE\jason" issuerKeyHash="4ba834bf656842ed0e4896eaac8b314c336d8f6a" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>TPED6HTZUY25wvXhOyuvJCxCHlSybhnr9lcBDdjnWhE=</DigestValue></Reference></SignedInfo><SignatureValue>LfsWQswZZOTWebKlZ9XOTcnJlT06CtSKQlOAPKZUjIB26N+WXjz0XbtJ4+IyhrR81mRig2DT5+Cb+bsJishvZsfxmTFB6OblipVkJHrB/WMMXfg8AdCnLwinvS90cztZTswEKEZa9Mi+Ad4g+Jid/SUO5iRMJDuNkPgIsi+fA1k=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>vuyVF8vjMgq6FwNM4O0/woIfrt1G/WtCDc9PACVEjIvvqCiUcKWhIlk1gM/mDX+oqZ/AOeXIHgUzNn4FLpqYT159lKDR4Y3rKm99vd/lcCpytA7Mbm/sVsMkGt76azwEFECw9sADL2NcsVoJRFlpmUxFPoZGWhMZXcpEjKAALgE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="115ae7d80d0157f6eb196eb2541e422c24af2b3be1f5c2b98d51d974e803f14c" Description="" Url=""><as:assemblyIdentity name="DeviceSQL.Utilities.RealFLOMappingGenerator.exe" version="1.0.0.1" publicKeyToken="a8dea72541eadd0a" language="en-US" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-KVQ66SE\jason</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>/mCP9q80ya52oPd4dQK1wN7OMMOPH9AfvoiIXrX4xsc=</DigestValue></Reference></SignedInfo><SignatureValue>KjIVRGF73PHNfUzvvZ4lWyCu5I1GzRntzvm4XK7VcDqA/cuLDch1KmUi3kxTDDTu3WnYkSoJ9nkXbTRNPw0Gef4jeq5VsaFu8FH4GzEd9IUOccp2aC5XFu8EBe7BSj9r2wKWfudsRslOUxJ0c1mhHrQiXWVPnczl0ejcJJSy8CA=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>vuyVF8vjMgq6FwNM4O0/woIfrt1G/WtCDc9PACVEjIvvqCiUcKWhIlk1gM/mDX+oqZ/AOeXIHgUzNn4FLpqYT159lKDR4Y3rKm99vd/lcCpytA7Mbm/sVsMkGt76azwEFECw9sADL2NcsVoJRFlpmUxFPoZGWhMZXcpEjKAALgE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB7TCCAVagAwIBAgIQGRRLB2YKjbNH0MH9GtgBADANBgkqhkiG9w0BAQsFADA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtAEsAVgBRADYANgBTAEUAXABqAGEAcwBvAG4wHhcNMTcwOTI5MDcwMjEyWhcNMTgwOTI5MTMwMjEyWjA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtAEsAVgBRADYANgBTAEUAXABqAGEAcwBvAG4wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAL7slRfL4zIKuhcDTODtP8KCH67dRv1rQg3PTwAlRIyL76golHCloSJZNYDP5g1/qKmfwDnlyB4FMzZ+BS6amE9efZSg0eGN6ypvfb3f5XAqcrQOzG5v7FbDJBre+ms8BBRAsPbAAy9jXLFaCURZaZlMRT6GRloTGV3KRIygAC4BAgMBAAEwDQYJKoZIhvcNAQELBQADgYEABYcIQtGhHUfV17Nv0FfKaYeklR8ZiF11c0efECofjBBBBOarAFNOjppc/TOed6md7K1Yhw2DaEPQsiC07Zf0eBrAZZ6iS61KgA7X6XGANM9Sez4B7Sx/iEg3b/JosrQydwDvvhkQ01ekKqj0y4t8UZh75Rnf3R9qfPTIlxO/j/o=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
+  <compatibility xmlns="urn:schemas-microsoft-com:compatibility.v1">
+    <application>
+      <!-- A list of the Windows versions that this application has been tested on and is
+           is designed to work with. Uncomment the appropriate elements and Windows will 
+           automatically selected the most compatible environment. -->
+      <!-- Windows Vista -->
+      <!--<supportedOS Id="{e2011457-1546-43c5-a5fe-008deee3d3f0}" />-->
+      <!-- Windows 7 -->
+      <!--<supportedOS Id="{35138b9a-5d96-4fbd-8e2d-a2440225f93a}" />-->
+      <!-- Windows 8 -->
+      <!--<supportedOS Id="{4a2f28e3-53b9-4441-ba9c-d69d4a4a6e38}" />-->
+      <!-- Windows 8.1 -->
+      <!--<supportedOS Id="{1f676c76-80e1-4239-95bb-83d0f6d0da78}" />-->
+      <!-- Windows 10 -->
+      <!--<supportedOS Id="{8e0f7a12-bfb3-4fe8-b9a5-48fd50a15a9a}" />-->
+    </application>
+  </compatibility>
+<publisherIdentity name="CN=DESKTOP-KVQ66SE\jason" issuerKeyHash="4ba834bf656842ed0e4896eaac8b314c336d8f6a" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>qbzrlIWw/YAFmqoI3fZzo7cb9NAn1UZc4/sU9wNKxJY=</DigestValue></Reference></SignedInfo><SignatureValue>uhanyLr36w78XWZkdlkti5bTVtCpEpcXn87LiYCP2jpJ0L8QexP9BAMGcsMiTkju0eMPohSzxrlvKtWts/COTE0zSmGYGmHT6JxvU2fwVIk7pMrwGK8Y8Sd+mWNjeKXhQmUenEX9UeHKB4AglaELf9YVKK7hwOfEUV77P4DJwMs=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>vuyVF8vjMgq6FwNM4O0/woIfrt1G/WtCDc9PACVEjIvvqCiUcKWhIlk1gM/mDX+oqZ/AOeXIHgUzNn4FLpqYT159lKDR4Y3rKm99vd/lcCpytA7Mbm/sVsMkGt76azwEFECw9sADL2NcsVoJRFlpmUxFPoZGWhMZXcpEjKAALgE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="96c44a03f714fbe35c46d527d0f41bb7a373f6dd08aa9a0580fdb08594ebbca9" Description="" Url=""><as:assemblyIdentity name="DeviceSQL.Utilities.RealFLOMappingGenerator.exe" version="1.0.0.2" publicKeyToken="a8dea72541eadd0a" language="en-US" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=DESKTOP-KVQ66SE\jason</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>t+I2pveOfRNJyNzMglGfWec7h+aaN9x2bkCDRxBrjNA=</DigestValue></Reference></SignedInfo><SignatureValue>a5BYqzmWkdOb3jqfSASqQCZULP+/SEe3y5y8Du76Su3scQG4LABJSNKXLgiNfYdZbux0KEw+fSuWSUU2sCoJs07hJum8X91/d74dxcIBxZbHG22hU/rbqsFG6iN/FUkzSVJXyZDj3i8z5epC+/xSh4AMiEz4KSsxbDA0Ox8hOmg=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>vuyVF8vjMgq6FwNM4O0/woIfrt1G/WtCDc9PACVEjIvvqCiUcKWhIlk1gM/mDX+oqZ/AOeXIHgUzNn4FLpqYT159lKDR4Y3rKm99vd/lcCpytA7Mbm/sVsMkGt76azwEFECw9sADL2NcsVoJRFlpmUxFPoZGWhMZXcpEjKAALgE=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB7TCCAVagAwIBAgIQGRRLB2YKjbNH0MH9GtgBADANBgkqhkiG9w0BAQsFADA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtAEsAVgBRADYANgBTAEUAXABqAGEAcwBvAG4wHhcNMTcwOTI5MDcwMjEyWhcNMTgwOTI5MTMwMjEyWjA1MTMwMQYDVQQDHioARABFAFMASwBUAE8AUAAtAEsAVgBRADYANgBTAEUAXABqAGEAcwBvAG4wgZ8wDQYJKoZIhvcNAQEBBQADgY0AMIGJAoGBAL7slRfL4zIKuhcDTODtP8KCH67dRv1rQg3PTwAlRIyL76golHCloSJZNYDP5g1/qKmfwDnlyB4FMzZ+BS6amE9efZSg0eGN6ypvfb3f5XAqcrQOzG5v7FbDJBre+ms8BBRAsPbAAy9jXLFaCURZaZlMRT6GRloTGV3KRIygAC4BAgMBAAEwDQYJKoZIhvcNAQELBQADgYEABYcIQtGhHUfV17Nv0FfKaYeklR8ZiF11c0efECofjBBBBOarAFNOjppc/TOed6md7K1Yhw2DaEPQsiC07Zf0eBrAZZ6iS61KgA7X6XGANM9Sez4B7Sx/iEg3b/JosrQydwDvvhkQ01ekKqj0y4t8UZh75Rnf3R9qfPTIlxO/j/o=</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
