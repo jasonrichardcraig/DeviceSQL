@@ -1,5 +1,6 @@
 ﻿#region Imported Types
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
@@ -21,17 +22,15 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
         {
             var map = new Map()
             {
+                Id = Guid.NewGuid(),
+                HelpFileBytes = File.ReadAllBytes(chmFileName),
                 EnronArchives = new List<Enron.Archive>(),
                 EnronEvents = new List<Enron.Event>(),
                 EnronRegisters = new List<Enron.Register>(),
-                HelpFileBytes = File.ReadAllBytes(chmFileName),
                 TeleBUSArchives = new List<TeleBUS.Archive>(),
                 TeleBUSEvents = new List<TeleBUS.Event>(),
                 TeleBUSRegisters = new List<TeleBUS.Register>()
             };
-
-            SaveMap(map, fileName);
-
             return map;
         }
 
@@ -49,6 +48,12 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             {
                 new BinaryFormatter().Serialize(fileStream, map);
             }
+        }
+
+        public void ExtractCHMFile(Map map)
+        {
+
+            File.WriteAllBytes($"rfm.{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\{map.Id.ToString("X")}.chm", map.HelpFileBytes);
         }
 
     }

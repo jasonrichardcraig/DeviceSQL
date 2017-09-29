@@ -12,7 +12,7 @@
         Width="900"
         Icon="/DeviceSQL.Utilities.RealFLOMappingGenerator;component/Resources/Images/RealFLO_24x24.png"
         Topmost="True"
-        WindowStartupLocation="CenterOwner" Closed="Window_Closed">
+        WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <viewModel:ViewModelLocator x:Key="Locator"/>
     </Window.Resources>

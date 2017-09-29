@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight;
 
 namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel.Enron
 {
-    public class ArchiveViewModel : ViewModelBase
+    public class ArchiveViewModel : TrackableViewModelBase
     {
         #region Fields
 
@@ -15,7 +15,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel.Enron
 
         #endregion
 
-        #region Imported Types
+        #region Properties
 
         public Archive Archive
         {

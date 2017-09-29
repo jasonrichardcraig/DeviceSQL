@@ -30,14 +30,5 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Wizard
 
         #endregion
 
-        #region Base Class Events
-
-        private void Window_Closed(object sender, System.EventArgs e)
-        {
-            
-        }
-        
-        #endregion
-
     }
 }

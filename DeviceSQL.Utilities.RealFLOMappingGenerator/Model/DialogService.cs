@@ -154,6 +154,37 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             }
         }
 
+        public Map OpenMapFileDialog()
+        {
+
+            var openFileDialog = new OpenFileDialog()
+            {
+                Title = "Select RealFLO Map File",
+                InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
+                DefaultExt = ".rfm",
+                Filter = "RealFLO Map Files|*.rfm"
+            };
+
+            var dialogResult = openFileDialog.ShowDialog();
+
+            if (dialogResult.HasValue && dialogResult.Value)
+            {
+                try
+                {
+                    return DataService.LoadMap(openFileDialog.FileName);
+                }
+                catch (Exception ex)
+                {
+                    ShowErrorMessage($"Error opening map file: {ex.Message}");
+                }
+                return null;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
         #endregion
 
     }

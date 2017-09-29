@@ -24,16 +24,31 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         private string mainWebBrowserPanelHeaderText = "about:blank";
         private object mainWebBrowserObjectForScripting;
 
+        private byte[] helpFileBytes;
         private ObservableCollection<Enron.RegisterViewModel> enronRegisterViewModels;
         private ObservableCollection<Enron.ArchiveViewModel> enronArchiveViewModels;
         private ObservableCollection<Enron.EventViewModel> enronEventViewModels;
         private ObservableCollection<TeleBUS.RegisterViewModel> teleBUSRegisterViewModels;
         private ObservableCollection<TeleBUS.ArchiveViewModel> teleBUSArchiveViewModels;
         private ObservableCollection<TeleBUS.EventViewModel> teleBUSEventViewModels;
+        private bool hasChanged;
 
         #endregion
 
         #region Properties
+
+        public byte[] HelpFileBytes
+        {
+            get
+            {
+                return helpFileBytes;
+            }
+            set
+            {
+                helpFileBytes = value;
+                RaisePropertyChanged("HelpFileBytes");
+            }
+        }
 
         public DialogService DialogService
         {
@@ -281,6 +296,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
+        public bool HasChanged
+        {
+            get
+            {
+                return hasChanged;
+            }
+            set
+            {
+                hasChanged = value;
+                RaisePropertyChanged("HasChanged");
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -320,18 +348,21 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
             if (map != null)
             {
-                
+                LoadMap(map);
             }
-            
         }
 
         private void Open()
         {
-
+            var map = DialogService.OpenMapFileDialog();
+            if (map != null)
+            {
+                LoadMap(map);
+            }
         }
         private bool CanSave()
         {
-            return File.Exists(CurrentMapFileName);
+            return HasChanged;
         }
 
         private void Save()
@@ -340,13 +371,13 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             {
                 var map = new Map()
                 {
+                    HelpFileBytes = HelpFileBytes,
                     EnronRegisters = EnronRegisterViewModels?.Select(enronRegisterViewModel => enronRegisterViewModel.Register).ToList(),
                     EnronArchives = EnronArchiveViewModels?.Select(enronArchiveViewModel => enronArchiveViewModel.Archive).ToList(),
                     EnronEvents = EnronEventViewModels?.Select(enronEventViewModel => enronEventViewModel.Event).ToList(),
                     TeleBUSRegisters = TeleBUSRegisterViewModels?.Select(teleBUSRegisterViewModel => teleBUSRegisterViewModel.Register).ToList(),
                     TeleBUSArchives = teleBUSArchiveViewModels?.Select(teleBUSArchiveViewModel => teleBUSArchiveViewModel.Archive).ToList(),
                     TeleBUSEvents = TeleBUSEventViewModels?.Select(teleBUSEventViewModel => teleBUSEventViewModel.Event).ToList()
-
                 };
                 DataService.SaveMap(map, CurrentMapFileName);
             }
@@ -373,7 +404,30 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         private void Close()
         {
-
+            if (CanSave())
+            {
+                var showSaveBeforeProceedingDialogResult = DialogService.ShowSaveBeforeProceedingDialog();
+                if (showSaveBeforeProceedingDialogResult.HasValue)
+                {
+                    if (showSaveBeforeProceedingDialogResult.Value)
+                    {
+                        Save();
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            CurrentMapFileName = null;
+            CurrentCHMFileName = null;
+            HelpFileBytes = new byte[] { };
+            EnronArchiveViewModels = new ObservableCollection<Enron.ArchiveViewModel>();
+            EnronRegisterViewModels = new ObservableCollection<Enron.RegisterViewModel>();
+            EnronEventViewModels = new ObservableCollection<Enron.EventViewModel>();
+            TeleBUSArchiveViewModels = new ObservableCollection<TeleBUS.ArchiveViewModel>();
+            TeleBUSRegisterViewModels = new ObservableCollection<TeleBUS.RegisterViewModel>();
+            TeleBUSEventViewModels = new ObservableCollection<TeleBUS.EventViewModel>();
         }
 
         #endregion
@@ -479,6 +533,32 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     break;
+            }
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        private void LoadMap(Map map)
+        {
+            if (map != null)
+            {
+                try
+                {
+                    DataService.ExtractCHMFile(map);
+                    HelpFileBytes = map.HelpFileBytes;
+                    EnronArchiveViewModels = new ObservableCollection<Enron.ArchiveViewModel>(map.EnronArchives.Select(enronArchive => new Enron.ArchiveViewModel() { Archive = enronArchive }));
+                    EnronRegisterViewModels = new ObservableCollection<Enron.RegisterViewModel>(map.EnronRegisters.Select(enronArchive => new Enron.RegisterViewModel() { Register = enronArchive }));
+                    EnronEventViewModels = new ObservableCollection<Enron.EventViewModel>(map.EnronEvents.Select(enronEvent => new Enron.EventViewModel() { Event = enronEvent }));
+                    TeleBUSArchiveViewModels = new ObservableCollection<TeleBUS.ArchiveViewModel>(map.TeleBUSArchives.Select(teleBUSArchive => new TeleBUS.ArchiveViewModel() { Archive = teleBUSArchive }));
+                    TeleBUSRegisterViewModels = new ObservableCollection<TeleBUS.RegisterViewModel>(map.TeleBUSRegisters.Select(teleBUSArchive => new TeleBUS.RegisterViewModel() { Register = teleBUSArchive }));
+                    TeleBUSEventViewModels = new ObservableCollection<TeleBUS.EventViewModel>(map.TeleBUSEvents.Select(teleBUSEvent => new TeleBUS.EventViewModel() { Event = teleBUSEvent }));
+                }
+                catch(Exception ex)
+                {
+                    DialogService.ShowErrorMessage($"Error loading map: {ex.Message}");
+                }
             }
         }
 

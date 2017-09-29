@@ -13,6 +13,12 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
 
         #region Properties
 
+        public Guid Id
+        {
+            get;
+            set;
+        }
+
         public byte[] HelpFileBytes
         {
             get;

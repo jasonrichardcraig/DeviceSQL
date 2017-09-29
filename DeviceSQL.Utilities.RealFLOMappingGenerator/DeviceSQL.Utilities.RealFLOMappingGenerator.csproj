@@ -13,6 +13,29 @@
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <PublishUrl>C:\Users\jason\Documents\GitHub\DeviceSQL\DeviceSQL.Utilities.RealFLOMappingGenerator\Version 1.0\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>https://github.com/jasonrichardcraig/DeviceSQL/tree/master/DeviceSQL.Utilities.RealFLOMappingGenerator/</InstallUrl>
+    <SupportUrl>https://github.com/jasonrichardcraig/DeviceSQL/blob/master/ReadMe.md</SupportUrl>
+    <ErrorReportUrl>https://github.com/jasonrichardcraig/DeviceSQL/blob/master/ReadMe.md</ErrorReportUrl>
+    <TargetCulture>en-US</TargetCulture>
+    <ProductName>RealFLO Mapping Generatoe</ProductName>
+    <PublisherName>Jason Richard Craig</PublisherName>
+    <SuiteName>DeviceSQL</SuiteName>
+    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,6 +58,18 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>Resources\Images\RealFLO.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>CAE5F5BEE4170D26B52B0960F9D7628C18AAE939</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>DeviceSQL.Utilities.RealFLOMappingGenerator_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EQATEC.Analytics.Monitor, Version=3.2.1.0, Culture=neutral, PublicKeyToken=213c7c68adb58a17, processorArchitecture=MSIL">
@@ -189,6 +224,7 @@
     <Compile Include="ViewModel\TeleBUS\ArchiveViewModel.cs" />
     <Compile Include="ViewModel\TeleBUS\EventViewModel.cs" />
     <Compile Include="ViewModel\TeleBUS\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\TrackableViewModelBase.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
     <Compile Include="Wizard\NewMapWizard.xaml.cs">
       <DependentUpon>NewMapWizard.xaml</DependentUpon>
@@ -228,6 +264,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="DeviceSQL.Utilities.RealFLOMappingGenerator_TemporaryKey.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -248,6 +285,26 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\RealFLO_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <FileAssociation Include=".rfm">
+      <Visible>False</Visible>
+      <Description>RealFLO Map</Description>
+      <Progid>RealFLOMappingGenerator</Progid>
+      <DefaultIcon>Resources\Images\RealFLO.ico</DefaultIcon>
+    </FileAssociation>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

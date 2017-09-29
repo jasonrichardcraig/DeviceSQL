@@ -126,6 +126,11 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             {
                 FileName = selectedMapFileName;
             }
+            else
+            {
+                FileName = null;
+                CHMFileName = null;
+            }
             
         }
 
