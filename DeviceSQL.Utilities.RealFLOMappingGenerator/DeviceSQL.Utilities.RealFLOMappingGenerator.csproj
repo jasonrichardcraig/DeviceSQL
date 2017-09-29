@@ -24,14 +24,14 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>https://github.com/jasonrichardcraig/DeviceSQL/tree/master/DeviceSQL.Utilities.RealFLOMappingGenerator/</InstallUrl>
+    <InstallUrl>http://liwt-app01.cloudapp.net/DeviceSQL/RealFLOMappingGenerator/</InstallUrl>
     <SupportUrl>https://github.com/jasonrichardcraig/DeviceSQL/blob/master/ReadMe.md</SupportUrl>
     <ErrorReportUrl>https://github.com/jasonrichardcraig/DeviceSQL/blob/master/ReadMe.md</ErrorReportUrl>
     <TargetCulture>en-US</TargetCulture>
     <ProductName>RealFLO Mapping Generatoe</ProductName>
     <PublisherName>Jason Richard Craig</PublisherName>
     <SuiteName>DeviceSQL</SuiteName>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
