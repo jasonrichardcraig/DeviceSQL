@@ -21,12 +21,16 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator
 
         #endregion
 
-        #region Main Web Browser Events
+        #region Base Class Events
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             MainWebBrowser.Navigate("about:blank");
         }
+
+        #endregion
+
+        #region Web Browser Events
 
         private void MainWebBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
         {
@@ -39,6 +43,20 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator
             if (mainViewModel.MainWebBrowserObjectForScripting != MainWebBrowser.ObjectForScripting)
             {
                 mainViewModel.MainWebBrowserObjectForScripting = MainWebBrowser.ObjectForScripting;
+            }
+        }
+
+        private void HelpDocumentWebBrowser_Navigating(object sender, NavigatingCancelEventArgs e)
+        {
+
+        }
+
+        private void HelpDocumentWebBrowser_Navigated(object sender, NavigationEventArgs e)
+        {
+            var mainViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
+            if (mainViewModel.HelpDocumentWebBrowserObjectForScripting != HelpDocumentWebBrowser.ObjectForScripting)
+            {
+                mainViewModel.HelpDocumentWebBrowserObjectForScripting = HelpDocumentWebBrowser.ObjectForScripting;
             }
         }
     }

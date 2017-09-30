@@ -19,12 +19,13 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         #region Fields
 
+        private byte[] helpFileBytes;
         private string currentMapFileName;
         private string currentCHMFileName;
+        private string currentCHMFolderName;
         private string mainWebBrowserPanelHeaderText = "about:blank";
         private object mainWebBrowserObjectForScripting;
-
-        private byte[] helpFileBytes;
+        private object helpDocumentWebBrowserObjectForScripting;        
         private ObservableCollection<Enron.RegisterViewModel> enronRegisterViewModels;
         private ObservableCollection<Enron.ArchiveViewModel> enronArchiveViewModels;
         private ObservableCollection<Enron.EventViewModel> enronEventViewModels;
@@ -219,6 +220,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
+        public object HelpDocumentWebBrowserObjectForScripting
+        {
+            get
+            {
+                return helpDocumentWebBrowserObjectForScripting;
+            }
+            set
+            {
+                helpDocumentWebBrowserObjectForScripting = value;
+                RaisePropertyChanged("HelpDocumentWebBrowserObjectForScripting");
+            }
+        }
+
         public RelayCommand NewCommand
         {
             get;
@@ -293,6 +307,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             {
                 currentCHMFileName = value;
                 RaisePropertyChanged("CurrentCHMFileName");
+            }
+        }
+
+        public string CurrentCHMFolderName
+        {
+            get
+            {
+                return currentCHMFolderName;
+            }
+            set
+            {
+                currentCHMFolderName = value;
+                RaisePropertyChanged("CurrentCHMFolderName");
             }
         }
 
@@ -546,7 +573,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             {
                 try
                 {
-                    DataService.ExtractCHMFile(map);
+                    DataService.ExtractCHMFile(map, out currentCHMFolderName, out currentCHMFileName);
                     HelpFileBytes = map.HelpFileBytes;
                     EnronArchiveViewModels = new ObservableCollection<Enron.ArchiveViewModel>(map.EnronArchives.Select(enronArchive => new Enron.ArchiveViewModel() { Archive = enronArchive }));
                     EnronRegisterViewModels = new ObservableCollection<Enron.RegisterViewModel>(map.EnronRegisters.Select(enronArchive => new Enron.RegisterViewModel() { Register = enronArchive }));

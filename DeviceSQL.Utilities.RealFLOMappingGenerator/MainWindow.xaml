@@ -146,8 +146,8 @@
 
             <telerikDocking:RadSplitContainer InitialPosition="DockedLeft" Orientation="Vertical">
                 <telerikDocking:RadPaneGroup>
-                    <telerikDocking:RadPane Header="Help Documents" CanUserClose="False">
-                        <telerik:RadListBox/>
+                    <telerikDocking:RadPane Header="Help Document" CanUserClose="False">
+                        <WebBrowser Visibility="{Binding ElementName=MainWebBrowser, Path=Visibility}" Name="HelpDocumentWebBrowser" Navigating="HelpDocumentWebBrowser_Navigating" Navigated="HelpDocumentWebBrowser_Navigated" />
                     </telerikDocking:RadPane>
                 </telerikDocking:RadPaneGroup>
                 <telerikDocking:RadPaneGroup>

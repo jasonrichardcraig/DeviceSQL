@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -50,10 +51,31 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             }
         }
 
-        public void ExtractCHMFile(Map map)
+        public void ExtractCHMFile(Map map, out string chmFileName, out string decompiledCHMFolderName)
         {
+            var formattedMapId = map.Id.ToString().Replace("-", "");
+            var chmFolderName = $"{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\RealFLOMappingGenerator";
+            chmFileName = $"{chmFolderName}\\rfm.{formattedMapId}.chm";
+            decompiledCHMFolderName = $"{chmFolderName}\\rfm.{formattedMapId}.decompiled";
 
-            File.WriteAllBytes($"rfm.{Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)}\\{map.Id.ToString("X")}.chm", map.HelpFileBytes);
+            if (!Directory.Exists(chmFolderName))
+            {
+                Directory.CreateDirectory(chmFolderName);
+            }
+
+            if (!Directory.Exists(decompiledCHMFolderName))
+            {
+                Directory.CreateDirectory(decompiledCHMFolderName);
+            }
+
+            File.WriteAllBytes(chmFileName, map.HelpFileBytes);
+            using (var process = Process.Start("hh.exe", $" -decompile {decompiledCHMFolderName} {chmFileName}"))
+            {
+                if (!process.WaitForExit(30000))
+                {
+                    throw new TimeoutException("HTML help decompiler timed out");
+                }
+            }
         }
 
     }

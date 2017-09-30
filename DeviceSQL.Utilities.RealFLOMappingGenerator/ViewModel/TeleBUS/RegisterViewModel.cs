@@ -7,7 +7,7 @@ using GalaSoft.MvvmLight;
 
 namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel.TeleBUS
 {
-    public class RegisterViewModel : ViewModelBase
+    public class RegisterViewModel : TrackableViewModelBase
     {
         #region Fields
 

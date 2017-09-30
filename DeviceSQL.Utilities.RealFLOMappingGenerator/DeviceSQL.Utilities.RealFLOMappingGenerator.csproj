@@ -231,7 +231,6 @@
     <Compile Include="Model\TeleBUS\Event.cs" />
     <Compile Include="Model\TeleBUS\Register.cs" />
     <Compile Include="ViewModel\ExportMapWizardViewModel.cs" />
-    <Compile Include="ViewModel\MapViewModel.cs" />
     <Compile Include="ViewModel\Enron\ArchiveViewModel.cs" />
     <Compile Include="ViewModel\Enron\EventViewModel.cs" />
     <Compile Include="ViewModel\Enron\RegisterViewModel.cs" />
