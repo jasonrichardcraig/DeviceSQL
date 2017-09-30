@@ -4,6 +4,7 @@ using DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel;
 using Microsoft.Practices.ServiceLocation;
 using System.Windows;
 using System.Windows.Navigation;
+using System;
 
 #endregion
 
@@ -25,7 +26,11 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            var mainViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
+            mainViewModel.NavigateHelpDocumentWebBrowserCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand<string>(NavigateHelpDocumentWebBrowser);
+            mainViewModel.NavigateMainWebBrowserCommand = new GalaSoft.MvvmLight.CommandWpf.RelayCommand<string>(NavigateMainWebBrowser);
             MainWebBrowser.Navigate("about:blank");
+            HelpDocumentWebBrowser.Navigate("about:blank");
         }
 
         #endregion
@@ -42,7 +47,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator
             var mainViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
             if (mainViewModel.MainWebBrowserObjectForScripting != MainWebBrowser.ObjectForScripting)
             {
-                mainViewModel.MainWebBrowserObjectForScripting = MainWebBrowser.ObjectForScripting;
+                MainWebBrowser.ObjectForScripting = mainViewModel.MainWebBrowserObjectForScripting;
             }
         }
 
@@ -56,12 +61,27 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator
             var mainViewModel = ServiceLocator.Current.GetInstance<MainViewModel>();
             if (mainViewModel.HelpDocumentWebBrowserObjectForScripting != HelpDocumentWebBrowser.ObjectForScripting)
             {
-                mainViewModel.HelpDocumentWebBrowserObjectForScripting = HelpDocumentWebBrowser.ObjectForScripting;
+                HelpDocumentWebBrowser.ObjectForScripting = mainViewModel.HelpDocumentWebBrowserObjectForScripting;
             }
         }
-    }
 
-    #endregion
+        #endregion
+
+        #region Navigation Methods
+
+        private void NavigateMainWebBrowser(string source)
+        {
+            MainWebBrowser.Navigate(source);
+        }
+
+        private void NavigateHelpDocumentWebBrowser(string source)
+        {
+            HelpDocumentWebBrowser.Navigate(source);
+        }
+
+        #endregion
+
+    }
 
 }
 

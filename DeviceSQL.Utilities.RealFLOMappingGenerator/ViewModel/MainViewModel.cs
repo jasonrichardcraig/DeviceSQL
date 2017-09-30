@@ -19,13 +19,14 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         #region Fields
 
+        private Guid id;
         private byte[] helpFileBytes;
         private string currentMapFileName;
         private string currentCHMFileName;
         private string currentCHMFolderName;
         private string mainWebBrowserPanelHeaderText = "about:blank";
-        private object mainWebBrowserObjectForScripting;
-        private object helpDocumentWebBrowserObjectForScripting;        
+        private Interop.Main mainWebBrowserObjectForScripting;
+        private Interop.HelpDocument helpDocumentWebBrowserObjectForScripting;
         private ObservableCollection<Enron.RegisterViewModel> enronRegisterViewModels;
         private ObservableCollection<Enron.ArchiveViewModel> enronArchiveViewModels;
         private ObservableCollection<Enron.EventViewModel> enronEventViewModels;
@@ -37,6 +38,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         #endregion
 
         #region Properties
+
+        public Guid Id
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                id = value;
+                RaisePropertyChanged("Id");
+            }
+        }
 
         public byte[] HelpFileBytes
         {
@@ -207,7 +221,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
-        public object MainWebBrowserObjectForScripting
+        public Interop.Main MainWebBrowserObjectForScripting
         {
             get
             {
@@ -220,7 +234,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             }
         }
 
-        public object HelpDocumentWebBrowserObjectForScripting
+        public Interop.HelpDocument HelpDocumentWebBrowserObjectForScripting
         {
             get
             {
@@ -258,6 +272,18 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
         }
 
         public RelayCommand CloseCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand<string> NavigateHelpDocumentWebBrowserCommand
+        {
+            get;
+            set;
+        }
+
+        public RelayCommand<string> NavigateMainWebBrowserCommand
         {
             get;
             set;
@@ -398,6 +424,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             {
                 var map = new Map()
                 {
+                    Id = Id,
                     HelpFileBytes = HelpFileBytes,
                     EnronRegisters = EnronRegisterViewModels?.Select(enronRegisterViewModel => enronRegisterViewModel.Register).ToList(),
                     EnronArchives = EnronArchiveViewModels?.Select(enronArchiveViewModel => enronArchiveViewModel.Archive).ToList(),
@@ -426,7 +453,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
 
         private bool CanClose()
         {
-            return false;
+            return !Id.Equals(Guid.Empty);
         }
 
         private void Close()
@@ -446,6 +473,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
                     return;
                 }
             }
+            Id = Guid.Empty;
             CurrentMapFileName = null;
             CurrentCHMFileName = null;
             HelpFileBytes = new byte[] { };
@@ -573,7 +601,8 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             {
                 try
                 {
-                    DataService.ExtractCHMFile(map, out currentCHMFolderName, out currentCHMFileName);
+                    Id = map.Id;
+                    DataService.ExtractCHMFile(map, out currentCHMFileName, out currentCHMFolderName);
                     HelpFileBytes = map.HelpFileBytes;
                     EnronArchiveViewModels = new ObservableCollection<Enron.ArchiveViewModel>(map.EnronArchives.Select(enronArchive => new Enron.ArchiveViewModel() { Archive = enronArchive }));
                     EnronRegisterViewModels = new ObservableCollection<Enron.RegisterViewModel>(map.EnronRegisters.Select(enronArchive => new Enron.RegisterViewModel() { Register = enronArchive }));
@@ -581,8 +610,20 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
                     TeleBUSArchiveViewModels = new ObservableCollection<TeleBUS.ArchiveViewModel>(map.TeleBUSArchives.Select(teleBUSArchive => new TeleBUS.ArchiveViewModel() { Archive = teleBUSArchive }));
                     TeleBUSRegisterViewModels = new ObservableCollection<TeleBUS.RegisterViewModel>(map.TeleBUSRegisters.Select(teleBUSArchive => new TeleBUS.RegisterViewModel() { Register = teleBUSArchive }));
                     TeleBUSEventViewModels = new ObservableCollection<TeleBUS.EventViewModel>(map.TeleBUSEvents.Select(teleBUSEvent => new TeleBUS.EventViewModel() { Event = teleBUSEvent }));
+
+                    var indexHTMLDocumentFileName = DataService.CreateIndexHTMLDocument(currentCHMFolderName);
+
+                    if (indexHTMLDocumentFileName != null)
+                    {   
+                        NavigateHelpDocumentWebBrowserCommand.Execute(indexHTMLDocumentFileName);
+                    }
+                    else
+                    {
+                        DialogService.ShowErrorMessage("Unable to create index HTML document");
+                        Close();
+                    }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     DialogService.ShowErrorMessage($"Error loading map: {ex.Message}");
                 }
