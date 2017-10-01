@@ -373,6 +373,8 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
             SaveCommand = new RelayCommand(Save, CanSave);
             ExportCommand = new RelayCommand(Export, CanExport);
             CloseCommand = new RelayCommand(Close, CanClose);
+            MainWebBrowserObjectForScripting = new Interop.Main();
+            HelpDocumentWebBrowserObjectForScripting = new Interop.HelpDocument();
         }
 
         #endregion
@@ -616,6 +618,7 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
                     if (indexHTMLDocumentFileName != null)
                     {   
                         NavigateHelpDocumentWebBrowserCommand.Execute(indexHTMLDocumentFileName);
+                        NavigateMainWebBrowserCommand.Execute($"{currentCHMFolderName}\\aga-11-calculation-status-codes.htm");
                     }
                     else
                     {

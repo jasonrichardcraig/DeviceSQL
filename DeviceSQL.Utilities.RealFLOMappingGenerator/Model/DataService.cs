@@ -85,6 +85,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
                         Application.GetResourceStream(new Uri("Resources/Scripts/jquery-3.2.1.min.js", UriKind.RelativeOrAbsolute)).Stream.CopyTo(jqueryFileStream);
                         Application.GetResourceStream(new Uri("Resources/Scripts/rfm.tree.js", UriKind.RelativeOrAbsolute)).Stream.CopyTo(treeFileStream);
                     }
+
+                    foreach (var htmFileInfo in new DirectoryInfo(decompiledCHMFolderName).GetFiles("*.htm", SearchOption.AllDirectories))
+                    {
+                        using (var htmFileStream = htmFileInfo.Open(FileMode.Open))
+                        {
+                            var chmHTMLDocument = new HtmlDocument();
+
+                            chmHTMLDocument.Load(htmFileStream, System.Text.Encoding.ASCII);
+                            chmHTMLDocument.DocumentNode.InsertBefore(HtmlNode.CreateNode("<!-- saved from url=(0016)http://localhost -->"), chmHTMLDocument.DocumentNode.FirstChild);
+                            htmFileStream.Position = 0;
+                            chmHTMLDocument.Save(htmFileStream);
+                        }
+                    }
                 }
                 else
                 {
@@ -100,53 +113,55 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             if (hhcFileInfo != null)
             {
                 var htmlDocument = new HtmlDocument();
+                var destinationHHCFileName = $"{hhcFileInfo.DirectoryName}\\rfm.index.html";
 
-                using (var hhcFileStream = hhcFileInfo.OpenRead())
+                using (var hhcFileStream = hhcFileInfo.Open(FileMode.Open))
+                using (var hhcStreamReader = new StreamReader(hhcFileStream))
+                using (var hhcStreamWriter = new StreamWriter(hhcFileStream))
                 {
-                    htmlDocument.Load(hhcFileInfo.OpenRead());
 
-                    if (htmlDocument.DocumentNode.SelectSingleNode("//head") == null)
-                    {
-                        htmlDocument.DocumentNode.AppendChild(new HtmlNode(HtmlNodeType.Element, htmlDocument, 0)
-                        {
-                            Name = "head",
-                            InnerHtml = $"<script type\"text/javascript\" src=\"jquery-3.2.1.min.js\"></script>\r\n" +
-                                        $"<script type\"text/javascript\" src=\"rfm.tree.js\"></script>"
-                        });
-                    }
-
-                    var sitemapTextElementIndex = 0;
-                    var objectIds = new List<string>();
-
-                    htmlDocument.DocumentNode.SelectNodes("//object").ToList().ForEach(objectHTMLNode =>
-                    {
-                        objectIds.Add(objectHTMLNode.Id = $"chm-object-{sitemapTextElementIndex}");
-
-                        switch (objectHTMLNode.GetAttributeValue("type", null))
-                        {
-                            case "text/sitemap":
-                                {
-                                    var nameParamHTMLNode = objectHTMLNode.SelectSingleNode("//param[@name='Name']");
-                                    var imageNumberParamHTMLNode = objectHTMLNode.SelectSingleNode("//param[@name='ImageNumber']");
-                                    var localParamHTMLNode = objectHTMLNode.SelectSingleNode("//param[@name='Local']");
-
-                                    objectHTMLNode.ParentNode.AppendChild(HtmlNode.CreateNode($"<div id=\"rfm-sitemap-text-{sitemapTextElementIndex++}\">\r\n" + "" +
-                                                                                                  $"<a href=\"javascript:alert('Hello'); \">{nameParamHTMLNode.GetAttributeValue("value", "")}</a>\r\n" +
-                                                                                               "</div>"));
-
-                                }
-                                break;
-                        }
-                    });
-
-                    objectIds.ForEach(objectId =>
-                    {
-                        //htmlDocument.GetElementbyId(objectId).Remove();
-                    });
-
+                    var hhcFileContents = $"<!-- saved from url=(0016)http://localhost -->\r\n{hhcStreamReader.ReadToEnd()}";
+                    hhcFileStream.Position = 0;
+                    hhcStreamWriter.Write(hhcFileContents);
+                    hhcStreamWriter.Flush();
                 }
 
-                var destinationHHCFileName = $"{hhcFileInfo.DirectoryName}\\rfm.index.html";
+                htmlDocument.Load(hhcFileInfo.Open(FileMode.Open, FileAccess.ReadWrite), System.Text.Encoding.ASCII);
+
+                //if (htmlDocument.DocumentNode.SelectSingleNode("//head") == null)
+                //{
+                //    htmlDocument.DocumentNode.SelectSingleNode("//html").InsertBefore(htmlDocument.DocumentNode.SelectSingleNode("//html") //.AppendChild(new HtmlNode(HtmlNodeType.Element, htmlDocument, 0)
+                //    {
+                //        Name = "head",
+                //        InnerHtml = $"<script type\"text/javascript\" src=\"jquery-3.2.1.min.js\"></script>\r\n" +
+                //                    $"<script type\"text/javascript\" src=\"rfm.tree.js\"></script>"
+                //    });
+                //}
+
+                htmlDocument.DocumentNode.SelectNodes("//object").ToList().ForEach(objectHTMLNode =>
+                {
+                    switch (objectHTMLNode.GetAttributeValue("type", null))
+                    {
+                        case "text/sitemap":
+                            {
+                                var name = objectHTMLNode.ChildNodes.FirstOrDefault(htmlNode => htmlNode.NodeType == HtmlNodeType.Element && htmlNode.Name == "param" && htmlNode.GetAttributeValue("name", "") == "Name")?.GetAttributeValue("value", "");
+                                var imageNumber = objectHTMLNode.ChildNodes.FirstOrDefault(htmlNode => htmlNode.NodeType == HtmlNodeType.Element && htmlNode.Name == "param" && htmlNode.GetAttributeValue("name", "") == "ImageNumber")?.GetAttributeValue("value", "");
+                                var local = objectHTMLNode.ChildNodes.FirstOrDefault(htmlNode => htmlNode.NodeType == HtmlNodeType.Element && htmlNode.Name == "param" && htmlNode.GetAttributeValue("name", "") == "Local")?.GetAttributeValue("value", "");
+
+                                objectHTMLNode.Name = "a";
+                                objectHTMLNode.Attributes.Add("href", $"javascript:window.alert(window.external);");
+                                objectHTMLNode.InnerHtml = name;
+
+                            }
+                            break;
+                        default:
+                            {
+                                objectHTMLNode.RemoveAllChildren();
+                                objectHTMLNode.Remove();
+                            }
+                            break;
+                    }
+                });
 
                 htmlDocument.Save(destinationHHCFileName);
 
