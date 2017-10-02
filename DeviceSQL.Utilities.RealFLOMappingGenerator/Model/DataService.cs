@@ -9,7 +9,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows;
-using System.Xml;
 
 #endregion
 
@@ -79,24 +78,19 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
             {
                 if (process.WaitForExit(30000))
                 {
-                    using (var jqueryFileStream = File.OpenWrite($"{decompiledCHMFolderName}\\jquery-3.2.1.min.js"))
-                    using (var treeFileStream = File.OpenWrite($"{decompiledCHMFolderName}\\rfm.tree.js"))
+                    using (var styleFileStream = File.Create($"{decompiledCHMFolderName}\\rfm.style.css"))
+                    using (var treeFileStream = File.Create($"{decompiledCHMFolderName}\\rfm.index.js"))
                     {
-                        Application.GetResourceStream(new Uri("Resources/Scripts/jquery-3.2.1.min.js", UriKind.RelativeOrAbsolute)).Stream.CopyTo(jqueryFileStream);
-                        Application.GetResourceStream(new Uri("Resources/Scripts/rfm.tree.js", UriKind.RelativeOrAbsolute)).Stream.CopyTo(treeFileStream);
+                        Application.GetResourceStream(new Uri("Resources/Styles/rfm.style.css", UriKind.RelativeOrAbsolute)).Stream.CopyTo(styleFileStream);
+                        Application.GetResourceStream(new Uri("Resources/Scripts/rfm.index.js", UriKind.RelativeOrAbsolute)).Stream.CopyTo(treeFileStream);
                     }
 
                     foreach (var htmFileInfo in new DirectoryInfo(decompiledCHMFolderName).GetFiles("*.htm", SearchOption.AllDirectories))
                     {
-                        using (var htmFileStream = htmFileInfo.Open(FileMode.Open))
-                        {
-                            var chmHTMLDocument = new HtmlDocument();
+                        var chmHTMLDocument = new HtmlDocument();
 
-                            chmHTMLDocument.Load(htmFileStream, System.Text.Encoding.ASCII);
-                            chmHTMLDocument.DocumentNode.InsertBefore(HtmlNode.CreateNode("<!-- saved from url=(0016)http://localhost -->"), chmHTMLDocument.DocumentNode.FirstChild);
-                            htmFileStream.Position = 0;
-                            chmHTMLDocument.Save(htmFileStream);
-                        }
+                        chmHTMLDocument.Load(htmFileInfo.FullName);
+                        File.WriteAllText(htmFileInfo.FullName, $"<!-- saved from url=(0016)http://localhost -->\r\n{ chmHTMLDocument.DocumentNode.InnerHtml }", System.Text.Encoding.UTF8);
                     }
                 }
                 else
@@ -112,33 +106,31 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
 
             if (hhcFileInfo != null)
             {
-                var htmlDocument = new HtmlDocument();
+                var hhcHTMLDocument = new HtmlDocument();
                 var destinationHHCFileName = $"{hhcFileInfo.DirectoryName}\\rfm.index.html";
+                var defaultSource = "";
 
-                using (var hhcFileStream = hhcFileInfo.Open(FileMode.Open))
-                using (var hhcStreamReader = new StreamReader(hhcFileStream))
-                using (var hhcStreamWriter = new StreamWriter(hhcFileStream))
+                //file:///C:/Users/jason/Desktop/Realflo%20Reference%20Manual.htm
+
+                hhcHTMLDocument.OptionUseIdAttribute = true;
+                hhcHTMLDocument.OptionOutputAsXml = true;
+                hhcHTMLDocument.Load(hhcFileInfo.FullName);
+
+                hhcHTMLDocument.DocumentNode.ChildNodes.Where(node => node.Name == "#comment" && node.InnerText.StartsWith("<!DOCTYPE")).FirstOrDefault()?.Remove();
+
+                if (hhcHTMLDocument.DocumentNode.SelectSingleNode("//head") == null)
                 {
+                    var htmlNode = hhcHTMLDocument.DocumentNode.SelectSingleNode("html");
 
-                    var hhcFileContents = $"<!-- saved from url=(0016)http://localhost -->\r\n{hhcStreamReader.ReadToEnd()}";
-                    hhcFileStream.Position = 0;
-                    hhcStreamWriter.Write(hhcFileContents);
-                    hhcStreamWriter.Flush();
+                    htmlNode.InsertBefore(HtmlNode.CreateNode("<head></head>"), htmlNode.FirstChild);
                 }
 
-                htmlDocument.Load(hhcFileInfo.Open(FileMode.Open, FileAccess.ReadWrite), System.Text.Encoding.ASCII);
+                hhcHTMLDocument.DocumentNode.SelectSingleNode("//head").AppendChild(HtmlNode.CreateNode("<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">"));
+                hhcHTMLDocument.DocumentNode.SelectSingleNode("//head").AppendChild(HtmlNode.CreateNode("<link type=\"text/css\" href=\"rfm.style.css\" rel=\"stylesheet\">"));
+                hhcHTMLDocument.DocumentNode.SelectSingleNode("//head").AppendChild(HtmlNode.CreateNode("<script src=\"jquery.js\"></script>"));
+                hhcHTMLDocument.DocumentNode.SelectSingleNode("//head").AppendChild(HtmlNode.CreateNode("<script src=\"rfm.index.js\"></script>"));
 
-                //if (htmlDocument.DocumentNode.SelectSingleNode("//head") == null)
-                //{
-                //    htmlDocument.DocumentNode.SelectSingleNode("//html").InsertBefore(htmlDocument.DocumentNode.SelectSingleNode("//html") //.AppendChild(new HtmlNode(HtmlNodeType.Element, htmlDocument, 0)
-                //    {
-                //        Name = "head",
-                //        InnerHtml = $"<script type\"text/javascript\" src=\"jquery-3.2.1.min.js\"></script>\r\n" +
-                //                    $"<script type\"text/javascript\" src=\"rfm.tree.js\"></script>"
-                //    });
-                //}
-
-                htmlDocument.DocumentNode.SelectNodes("//object").ToList().ForEach(objectHTMLNode =>
+                foreach (var objectHTMLNode in hhcHTMLDocument.DocumentNode.SelectNodes("//object"))
                 {
                     switch (objectHTMLNode.GetAttributeValue("type", null))
                     {
@@ -149,9 +141,14 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
                                 var local = objectHTMLNode.ChildNodes.FirstOrDefault(htmlNode => htmlNode.NodeType == HtmlNodeType.Element && htmlNode.Name == "param" && htmlNode.GetAttributeValue("name", "") == "Local")?.GetAttributeValue("value", "");
 
                                 objectHTMLNode.Name = "a";
-                                objectHTMLNode.Attributes.Add("href", $"javascript:window.alert(window.external);");
                                 objectHTMLNode.InnerHtml = name;
+                                objectHTMLNode.Attributes.Add("href", $"#_{local}_");
+                                objectHTMLNode.Attributes.Add("onclick", $"javascript: window.external.NavigateMain('{chmFolderName.Replace("\\","\\\\")}\\\\{local}');");
 
+                                if(defaultSource == "")
+                                {
+                                    defaultSource = $"{chmFolderName}\\{local}";
+                                }
                             }
                             break;
                         default:
@@ -161,9 +158,11 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.Model
                             }
                             break;
                     }
-                });
+                }
 
-                htmlDocument.Save(destinationHHCFileName);
+                hhcHTMLDocument.DocumentNode.SelectSingleNode("//head").AppendChild(HtmlNode.CreateNode($"<script>var defaultSource = \"{defaultSource.Replace("\\","\\\\")}\";</script>"));
+
+                File.WriteAllText(destinationHHCFileName, $"<!-- saved from url=(0016)http://localhost -->\r\n<!DOCTYPE html>\r\n{ hhcHTMLDocument.DocumentNode.InnerHtml }", System.Text.Encoding.UTF8);
 
                 return destinationHHCFileName;
             }

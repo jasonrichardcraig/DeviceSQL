@@ -1,0 +1,84 @@
+﻿body, a {
+    color: #3B4C56;
+    font-family: sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+#logo {
+    width: 505px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#pgtitle {
+    margin: 0px 0px 20px;
+    font-size: 18pt;
+}
+
+a {
+    cursor: pointer;
+}
+
+.tree ul {
+    list-style: none outside none;
+}
+
+.tree li a {
+    line-height: 25px;
+}
+
+.tree > ul > li > a {
+    color: #3B4C56;
+    display: block;
+    font-weight: normal;
+    position: relative;
+    text-decoration: none;
+}
+
+.tree li.parent > a {
+    padding: 0 0 0 28px;
+}
+
+    .tree li.parent > a:before {
+        background-image: url("../images/plus_minus_icons.png");
+        background-position: 25px center;
+        content: "";
+        display: block;
+        height: 21px;
+        left: 0;
+        position: absolute;
+        top: 2px;
+        vertical-align: middle;
+        width: 23px;
+    }
+
+.tree ul li.active > a:before {
+    background-position: 0 center;
+}
+
+.tree ul li ul {
+    border-left: 1px solid #D9DADB;
+    display: none;
+    margin: 0 0 0 12px;
+    overflow: hidden;
+    padding: 0 0 0 25px;
+}
+
+    .tree ul li ul li {
+        position: relative;
+    }
+
+        .tree ul li ul li:before {
+            border-bottom: 1px dashed #E2E2E3;
+            content: "";
+            left: -20px;
+            position: absolute;
+            top: 12px;
+            width: 15px;
+        }
+
+#wrapper {
+    margin: 0 auto;
+    width: 300px;
+}

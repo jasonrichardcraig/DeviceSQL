@@ -330,8 +330,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="RealFLO.ico" />
-    <Resource Include="Resources\Scripts\rfm.tree.js" />
-    <Resource Include="Resources\Scripts\jquery-3.2.1.min.js" />
+    <Resource Include="Resources\Styles\rfm.style.css" />
+    <Resource Include="Resources\Scripts\rfm.index.js" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

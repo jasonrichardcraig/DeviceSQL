@@ -618,7 +618,6 @@ namespace DeviceSQL.Utilities.RealFLOMappingGenerator.ViewModel
                     if (indexHTMLDocumentFileName != null)
                     {   
                         NavigateHelpDocumentWebBrowserCommand.Execute(indexHTMLDocumentFileName);
-                        NavigateMainWebBrowserCommand.Execute($"{currentCHMFolderName}\\aga-11-calculation-status-codes.htm");
                     }
                     else
                     {
