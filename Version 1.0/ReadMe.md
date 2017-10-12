@@ -1,4 +1,4 @@
-### The script installation method requires Microsoft SQL Server 2008 (or Higher), the file restore method requires Microsoft SQL 2016 (or higher) due to file versioning. Device SQL works with all SQL Server editions (Express, Standard & Datacenter) an runs on Microsoft Windows Azure, on premise and any device capable of running Windows 10.
+### The script installation method requires Microsoft SQL Server 2008 (or Higher), the file restore method requires Microsoft SQL 2016 (or higher) due to file versioning. Device SQL works with all SQL Server editions (Express, Standard & Datacenter) and runs on Microsoft Windows Azure, on premise and any device capable of running Windows 10.
 
 #### To create an ASYMMETRIC KEY, download [DeviceSQL.dll](https://github.com/jasonrichardcraig/DeviceSQL/raw/master/Version%201.0/DeviceSQL.dll) and copy it to 'C:\DLLTemp\DeviceSQL.dll' or other path your SQL Server process has access to and run the script below.
 
