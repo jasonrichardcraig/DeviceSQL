@@ -13,7 +13,7 @@ using System.Threading;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS
+namespace DeviceSQL.Device.MODBUS.IO
 {
     public class Transport : ITransport
     {

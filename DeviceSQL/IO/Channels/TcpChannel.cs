@@ -17,11 +17,20 @@ namespace DeviceSQL.IO.Channels
 
         private string name = "";
         private bool tracingEnabled = false;
-        private TcpClient tcpClient = new TcpClient();
+        protected TcpClient tcpClient = new TcpClient();
+        private object lockObject = new object();
 
         #endregion
 
         #region Properties
+
+        public object LockObject
+        {
+            get
+            {
+                return lockObject;
+            }
+        }
 
         public string Name
         {

@@ -22,7 +22,6 @@ namespace DeviceSQL.Device.ROC.IO
         #region Fields
 
         private bool loggingEnabled = false;
-        private object channelLock = new object();
 
         #endregion
 
@@ -106,6 +105,7 @@ namespace DeviceSQL.Device.ROC.IO
             IROCResponseMessage responseMessage = default(TResponseMessage);
             int attempt = 0;
             bool success = false;
+            object channelLock = Channel.LockObject;
             lock (channelLock)
             {
                 do

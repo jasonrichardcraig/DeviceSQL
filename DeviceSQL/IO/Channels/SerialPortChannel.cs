@@ -22,10 +22,19 @@ namespace DeviceSQL.IO.Channels
         private bool tracingEnabled = false;
         private SerialPort serialPort = new SerialPort();
         private double numberOfInterFrameSpacingCharacters = 3.5;
+        private object lockObject = new object();
 
         #endregion
 
         #region Properties
+
+        public object LockObject
+        {
+            get
+            {
+                return lockObject;
+            }
+        }
 
         public string Name
         {

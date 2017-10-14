@@ -1,6 +1,7 @@
 ﻿#region Imported Types
 
 using DeviceSQL.Device.MODBUS.Data;
+using DeviceSQL.Device.MODBUS.IO;
 using DeviceSQL.Device.MODBUS.Message;
 using DeviceSQL.IO.Channels;
 using DeviceSQL.IO.Channels.Transport;
@@ -83,7 +84,7 @@ namespace DeviceSQL.Device.MODBUS
 
         public MODBUSMaster(IChannel channel)
         {
-            this.transport = new MODBUS.Transport(channel);
+            this.transport = new Transport(channel);
         }
 
         #endregion

@@ -8,6 +8,7 @@ namespace DeviceSQL.IO.Channels
 {
     public interface IChannel : IDisposable
     {
+        object LockObject { get; }
         string Name { get; set; }
         bool TracingEnabled { get; set; }
         string ConnectionString { get; }

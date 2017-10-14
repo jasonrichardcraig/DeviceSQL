@@ -68,7 +68,6 @@
     <Folder Include="Device\ROC" />
     <Folder Include="Device\MODBUS" />
     <Folder Include="Device\ROC\Data" />
-    <Folder Include="Device\ROC\Transport" />
     <Folder Include="IO\Channels\Transport" />
     <Folder Include="Device\MODBUS\Data" />
     <Folder Include="Device\MODBUS\Message" />
@@ -96,6 +95,10 @@
     <Folder Include="Tables" />
     <Folder Include="Tables\ROCMaster" />
     <Folder Include="Tables\FlowSQL" />
+    <Folder Include="Device\ROC\IO" />
+    <Folder Include="Device\ROC\IO\Transport" />
+    <Folder Include="Device\Modbus\IO" />
+    <Folder Include="Device\Modbus\IO\Transport" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -140,7 +143,6 @@
     <Compile Include="Device\ROC\Data\UInt16Parameter.cs" />
     <Compile Include="Device\ROC\Data\UInt32Parameter.cs" />
     <Compile Include="Device\ROC\Crc16.cs" />
-    <Compile Include="Device\ROC\Transport\Transport.cs" />
     <Compile Include="IO\Channels\Transport\ITransport.cs" />
     <Compile Include="Device\Modbus\Device.cs" />
     <Compile Include="Device\Modbus\ModbusMaster.cs" />
@@ -241,7 +243,6 @@
     <Compile Include="Device\ROC\Message\RocMessageFactory.cs" />
     <Compile Include="Device\IMessage.cs" />
     <Compile Include="Device\IMaster.cs" />
-    <Compile Include="Device\Modbus\Transport.cs" />
     <Compile Include="Device\ROC\FST\Instructions\AddInstruction.cs" />
     <Compile Include="Device\ROC\FST\Instructions\InstructionBase.cs" />
     <Compile Include="Device\ROC\FST\Instructions\InstructionCategory.cs" />
@@ -373,6 +374,11 @@
     <Compile Include="Functions\ChannelManager\EnableChannelTracing.cs" />
     <Compile Include="Functions\ChannelManager\DisableChannelTracing.cs" />
     <Compile Include="IO\Channels\ChannelTraceEventArgs.cs" />
+    <Compile Include="IO\Channels\SerialPortMuxChannel.cs" />
+    <Compile Include="IO\Channels\IMuxChannel.cs" />
+    <Compile Include="IO\Channels\TcpMuxChannel.cs" />
+    <Compile Include="Device\ROC\IO\Transport\Transport.cs" />
+    <Compile Include="Device\Modbus\IO\Transport\Transport.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
