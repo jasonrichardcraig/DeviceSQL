@@ -7,3 +7,6 @@
 
 
 #### Support (Mountain Time): 403-618-6945 | Jason.Craig@Outlook.com | Skype - JasonRichardCraig
+
+#### Donations (LTC): LW5vG1CGbDeVWMC3AoPVPKKK4hKgbdC6rF
+
