@@ -1,0 +1,284 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeviceSQL.ControlPanel</RootNamespace>
+    <AssemblyName>DeviceSQL.ControlPanel</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>devicesql_controlpanel_icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls">
+      <HintPath>..\lib\RCWPF\2017.3.1018.45.NoXaml\Telerik.Windows.Controls.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Diagrams">
+      <HintPath>..\lib\RCWPF\2017.3.1018.45.NoXaml\Telerik.Windows.Controls.Diagrams.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Docking">
+      <HintPath>..\lib\RCWPF\2017.3.1018.45.NoXaml\Telerik.Windows.Controls.Docking.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Controls.Navigation">
+      <HintPath>..\lib\RCWPF\2017.3.1018.45.NoXaml\Telerik.Windows.Controls.Navigation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Data">
+      <HintPath>..\lib\RCWPF\2017.3.1018.45.NoXaml\Telerik.Windows.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Diagrams.Core">
+      <HintPath>..\lib\RCWPF\2017.3.1018.45.NoXaml\Telerik.Windows.Diagrams.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Telerik.Windows.Themes.Office2016Touch">
+      <HintPath>..\lib\RCWPF\2017.3.1018.45.NoXaml\Telerik.Windows.Themes.Office2016Touch.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\BooleanRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\BooleanRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\CoilRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\CoilRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\DiscreteInputRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\DiscreteInputRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\EventArchiveRecord.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\EventArchiveRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\FloatRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\FloatRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\HistoryArchiveRecord.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\HistoryArchiveRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\HoldingRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\HoldingRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\IModbusRegisterData.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\IModbusRegisterData.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\InputRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\InputRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\LongRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\LongRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\ModbusAddress.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\ModbusAddress.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\ModbusRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\ModbusRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\ShortRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\ShortRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\Data\StringRegister.cs">
+      <Link>SqlClrTypes\Devices\Modbus\Data\StringRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\Modbus\ModbusConverter.cs">
+      <Link>SqlClrTypes\Devices\Modbus\ModbusConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Ac10Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Ac10Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Ac12Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Ac12Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Ac20Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Ac20Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Ac30Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Ac30Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Ac3Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Ac3Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Ac40Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Ac40Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Ac7Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Ac7Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\AlarmRecord.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\AlarmRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\ArchiveInfo.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\ArchiveInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\AuditLogRecord.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\AuditLogRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\BinParameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\BinParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\DoubleParameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\DoubleParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\EventRecord.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\EventRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\FlpParameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\FlpParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\FstCodeChunk.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\FstCodeChunk.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\FstHeaderInfo.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\FstHeaderInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\HistoryPointConfiguration.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\HistoryPointConfiguration.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\HistoryRecord.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\HistoryRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Int16Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Int16Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Int32Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Int32Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Int8Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Int8Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\IRocParameterData.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\IRocParameterData.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\RocPlusAlarmRecord.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\RocPlusAlarmRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\RocPlusEventRecord.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\RocPlusEventRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\RocPlusHistoryRecord.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\RocPlusHistoryRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\TimeParameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\TimeParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\Tlp.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\Tlp.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\TlpParameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\TlpParameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\UInt16Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\UInt16Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\UInt32Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\UInt32Parameter.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL\Device\ROC\Data\UInt8Parameter.cs">
+      <Link>SqlClrTypes\Devices\ROC\Data\UInt8Parameter.cs</Link>
+    </Compile>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Licenses.licx" />
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="devicesql_controlpanel_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DeviceSQL_ControlPanel_64x64.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
