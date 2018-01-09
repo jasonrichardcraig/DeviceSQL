@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Utilities.RealFLO
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.ControlPanel", "DeviceSQL.ControlPanel\DeviceSQL.ControlPanel.csproj", "{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DeviceSQL.ControlPanel.Setup", "DeviceSQL.ControlPanel.Setup\DeviceSQL.ControlPanel.Setup.vdproj", "{776B9732-712C-4416-8D12-828717622A32}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Release|Any CPU.ActiveCfg = Release|x86
 		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Release|x86.ActiveCfg = Release|x86
 		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Release|x86.Build.0 = Release|x86
+		{776B9732-712C-4416-8D12-828717622A32}.Debug|Any CPU.ActiveCfg = Debug
+		{776B9732-712C-4416-8D12-828717622A32}.Debug|x86.ActiveCfg = Debug
+		{776B9732-712C-4416-8D12-828717622A32}.Release|Any CPU.ActiveCfg = Release
+		{776B9732-712C-4416-8D12-828717622A32}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
