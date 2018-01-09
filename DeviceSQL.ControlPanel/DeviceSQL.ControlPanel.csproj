@@ -52,6 +52,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -100,20 +101,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Dialog\ConnectToServerDialog.xaml.cs">
+    <Compile Include="Dialogs\ConnectToServerDialog.xaml.cs">
       <DependentUpon>ConnectToServerDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\DataService.cs" />
-    <Compile Include="ViewModel\ChannelTraceViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\ModbusDeviceViewModel.cs" />
-    <Compile Include="ViewModel\RocDeviceViewModel.cs" />
-    <Compile Include="ViewModel\SerialPortChannelViewModel.cs" />
-    <Compile Include="ViewModel\SerialPortMuxChannelViewModel.cs" />
-    <Compile Include="ViewModel\TcpChannelViewModel.cs" />
-    <Compile Include="ViewModel\TcpMuxChannelViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelLocator.cs" />
-    <Page Include="Dialog\ConnectToServerDialog.xaml">
+    <Compile Include="Models\DataService.cs" />
+    <Compile Include="Security\SecurePasswordManager.cs" />
+    <Compile Include="ViewModels\ChannelTraceViewModel.cs" />
+    <Compile Include="ViewModels\ConnectToServerViewModel.cs" />
+    <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\ModbusDeviceViewModel.cs" />
+    <Compile Include="ViewModels\RocDeviceViewModel.cs" />
+    <Compile Include="ViewModels\SerialPortChannelViewModel.cs" />
+    <Compile Include="ViewModels\SerialPortMuxChannelViewModel.cs" />
+    <Compile Include="ViewModels\TcpChannelViewModel.cs" />
+    <Compile Include="ViewModels\TcpMuxChannelViewModel.cs" />
+    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Page Include="Dialogs\ConnectToServerDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -308,6 +311,9 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="TemplateSelector\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DeviceSQL_ControlPanelLoginSplash.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

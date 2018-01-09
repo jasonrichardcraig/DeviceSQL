@@ -6,7 +6,7 @@ using Microsoft.Practices.ServiceLocation;
 
 #endregion
 
-namespace DeviceSQL.ControlPanel.ViewModel
+namespace DeviceSQL.ControlPanel.ViewModels
 {
     public class ViewModelLocator
     {
