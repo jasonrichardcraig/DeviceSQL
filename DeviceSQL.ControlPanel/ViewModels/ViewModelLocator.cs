@@ -21,6 +21,15 @@ namespace DeviceSQL.ControlPanel.ViewModels
             }
         }
 
+        public ConnectToServerViewModel ConnectToServer
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<ConnectToServerViewModel>();
+            }
+        }
+
+
         #endregion
 
         #region Constructor
@@ -29,11 +38,9 @@ namespace DeviceSQL.ControlPanel.ViewModels
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
 
-
             SimpleIoc.Default.Register<DataService>();
-
-
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<ConnectToServerViewModel>();
         }
 
         #endregion

@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeviceSQL.ControlPanel.Dialogs"
         mc:Ignorable="d"
-        Title="Connect to Server" Height="320" Width="400" Icon="/DeviceSQL.ControlPanel;component/devicesql_controlpanel_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
-    <Grid>
+        Title="Connect to Server" Icon="/DeviceSQL.ControlPanel;component/devicesql_controlpanel_icon.ico" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" SizeToContent="WidthAndHeight">
+    <Grid DataContext="{Binding Source={StaticResource Locator}, Path=ConnectToServer}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -15,9 +15,9 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
-            <Image Source="/DeviceSQL.ControlPanel;component/Resources/Images/DeviceSQL_ControlPanelLoginSplash.png" Stretch="Fill"/>
+            <Image Source="/DeviceSQL.ControlPanel;component/Resources/Images/DeviceSQL_ControlPanelLoginSplash.png" Width="380" Height="98"/>
         </Grid>
         <Grid Grid.Row="1" Margin="4">
             <Grid.ColumnDefinitions>
