@@ -34,16 +34,24 @@
             this.testButton = new System.Windows.Forms.Button();
             this.installButton = new System.Windows.Forms.Button();
             this.authenticationTypePanel = new System.Windows.Forms.Panel();
-            this.windowsAutenticationRadioButton = new System.Windows.Forms.RadioButton();
             this.sqlAuthenticationRadioButton = new System.Windows.Forms.RadioButton();
+            this.windowsAutenticationRadioButton = new System.Windows.Forms.RadioButton();
             this.cancelButton = new System.Windows.Forms.Button();
             this.userNameLabel = new System.Windows.Forms.Label();
             this.userNameTextBox = new System.Windows.Forms.TextBox();
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.passwordLabel = new System.Windows.Forms.Label();
             this.buttonPanel = new System.Windows.Forms.Panel();
+            this.asymmetricKeyPanel = new System.Windows.Forms.Panel();
+            this.asymmetricKeyFolderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
+            this.asymmetricKeyNoteLabel = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.asymmetricKeyTextBox = new System.Windows.Forms.TextBox();
+            this.openAssymetricKeyFolderButton = new System.Windows.Forms.Button();
             this.authenticationTypePanel.SuspendLayout();
             this.buttonPanel.SuspendLayout();
+            this.asymmetricKeyPanel.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // databaseInstanceComboBox
@@ -75,6 +83,7 @@
             // 
             // installButton
             // 
+            this.installButton.Enabled = false;
             this.installButton.Location = new System.Drawing.Point(165, 3);
             this.installButton.Name = "installButton";
             this.installButton.Size = new System.Drawing.Size(75, 23);
@@ -92,6 +101,17 @@
             this.authenticationTypePanel.Size = new System.Drawing.Size(272, 25);
             this.authenticationTypePanel.TabIndex = 4;
             // 
+            // sqlAuthenticationRadioButton
+            // 
+            this.sqlAuthenticationRadioButton.AutoSize = true;
+            this.sqlAuthenticationRadioButton.Location = new System.Drawing.Point(149, 3);
+            this.sqlAuthenticationRadioButton.Name = "sqlAuthenticationRadioButton";
+            this.sqlAuthenticationRadioButton.Size = new System.Drawing.Size(117, 17);
+            this.sqlAuthenticationRadioButton.TabIndex = 1;
+            this.sqlAuthenticationRadioButton.Text = "SQL Authentication";
+            this.sqlAuthenticationRadioButton.UseVisualStyleBackColor = true;
+            this.sqlAuthenticationRadioButton.CheckedChanged += new System.EventHandler(this.sqlAuthenticationRadioButton_CheckedChanged);
+            // 
             // windowsAutenticationRadioButton
             // 
             this.windowsAutenticationRadioButton.AutoSize = true;
@@ -105,26 +125,15 @@
             this.windowsAutenticationRadioButton.UseVisualStyleBackColor = true;
             this.windowsAutenticationRadioButton.CheckedChanged += new System.EventHandler(this.windowsAutenticationRadioButton_CheckedChanged);
             // 
-            // sqlAuthenticationRadioButton
-            // 
-            this.sqlAuthenticationRadioButton.AutoSize = true;
-            this.sqlAuthenticationRadioButton.Location = new System.Drawing.Point(149, 3);
-            this.sqlAuthenticationRadioButton.Name = "sqlAuthenticationRadioButton";
-            this.sqlAuthenticationRadioButton.Size = new System.Drawing.Size(117, 17);
-            this.sqlAuthenticationRadioButton.TabIndex = 1;
-            this.sqlAuthenticationRadioButton.Text = "SQL Authentication";
-            this.sqlAuthenticationRadioButton.UseVisualStyleBackColor = true;
-            this.sqlAuthenticationRadioButton.CheckedChanged += new System.EventHandler(this.sqlAuthenticationRadioButton_CheckedChanged);
-            // 
             // cancelButton
             // 
+            this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.cancelButton.Location = new System.Drawing.Point(84, 3);
             this.cancelButton.Name = "cancelButton";
             this.cancelButton.Size = new System.Drawing.Size(75, 23);
             this.cancelButton.TabIndex = 5;
             this.cancelButton.Text = "Cancel";
             this.cancelButton.UseVisualStyleBackColor = true;
-            this.cancelButton.Click += new System.EventHandler(this.cancelButton_Click);
             // 
             // userNameLabel
             // 
@@ -167,17 +176,71 @@
             this.buttonPanel.Controls.Add(this.installButton);
             this.buttonPanel.Controls.Add(this.testButton);
             this.buttonPanel.Controls.Add(this.cancelButton);
-            this.buttonPanel.Location = new System.Drawing.Point(95, 156);
+            this.buttonPanel.Location = new System.Drawing.Point(142, 224);
             this.buttonPanel.Name = "buttonPanel";
             this.buttonPanel.Size = new System.Drawing.Size(246, 29);
             this.buttonPanel.TabIndex = 10;
+            // 
+            // asymmetricKeyPanel
+            // 
+            this.asymmetricKeyPanel.Controls.Add(this.groupBox1);
+            this.asymmetricKeyPanel.Controls.Add(this.asymmetricKeyNoteLabel);
+            this.asymmetricKeyPanel.Location = new System.Drawing.Point(94, 134);
+            this.asymmetricKeyPanel.Name = "asymmetricKeyPanel";
+            this.asymmetricKeyPanel.Size = new System.Drawing.Size(380, 79);
+            this.asymmetricKeyPanel.TabIndex = 11;
+            // 
+            // asymmetricKeyFolderBrowserDialog
+            // 
+            this.asymmetricKeyFolderBrowserDialog.Description = "Select Asymmetric Key Folder";
+            this.asymmetricKeyFolderBrowserDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
+            this.asymmetricKeyFolderBrowserDialog.SelectedPath = "C:\\DLLTemp";
+            // 
+            // asymmetricKeyNoteLabel
+            // 
+            this.asymmetricKeyNoteLabel.AutoSize = true;
+            this.asymmetricKeyNoteLabel.Location = new System.Drawing.Point(24, 57);
+            this.asymmetricKeyNoteLabel.Name = "asymmetricKeyNoteLabel";
+            this.asymmetricKeyNoteLabel.Size = new System.Drawing.Size(289, 13);
+            this.asymmetricKeyNoteLabel.TabIndex = 0;
+            this.asymmetricKeyNoteLabel.Text = "* This folder must be accessible by the SQL Server instance";
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.openAssymetricKeyFolderButton);
+            this.groupBox1.Controls.Add(this.asymmetricKeyTextBox);
+            this.groupBox1.Location = new System.Drawing.Point(21, 4);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(331, 50);
+            this.groupBox1.TabIndex = 2;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Asymmetric Key Folder";
+            // 
+            // asymmetricKeyTextBox
+            // 
+            this.asymmetricKeyTextBox.Location = new System.Drawing.Point(6, 19);
+            this.asymmetricKeyTextBox.Name = "asymmetricKeyTextBox";
+            this.asymmetricKeyTextBox.ReadOnly = true;
+            this.asymmetricKeyTextBox.Size = new System.Drawing.Size(272, 20);
+            this.asymmetricKeyTextBox.TabIndex = 2;
+            // 
+            // openAssymetricKeyFolderButton
+            // 
+            this.openAssymetricKeyFolderButton.Location = new System.Drawing.Point(284, 19);
+            this.openAssymetricKeyFolderButton.Name = "openAssymetricKeyFolderButton";
+            this.openAssymetricKeyFolderButton.Size = new System.Drawing.Size(40, 20);
+            this.openAssymetricKeyFolderButton.TabIndex = 3;
+            this.openAssymetricKeyFolderButton.Text = "···";
+            this.openAssymetricKeyFolderButton.UseVisualStyleBackColor = true;
             // 
             // SelectDatabaseServerDialog
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(436, 212);
+            this.CancelButton = this.cancelButton;
+            this.ClientSize = new System.Drawing.Size(507, 263);
             this.ControlBox = false;
+            this.Controls.Add(this.asymmetricKeyPanel);
             this.Controls.Add(this.buttonPanel);
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.passwordLabel);
@@ -194,6 +257,10 @@
             this.authenticationTypePanel.ResumeLayout(false);
             this.authenticationTypePanel.PerformLayout();
             this.buttonPanel.ResumeLayout(false);
+            this.asymmetricKeyPanel.ResumeLayout(false);
+            this.asymmetricKeyPanel.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -213,5 +280,11 @@
         private System.Windows.Forms.TextBox passwordTextBox;
         private System.Windows.Forms.Label passwordLabel;
         private System.Windows.Forms.Panel buttonPanel;
+        private System.Windows.Forms.Panel asymmetricKeyPanel;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button openAssymetricKeyFolderButton;
+        private System.Windows.Forms.TextBox asymmetricKeyTextBox;
+        private System.Windows.Forms.Label asymmetricKeyNoteLabel;
+        private System.Windows.Forms.FolderBrowserDialog asymmetricKeyFolderBrowserDialog;
     }
 }

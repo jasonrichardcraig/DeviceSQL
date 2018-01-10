@@ -3,6 +3,8 @@
 using System;
 using System.Data;
 using System.Data.Sql;
+using System.Data.SqlClient;
+using System.IO;
 using System.Windows.Forms;
 
 #endregion
@@ -54,12 +56,53 @@ namespace DeviceSQL.Installer.Dialogs
 
         private void installButton_Click(object sender, EventArgs e)
         {
+            if (!Directory.Exists(asymmetricKeyTextBox.Text))
+            {
+                MessageBox.Show($"Asymmetric key folder does not exist", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            else
+            {
+                try
+                {
+                    File.WriteAllBytes($"{asymmetricKeyTextBox.Text}\\DeviceSQL.dll", Properties.Resources.DeviceSQL);
+                }
+                catch(Exception ex)
+                {
+                    MessageBox.Show($"Error copying Asymmetric key file to specified path: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }                
+            }
+
+            try
+            {
+                using (var sqlConnection = new SqlConnection(BuildConnectionString()))
+                {
+                    var securityScriptText = Properties.Resources.DeviceSQL_Install_Script_01.Replace("##_ASYMMETRIC_KEY_EXECUTABLE_FILE#", $"{asymmetricKeyTextBox.Text}\\DeviceSQL.dll");
+                    var objectsScriptText = Properties.Resources.DeviceSQL_Install_Script_02;
+
+                    sqlConnection.Open();
+
+                    var sqlTransaction = sqlConnection.BeginTransaction();
+
+                    
+
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error installing database objects: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
 
         }
 
         private void testButton_Click(object sender, EventArgs e)
         {
-
+            installButton.Enabled = BuildConnectionString() != null;
         }
 
         private void sqlAuthenticationRadioButton_CheckedChanged(object sender, EventArgs e)
@@ -84,19 +127,13 @@ namespace DeviceSQL.Installer.Dialogs
             }
         }
 
-        private void cancelButton_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-        }
-
-
         private void userNameTextBox_TextChanged(object sender, EventArgs e)
         {
             if (windowsAutenticationRadioButton.Checked && databaseInstanceComboBox.Text?.Length > 0)
             {
                 testButton.Enabled = true;
             }
-            else if(sqlAuthenticationRadioButton.Checked && databaseInstanceComboBox.Text?.Length > 0)
+            else if (sqlAuthenticationRadioButton.Checked && databaseInstanceComboBox.Text?.Length > 0)
             {
                 testButton.Enabled = true;
             }
@@ -104,6 +141,50 @@ namespace DeviceSQL.Installer.Dialogs
             {
                 testButton.Enabled = false;
             }
+        }
+
+        #endregion
+
+        #region Helper Methods
+
+        public string BuildConnectionString()
+        {
+            try
+            {
+                using (var sqlConnection = new SqlConnection())
+                {
+                    var sqlConnectionStringBuilder = new SqlConnectionStringBuilder();
+
+                    sqlConnectionStringBuilder.InitialCatalog = "master";
+                    sqlConnectionStringBuilder.DataSource = databaseInstanceComboBox.Text;
+
+                    if (windowsAutenticationRadioButton.Checked)
+                    {
+                        sqlConnectionStringBuilder.IntegratedSecurity = true;
+                        sqlConnectionStringBuilder.Authentication = SqlAuthenticationMethod.NotSpecified;
+                    }
+                    else
+                    {
+                        sqlConnectionStringBuilder.IntegratedSecurity = false;
+                        sqlConnectionStringBuilder.Authentication = SqlAuthenticationMethod.SqlPassword;
+                        sqlConnectionStringBuilder.UserID = userNameTextBox.Text;
+                        sqlConnectionStringBuilder.Password = passwordTextBox.Text;
+                    }
+
+                    sqlConnection.ConnectionString = sqlConnectionStringBuilder.ToString();
+
+                    sqlConnection.Open();
+
+                    return sqlConnection.ConnectionString;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                installButton.Enabled = false;
+                MessageBox.Show($"Error testing database connection: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return null;
         }
 
         #endregion
