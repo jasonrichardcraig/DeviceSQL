@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.ControlPanel", "D
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DeviceSQL.ControlPanel.Setup", "DeviceSQL.ControlPanel.Setup\DeviceSQL.ControlPanel.Setup.vdproj", "{776B9732-712C-4416-8D12-828717622A32}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Installer", "DeviceSQL.Installer\DeviceSQL.Installer.csproj", "{7883CE1B-9B87-4195-806D-2739318FA52A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,14 @@ Global
 		{776B9732-712C-4416-8D12-828717622A32}.Debug|x86.ActiveCfg = Debug
 		{776B9732-712C-4416-8D12-828717622A32}.Release|Any CPU.ActiveCfg = Release
 		{776B9732-712C-4416-8D12-828717622A32}.Release|x86.ActiveCfg = Release
+		{7883CE1B-9B87-4195-806D-2739318FA52A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7883CE1B-9B87-4195-806D-2739318FA52A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7883CE1B-9B87-4195-806D-2739318FA52A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7883CE1B-9B87-4195-806D-2739318FA52A}.Debug|x86.Build.0 = Debug|Any CPU
+		{7883CE1B-9B87-4195-806D-2739318FA52A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7883CE1B-9B87-4195-806D-2739318FA52A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7883CE1B-9B87-4195-806D-2739318FA52A}.Release|x86.ActiveCfg = Release|Any CPU
+		{7883CE1B-9B87-4195-806D-2739318FA52A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
