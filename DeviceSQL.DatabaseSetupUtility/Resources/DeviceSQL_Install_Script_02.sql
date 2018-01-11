@@ -1,8 +1,3 @@
-CREATE DATABASE [DeviceSQL] 
-
-GO 
-USE [DeviceSQL] 
-
 PRINT N'Creating [ChannelManager]...';
 
 

@@ -1,10 +1,13 @@
 ﻿#region Imported Types
 
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.Sql;
 using System.Data.SqlClient;
 using System.IO;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 #endregion
@@ -98,17 +101,64 @@ namespace DeviceSQL.DatabaseSetupUtility
                 {
                     sqlConnection.Open();
 
-                    var sqlTransaction = sqlConnection.BeginTransaction();
+                    var sqlTransaction = (SqlTransaction)null;
 
-                    (new SqlCommand(Properties.Resources.DeviceSQL_Install_Script_01.Replace("##_ASYMMETRIC_KEY_EXECUTABLE_FILE#", $"{asymmetricKeyTextBox.Text}\\DeviceSQL.dll"), sqlConnection, sqlTransaction)).ExecuteNonQuery();
+                    try
+                    {
 
-                    (new SqlCommand(Properties.Resources.DeviceSQL_Install_Script_02, sqlConnection, sqlTransaction)).ExecuteNonQuery();
+                        foreach (var sqlStatment in SplitSqlStatements(Properties.Resources.DeviceSQL_Install_Script_01.Replace("##_ASYMMETRIC_KEY_EXECUTABLE_FILE#", $"{asymmetricKeyTextBox.Text}\\DeviceSQL.dll")))
+                        {
+                            using (var sqlcommand = new SqlCommand(sqlStatment, sqlConnection))
+                            {
+                                try
+                                {
+                                    sqlcommand.ExecuteNonQuery();
+                                }
+                                catch(Exception ex)
+                                {
+                                    if(MessageBox.Show($"Error executing SQL statement: {ex.Message}.\r\nContinue?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes)
+                                    {
+                                        throw ex;
+                                    }
+                                }
+                            }
+                        }
 
-                    sqlTransaction.Commit();
+                        sqlConnection.ChangeDatabase("DeviceSQL");
+
+                        sqlTransaction = sqlConnection.BeginTransaction();
+
+                        foreach (var sqlStatment in SplitSqlStatements(Properties.Resources.DeviceSQL_Install_Script_02))
+                        {
+                            using (var sqlcommand = new SqlCommand(sqlStatment, sqlConnection, sqlTransaction))
+                            {
+                                try
+                                {
+                                    sqlcommand.ExecuteNonQuery();
+                                }
+                                catch (Exception ex)
+                                {
+                                    if (MessageBox.Show($"Error executing SQL statement: {ex.Message}.\r\nContinue?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Error) != DialogResult.Yes)
+                                    {
+                                        throw ex;
+                                    }
+                                }
+                            }
+                        }
+
+                        sqlTransaction.Commit();
+
+                        DialogResult = DialogResult.OK;
+
+                        Close();
+
+                    }
+                    catch (Exception ex)
+                    {
+                        sqlTransaction.Rollback();
+                        throw ex;
+                    }
                 }
-
-                DialogResult = DialogResult.OK;
-                Close();
             }
             catch (Exception ex)
             {
@@ -166,6 +216,15 @@ namespace DeviceSQL.DatabaseSetupUtility
             }
         }
 
+        private void openAssymetricKeyFolderButton_Click(object sender, EventArgs e)
+        {
+            if (asymmetricKeyFolderBrowserDialog.ShowDialog() == DialogResult.OK)
+            {
+                asymmetricKeyTextBox.Text = asymmetricKeyFolderBrowserDialog.SelectedPath;
+            }
+
+        }
+
         #endregion
 
         #region Helper Methods
@@ -210,13 +269,20 @@ namespace DeviceSQL.DatabaseSetupUtility
             return null;
         }
 
-        private void openAssymetricKeyFolderButton_Click(object sender, EventArgs e)
+        private static IEnumerable<string> SplitSqlStatements(string sqlScript)
         {
-            if (asymmetricKeyFolderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
-                asymmetricKeyTextBox.Text = asymmetricKeyFolderBrowserDialog.SelectedPath;
-            }
+            // Split by "GO" statements
+            var statements = Regex.Split(
+                    sqlScript,
+                    @"^[\t\r\n]*GO[\t\r\n]*\d*[\t\r\n]*(?:--.*)?$",
+                    RegexOptions.Multiline |
+                    RegexOptions.IgnorePatternWhitespace |
+                    RegexOptions.IgnoreCase);
 
+            // Remove empties, trim, and return
+            return statements
+                .Where(x => !string.IsNullOrWhiteSpace(x))
+                .Select(x => x.Trim(' ', '\r', '\n'));
         }
 
         #endregion
