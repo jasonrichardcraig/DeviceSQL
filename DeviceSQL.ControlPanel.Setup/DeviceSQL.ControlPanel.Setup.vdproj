@@ -610,12 +610,6 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_EE66CD65920A1B3CBDF51FD4D904C12B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_87B57C220B454D368597751B42BD6309"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -1045,6 +1039,12 @@
         "OwnerKey" = "8:_34A74182481BB8989C219EDE36D1B6AA"
         "MsmSig" = "8:_UNDEFINED"
         }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_EE66CD65920A1B3CBDF51FD4D904C12B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
     }
     "Configurations"
     {
@@ -1063,6 +1063,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.6.1"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.6.1 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.6.1"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -1079,6 +1095,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
     }
     "Deployable"
@@ -3510,7 +3534,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:DeviceSQL Control Panel"
         "ProductCode" = "8:{09714909-D538-48D5-BCBF-08EE34418A4C}"
-        "PackageCode" = "8:{A66E85E7-0F25-4364-AAAC-3AC366839283}"
+        "PackageCode" = "8:{AA29334C-6F35-4A1E-83A5-86E9B2C666A7}"
         "UpgradeCode" = "8:{590F7693-099A-4A41-B790-AD7DCA892D78}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
