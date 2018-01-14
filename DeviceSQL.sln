@@ -11,10 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Utilities.Deploym
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Utilities.RealFLOMappingGenerator", "DeviceSQL.Utilities.RealFLOMappingGenerator\DeviceSQL.Utilities.RealFLOMappingGenerator.csproj", "{6037A772-F9F9-420A-B04E-24E4B646911A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.ControlPanel", "DeviceSQL.ControlPanel\DeviceSQL.ControlPanel.csproj", "{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}"
-EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "DeviceSQL.ControlPanel.Setup", "DeviceSQL.ControlPanel.Setup\DeviceSQL.ControlPanel.Setup.vdproj", "{776B9732-712C-4416-8D12-828717622A32}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.DatabaseSetupUtility", "DeviceSQL.DatabaseSetupUtility\DeviceSQL.DatabaseSetupUtility.csproj", "{22929CF0-D02A-47D9-A308-D1D5497BF42B}"
 EndProject
 Global
@@ -61,16 +57,6 @@ Global
 		{6037A772-F9F9-420A-B04E-24E4B646911A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6037A772-F9F9-420A-B04E-24E4B646911A}.Release|x86.ActiveCfg = Release|Any CPU
 		{6037A772-F9F9-420A-B04E-24E4B646911A}.Release|x86.Build.0 = Release|Any CPU
-		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Debug|x86.ActiveCfg = Debug|x86
-		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Debug|x86.Build.0 = Debug|x86
-		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Release|Any CPU.ActiveCfg = Release|x86
-		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Release|x86.ActiveCfg = Release|x86
-		{8703320B-47FE-4ADF-8FDC-F5F14F3A42F6}.Release|x86.Build.0 = Release|x86
-		{776B9732-712C-4416-8D12-828717622A32}.Debug|Any CPU.ActiveCfg = Debug
-		{776B9732-712C-4416-8D12-828717622A32}.Debug|x86.ActiveCfg = Debug
-		{776B9732-712C-4416-8D12-828717622A32}.Release|Any CPU.ActiveCfg = Release
-		{776B9732-712C-4416-8D12-828717622A32}.Release|x86.ActiveCfg = Release
 		{22929CF0-D02A-47D9-A308-D1D5497BF42B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{22929CF0-D02A-47D9-A308-D1D5497BF42B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22929CF0-D02A-47D9-A308-D1D5497BF42B}.Debug|x86.ActiveCfg = Debug|Any CPU
