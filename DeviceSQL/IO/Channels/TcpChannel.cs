@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Sockets;
 using System.Threading;
 
@@ -19,7 +20,7 @@ namespace DeviceSQL.IO.Channels
         private bool tracingEnabled = false;
         protected TcpClient tcpClient = new TcpClient();
         private object lockObject = new object();
-
+        
         #endregion
 
         #region Properties
@@ -36,6 +37,24 @@ namespace DeviceSQL.IO.Channels
         {
             get { return name; }
             set { name = value; }
+        }
+
+        public string HostName
+        {
+            get;
+            set;
+        }
+
+        public int HostPort
+        {
+            get;
+            set;
+        }
+
+        public int ConnectionAttempts
+        {
+            get;
+            set;
         }
 
         public bool TracingEnabled
@@ -107,85 +126,146 @@ namespace DeviceSQL.IO.Channels
 
         public void Write(ref byte[] buffer, int offset, int count)
         {
-            var masterStopWatch = Stopwatch.StartNew();
-            var startTime = DateTime.Now;
-            var bufferLength = buffer.Length;
-            var writeBuffer = new byte[bufferLength];
-            Buffer.BlockCopy(buffer, 0, writeBuffer, 0, bufferLength);
-            TcpClient.GetStream().Write(writeBuffer, offset, count);
-            masterStopWatch.Stop();
-            if (TracingEnabled)
+            var currentConnectAttempts = 0;
+
+            try
             {
-                Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelWrite,{3},{4},{5},TCPChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), 0, count, HexConverter.ToHexString(buffer)));
+                var masterStopWatch = Stopwatch.StartNew();
+                var startTime = DateTime.Now;
+                var bufferLength = buffer.Length;
+                var writeBuffer = new byte[bufferLength];
+                Buffer.BlockCopy(buffer, 0, writeBuffer, 0, bufferLength);
+                TcpClient.GetStream().Write(writeBuffer, offset, count);
+                masterStopWatch.Stop();
+                if (TracingEnabled)
+                {
+                    Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelWrite,{3},{4},{5},TCPChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), 0, count, HexConverter.ToHexString(buffer)));
+                }
+            }
+            catch (SocketException socketException)
+            {
+            Connect:
+                currentConnectAttempts++;
+                try
+                {
+                    TcpClient.Connect(HostName, HostPort);
+                    throw new IOException("Recconected to host");
+                }
+                catch (SocketException)
+                {
+                    if (currentConnectAttempts > ConnectionAttempts)
+                    {
+                        throw socketException;
+                    }
+                    else
+                    {
+                        System.Threading.Thread.Sleep(500);
+                        goto Connect;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
 
         public int Read(ref byte[] buffer, int offset, int count, int sequence)
         {
-            var masterStopWatch = Stopwatch.StartNew();
-            var startTime = DateTime.Now;
-            var startTicks = startTime.Ticks;
-            var bytesRead = new List<byte>();
-            var networkStream = TcpClient.GetStream();
-            var timeoutStopWatch = Stopwatch.StartNew();
-
-            while (ReadTimeout > timeoutStopWatch.ElapsedMilliseconds)
+            var currentConnectAttempts = 0;
+            try
             {
-                var byteValue = -1;
+
+                var masterStopWatch = Stopwatch.StartNew();
+                var startTime = DateTime.Now;
+                var startTicks = startTime.Ticks;
+                var bytesRead = new List<byte>();
+                var networkStream = TcpClient.GetStream();
+                var timeoutStopWatch = Stopwatch.StartNew();
+
+                while (ReadTimeout > timeoutStopWatch.ElapsedMilliseconds)
+                {
+                    var byteValue = -1;
+                    try
+                    {
+                        byteValue = networkStream.ReadByte();
+                        if (byteValue >= 0)
+                        {
+                            bytesRead.Add((byte)byteValue);
+                        }
+                        if (count == bytesRead.Count)
+                        {
+                            goto Finish;
+                        }
+                    }
+                    catch (System.IO.IOException toex)
+                    {
+                        masterStopWatch.Stop();
+
+                        if (bytesRead.Count > 0)
+                        {
+                            Buffer.BlockCopy(bytesRead.ToArray(), 0, buffer, offset, bytesRead.Count);
+                        }
+
+                        if (TracingEnabled)
+                        {
+                            Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5},TCPChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())));
+                        }
+
+                        throw new TimeoutException("Read Timeout", toex);
+                    }
+                    Thread.Sleep(0);
+                }
+
+            Finish:
+                timeoutStopWatch.Stop();
+                masterStopWatch.Stop();
+
+                if (bytesRead.Count > 0)
+                {
+                    Buffer.BlockCopy(bytesRead.ToArray(), 0, buffer, offset, bytesRead.Count);
+                }
+
+                if (TracingEnabled)
+                {
+                    Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5},TCPChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())));
+                }
+
+                if (count != bytesRead.Count)
+                {
+                    throw new TimeoutException("Read Timeout");
+                }
+                else
+                {
+                    return count;
+                }
+            }
+            catch(SocketException socketException)
+            {
+            Connect:
+                currentConnectAttempts++;
                 try
                 {
-                    byteValue = networkStream.ReadByte();
-                    if (byteValue >= 0)
-                    {
-                        bytesRead.Add((byte)byteValue);
-                    }
-                    if (count == bytesRead.Count)
-                    {
-                        goto Finish;
-                    }
+                    TcpClient.Connect(HostName, HostPort);
+                    throw new IOException("Recconected to host");
                 }
-                catch (System.IO.IOException toex)
+                catch(SocketException)
                 {
-                    masterStopWatch.Stop();
-
-                    if (bytesRead.Count > 0)
+                    if(currentConnectAttempts > ConnectionAttempts)
                     {
-                        Buffer.BlockCopy(bytesRead.ToArray(), 0, buffer, offset, bytesRead.Count);
+                        throw socketException;
                     }
-
-                    if (TracingEnabled)
+                    else
                     {
-                        Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5},TCPChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())));
+                        System.Threading.Thread.Sleep(500);
+                        goto Connect;
                     }
-
-                    throw new TimeoutException("Read Timeout", toex);
                 }
-                Thread.Sleep(0);
             }
-
-        Finish:
-            timeoutStopWatch.Stop();
-            masterStopWatch.Stop();
-
-            if (bytesRead.Count > 0)
+            catch(Exception ex)
             {
-                Buffer.BlockCopy(bytesRead.ToArray(), 0, buffer, offset, bytesRead.Count);
+                throw ex;
             }
-
-            if (TracingEnabled)
-            {
-                Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelRead,{3},{4},{5},TCPChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), sequence, bytesRead.Count, HexConverter.ToHexString(bytesRead.ToArray())));
-            }
-
-            if (count != bytesRead.Count)
-            {
-                throw new TimeoutException("Read Timeout");
-            }
-            else
-            {
-                return count;
-            }
-
         }
 
         #endregion
@@ -206,14 +286,6 @@ namespace DeviceSQL.IO.Channels
                 {
                     try
                     {
-                        try
-                        {
-                            TcpClient.GetStream().Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            Trace.Write(string.Format("Error closing TCP Client network stream: {0}", ex.Message));
-                        }
                         TcpClient.Close();
                     }
                     catch (Exception ex)

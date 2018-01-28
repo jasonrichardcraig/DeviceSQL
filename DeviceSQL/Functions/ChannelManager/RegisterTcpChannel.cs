@@ -5,6 +5,7 @@ using System;
 using System.Data.SqlTypes;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 
 #endregion
 namespace DeviceSQL.Functions
@@ -13,56 +14,74 @@ namespace DeviceSQL.Functions
     {
 
         [Microsoft.SqlServer.Server.SqlFunction]
-        public static SqlBoolean ChannelManager_RegisterTcpChannel(SqlString channelName, SqlString hostName, SqlInt32 hostPort, SqlInt32 readTimeout, SqlInt32 writeTimeout)
+        public static SqlBoolean ChannelManager_RegisterTcpChannel(SqlString channelName, SqlString hostName, SqlInt32 hostPort, SqlInt32 connectAttempts, SqlInt32 readTimeout, SqlInt32 writeTimeout)
         {
-            try
-            {
-                var channelNameValue = channelName.Value;
-                var channels = DeviceSQL.Watchdog.Worker.Channels;
 
-                if (channelNameValue.Count(c =>
+            var channelNameValue = channelName.Value;
+            var channels = DeviceSQL.Watchdog.Worker.Channels;
+
+            if (channelNameValue.Count(c =>
+            {
+                switch (c)
                 {
-                    switch (c)
+                    case '|':
+                    case ';':
+                    case ',':
+                        return true;
+                    default:
+                        return false;
+                }
+            }) > 0)
+            {
+                throw new ArgumentException("Invalid channel name");
+            }
+
+            if (channels.Where(channel => channel.Name == channelNameValue).Count() == 0)
+            {
+                var tcpChannel = new TcpChannel()
+                {
+                    Name = channelNameValue,
+                    HostName = hostName.Value,
+                    HostPort = hostPort.Value,
+                    ConnectionAttempts = connectAttempts.Value
+                };
+
+                var currentConnectAttempts = 0;
+
+                Connect:
+                currentConnectAttempts++;
+
+                try
+                {
+                    
+                    tcpChannel.TcpClient.Connect(tcpChannel.HostName, tcpChannel.HostPort);
+
+                }
+                catch(SocketException socketException)
+                {
+                    if (currentConnectAttempts > tcpChannel.ConnectionAttempts)
                     {
-                        case '|':
-                        case ';':
-                        case ',':
-                            return true;
-                        default:
-                            return false;
+                        throw socketException;
                     }
-                }) > 0)
-                {
-                    throw new ArgumentException("Invalid channel name");
-                }
-
-                if (channels.Where(channel => channel.Name == channelNameValue).Count() == 0)
-                {
-                    var tcpChannel = new TcpChannel()
+                    else
                     {
-                        Name = channelNameValue
-                    };
-
-                    tcpChannel.TcpClient.Connect(hostName.Value, hostPort.Value);
-
-                    tcpChannel.ReadTimeout = readTimeout.Value;
-                    tcpChannel.WriteTimeout = writeTimeout.Value;
-
-                    channels.Add(tcpChannel);
-
-                    return new SqlBoolean(true);
-
+                        System.Threading.Thread.Sleep(500);
+                        goto Connect;
+                    }
                 }
-                else
-                {
-                    throw new ArgumentException("Channel name is already registered");
-                }
+                
+                tcpChannel.ReadTimeout = readTimeout.Value;
+                tcpChannel.WriteTimeout = writeTimeout.Value;
+
+                channels.Add(tcpChannel);
+
+                return new SqlBoolean(true);
+
             }
-            catch (Exception ex)
+            else
             {
-                Trace.TraceError(string.Format("Error registering channel: {0}", ex.Message));
+                throw new ArgumentException("Channel name is already registered");
             }
-            return new SqlBoolean(false);
         }
     }
 
