@@ -7,6 +7,3 @@
 
 
 #### Support (Mountain Time): 403-618-6945 | Jason.Craig@Outlook.com | Skype - JasonRichardCraig
-
-#### Donations (LTC): LW5vG1CGbDeVWMC3AoPVPKKK4hKgbdC6rF
-![litecoin:LW5vG1CGbDeVWMC3AoPVPKKK4hKgbdC6rF?label=DeviceSQL%20Donations&message=DeviceSQL%20Donations](https://raw.githubusercontent.com/jasonrichardcraig/devicesql/master/DeviceSQLDonations.png)
