@@ -14,7 +14,7 @@ namespace DeviceSQL.TestHarness
 
 
 
-            DeviceSQL.Functions.ChannelManager.ChannelManager_RegisterTcpChannel("tcp://96.53.12.52:4000", "96.53.12.52", 4000, 5, 5000, 5000);
+            DeviceSQL.Functions.ChannelManager.ChannelManager_RegisterTcpChannel("tcp://96.53.12.52:4000", "96.53.12.52", 4000, 5, 5000, 5000, 5000);
 
             DeviceSQL.Functions.DeviceManager.DeviceManager_RegisterROCMaster("tcp://96.53.12.52:4000", "FB103-01", 1, 2, 3, 1, 5, 200, 0, 0);
 
@@ -23,6 +23,7 @@ namespace DeviceSQL.TestHarness
             while (1000 > index)
             {
                 var deviceDateTime = DeviceSQL.Functions.ROCMaster.ROCMaster_GetRealTimeClockValueWithCentury("FB103-01", 2000);
+                Console.WriteLine(deviceDateTime);
             }
 
             DeviceSQL.Functions.DeviceManager.DeviceManager_UnregisterDevice("FB103-01");

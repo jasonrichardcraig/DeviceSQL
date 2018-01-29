@@ -116,7 +116,7 @@ namespace DeviceSQL.Device.ROC.IO
                         if (RequestWriteDelayMilliseconds > 0)
                         {
                             if (TracingEnabled)
-                            {                                                   
+                            {
                                 Trace.WriteLine(string.Format("ROCMaster.Transport,WriteDelay,{0},{1}", requestMessage.OpCode.ToString(), RequestWriteDelayMilliseconds.ToString("0.0")));
                             }
                             TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
@@ -125,7 +125,7 @@ namespace DeviceSQL.Device.ROC.IO
                         if (ResponseReadDelayMilliseconds > 0)
                         {
                             if (TracingEnabled)
-                            {                                                          
+                            {
                                 Trace.WriteLine(string.Format("ROCMaster.Transport,ReadDelay,{0},{1}", requestMessage.OpCode.ToString(), ResponseReadDelayMilliseconds.ToString("0.0")));
                             }
                             TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
@@ -145,7 +145,7 @@ namespace DeviceSQL.Device.ROC.IO
                             transactionStopWatch.Stop();
                             if (TracingEnabled)
                             {
-                                Trace.WriteLine(string.Format("ROCMaster.Transport,Read,{0},{1},{3},{4}", requestMessage.OpCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString(), HexConverter.ToHexString(requestMessage.ProtocolDataUnit), HexConverter.ToHexString(responseMessage.ProtocolDataUnit)));
+                                Trace.WriteLine(string.Format("ROCMaster.Transport,Read,{0},{1},{3},{4}", requestMessage.OpCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString(), HexConverter.ToHexString(requestMessage.ProtocolDataUnit), HexConverter.ToHexString(responseMessage.ProtocolDataUnit), ""));
                             }
                             return (TResponseMessage)responseMessage;
                         }
@@ -179,7 +179,7 @@ namespace DeviceSQL.Device.ROC.IO
                     }
                 } while (!success && NumberOfRetries > attempt);
             }
-            Finish:
+        Finish:
             throw new TimeoutException("Device not responding to requests", lastException);
         }
 

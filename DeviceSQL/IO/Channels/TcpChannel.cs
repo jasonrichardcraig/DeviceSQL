@@ -20,7 +20,7 @@ namespace DeviceSQL.IO.Channels
         private bool tracingEnabled = false;
         protected TcpClient tcpClient = new TcpClient();
         private object lockObject = new object();
-        
+
         #endregion
 
         #region Properties
@@ -57,6 +57,24 @@ namespace DeviceSQL.IO.Channels
             set;
         }
 
+        public int ConnectionRetryDelay
+        {
+            get;
+            set;
+        }
+
+        internal int TcpClientReadTimeout
+        {
+            get;
+            set;
+        }
+
+        internal int TcpClientWriteTimeout
+        {
+            get;
+            set;
+        }
+
         public bool TracingEnabled
         {
             get
@@ -73,18 +91,30 @@ namespace DeviceSQL.IO.Channels
         public TcpClient TcpClient
         {
             get { return tcpClient; }
+            internal set
+            {
+                tcpClient = value;
+            }
         }
 
         public int ReadTimeout
         {
             get { return TcpClient.GetStream().ReadTimeout; }
-            set { TcpClient.GetStream().ReadTimeout = value; }
+            set
+            {
+                TcpClient.GetStream().ReadTimeout = value;
+                TcpClientReadTimeout = value;
+            }
         }
 
         public int WriteTimeout
         {
             get { return TcpClient.GetStream().WriteTimeout; }
-            set { TcpClient.GetStream().WriteTimeout = value; }
+            set
+            {
+                TcpClient.GetStream().WriteTimeout = value;
+                TcpClientWriteTimeout = value;
+            }
         }
 
         public string ConnectionString
@@ -142,32 +172,50 @@ namespace DeviceSQL.IO.Channels
                     Trace.WriteLine(string.Format("Channel,{0},{1},{2},ChannelWrite,{3},{4},{5},TCPChannel", Name, startTime.ToString("O"), (1000.0 * (((double)masterStopWatch.ElapsedTicks) * (1.0 / ((double)Stopwatch.Frequency)))), 0, count, HexConverter.ToHexString(buffer)));
                 }
             }
-            catch (SocketException socketException)
+            catch (Exception exception)
             {
-            Connect:
+                if (exception.InnerException is SocketException)
+                {
+                    goto Connect;
+                }
+                else if (exception is InvalidOperationException)
+                {
+                    goto Connect;
+                }
+                else
+                {
+                    throw exception;
+                }
+                Connect:
                 currentConnectAttempts++;
                 try
                 {
+                    TcpClient.Dispose();
+
+                    TcpClient = new TcpClient();
+
                     TcpClient.Connect(HostName, HostPort);
+
+                    ReadTimeout = TcpClientReadTimeout;
+
+                    WriteTimeout = TcpClientWriteTimeout;
+
                     throw new IOException("Recconected to host");
                 }
                 catch (SocketException)
                 {
                     if (currentConnectAttempts > ConnectionAttempts)
                     {
-                        throw socketException;
+                        throw exception;
                     }
                     else
                     {
-                        System.Threading.Thread.Sleep(500);
+                        System.Threading.Thread.Sleep(ConnectionRetryDelay);
                         goto Connect;
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+
         }
 
         public int Read(ref byte[] buffer, int offset, int count, int sequence)
@@ -217,7 +265,7 @@ namespace DeviceSQL.IO.Channels
                     Thread.Sleep(0);
                 }
 
-            Finish:
+                Finish:
                 timeoutStopWatch.Stop();
                 masterStopWatch.Stop();
 
@@ -240,31 +288,49 @@ namespace DeviceSQL.IO.Channels
                     return count;
                 }
             }
-            catch(SocketException socketException)
+            catch (Exception exception)
             {
-            Connect:
+                if (exception.InnerException is SocketException)
+                {
+                    goto Connect;
+                }
+                else if (exception is InvalidOperationException)
+                {
+                    goto Connect;
+                }
+                else
+                {
+                    throw exception;
+                }
+                Connect:
                 currentConnectAttempts++;
                 try
                 {
+                    TcpClient.Dispose();
+
+                    TcpClient = new TcpClient();
+
                     TcpClient.Connect(HostName, HostPort);
+
+                    ReadTimeout = TcpClientReadTimeout;
+
+                    WriteTimeout = TcpClientWriteTimeout;
+
                     throw new IOException("Recconected to host");
+
                 }
-                catch(SocketException)
+                catch (SocketException)
                 {
-                    if(currentConnectAttempts > ConnectionAttempts)
+                    if (currentConnectAttempts > ConnectionAttempts)
                     {
-                        throw socketException;
+                        throw exception;
                     }
                     else
                     {
-                        System.Threading.Thread.Sleep(500);
+                        System.Threading.Thread.Sleep(ConnectionRetryDelay);
                         goto Connect;
                     }
                 }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
             }
         }
 

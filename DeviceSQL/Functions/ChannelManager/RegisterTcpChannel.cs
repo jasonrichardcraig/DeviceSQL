@@ -14,7 +14,7 @@ namespace DeviceSQL.Functions
     {
 
         [Microsoft.SqlServer.Server.SqlFunction]
-        public static SqlBoolean ChannelManager_RegisterTcpChannel(SqlString channelName, SqlString hostName, SqlInt32 hostPort, SqlInt32 connectAttempts, SqlInt32 readTimeout, SqlInt32 writeTimeout)
+        public static SqlBoolean ChannelManager_RegisterTcpChannel(SqlString channelName, SqlString hostName, SqlInt32 hostPort, SqlInt32 connectAttempts, SqlInt32 connectionRetryDelay, SqlInt32 readTimeout, SqlInt32 writeTimeout)
         {
 
             var channelNameValue = channelName.Value;
@@ -43,7 +43,8 @@ namespace DeviceSQL.Functions
                     Name = channelNameValue,
                     HostName = hostName.Value,
                     HostPort = hostPort.Value,
-                    ConnectionAttempts = connectAttempts.Value
+                    ConnectionAttempts = connectAttempts.Value,
+                    ConnectionRetryDelay = connectionRetryDelay.Value
                 };
 
                 var currentConnectAttempts = 0;
