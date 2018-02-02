@@ -18,7 +18,11 @@ namespace DeviceSQL.Utilities.DeploymentScriptFormatter
 
                 var installScriptFolderName = @"..\..\..\Version 1.0\";
                 var installScriptFileName = @"..\..\..\Version 1.0\Install Script.sql";
-                var installScriptText = File.OpenText(installScriptFileName).ReadToEnd();
+                var installScriptText = "";
+                using (var streamReader = File.OpenText(installScriptFileName))
+                {
+                    installScriptText = streamReader.ReadToEnd();
+                }
 
                 installScriptText = $"CREATE DATABASE [DeviceSQL] \r\n" +
                                      "\r\n" +

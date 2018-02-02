@@ -150,6 +150,8 @@ namespace DeviceSQL.DatabaseSetupUtility
 
                         DialogResult = DialogResult.OK;
 
+                        MessageBox.Show("Installation Complete");
+
                         Close();
 
                     }
