@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2026
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DeviceSQL", "DeviceSQL\DeviceSQL.sqlproj", "{CB6F0884-5A58-432A-800E-4ABFEEAB6F46}"
 EndProject
@@ -12,6 +12,14 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Utilities.RealFLOMappingGenerator", "DeviceSQL.Utilities.RealFLOMappingGenerator\DeviceSQL.Utilities.RealFLOMappingGenerator.csproj", "{6037A772-F9F9-420A-B04E-24E4B646911A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.DatabaseSetupUtility", "DeviceSQL.DatabaseSetupUtility\DeviceSQL.DatabaseSetupUtility.csproj", "{22929CF0-D02A-47D9-A308-D1D5497BF42B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Services", "DeviceSQL.Services\DeviceSQL.Services.csproj", "{4136548D-5D58-4EEB-8876-D450ADC62369}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Service", "DeviceSQL.Service\DeviceSQL.Service.csproj", "{F7B38332-A678-424C-A67E-25CF36C2430D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.Devices", "DeviceSQL.Devices\DeviceSQL.Devices.csproj", "{80ED4080-6FD1-492F-B70E-8C837B3DADC7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeviceSQL.SQLTypes", "DeviceSQL.SQLTypes\DeviceSQL.SQLTypes.csproj", "{91B62CD7-190B-4727-B1EB-66B51913709D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +73,38 @@ Global
 		{22929CF0-D02A-47D9-A308-D1D5497BF42B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{22929CF0-D02A-47D9-A308-D1D5497BF42B}.Release|x86.ActiveCfg = Release|Any CPU
 		{22929CF0-D02A-47D9-A308-D1D5497BF42B}.Release|x86.Build.0 = Release|Any CPU
+		{4136548D-5D58-4EEB-8876-D450ADC62369}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4136548D-5D58-4EEB-8876-D450ADC62369}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4136548D-5D58-4EEB-8876-D450ADC62369}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4136548D-5D58-4EEB-8876-D450ADC62369}.Debug|x86.Build.0 = Debug|Any CPU
+		{4136548D-5D58-4EEB-8876-D450ADC62369}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4136548D-5D58-4EEB-8876-D450ADC62369}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4136548D-5D58-4EEB-8876-D450ADC62369}.Release|x86.ActiveCfg = Release|Any CPU
+		{4136548D-5D58-4EEB-8876-D450ADC62369}.Release|x86.Build.0 = Release|Any CPU
+		{F7B38332-A678-424C-A67E-25CF36C2430D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7B38332-A678-424C-A67E-25CF36C2430D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7B38332-A678-424C-A67E-25CF36C2430D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F7B38332-A678-424C-A67E-25CF36C2430D}.Debug|x86.Build.0 = Debug|Any CPU
+		{F7B38332-A678-424C-A67E-25CF36C2430D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7B38332-A678-424C-A67E-25CF36C2430D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7B38332-A678-424C-A67E-25CF36C2430D}.Release|x86.ActiveCfg = Release|Any CPU
+		{F7B38332-A678-424C-A67E-25CF36C2430D}.Release|x86.Build.0 = Release|Any CPU
+		{80ED4080-6FD1-492F-B70E-8C837B3DADC7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80ED4080-6FD1-492F-B70E-8C837B3DADC7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80ED4080-6FD1-492F-B70E-8C837B3DADC7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{80ED4080-6FD1-492F-B70E-8C837B3DADC7}.Debug|x86.Build.0 = Debug|Any CPU
+		{80ED4080-6FD1-492F-B70E-8C837B3DADC7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80ED4080-6FD1-492F-B70E-8C837B3DADC7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80ED4080-6FD1-492F-B70E-8C837B3DADC7}.Release|x86.ActiveCfg = Release|Any CPU
+		{80ED4080-6FD1-492F-B70E-8C837B3DADC7}.Release|x86.Build.0 = Release|Any CPU
+		{91B62CD7-190B-4727-B1EB-66B51913709D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91B62CD7-190B-4727-B1EB-66B51913709D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91B62CD7-190B-4727-B1EB-66B51913709D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{91B62CD7-190B-4727-B1EB-66B51913709D}.Debug|x86.Build.0 = Debug|Any CPU
+		{91B62CD7-190B-4727-B1EB-66B51913709D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91B62CD7-190B-4727-B1EB-66B51913709D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91B62CD7-190B-4727-B1EB-66B51913709D}.Release|x86.ActiveCfg = Release|Any CPU
+		{91B62CD7-190B-4727-B1EB-66B51913709D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
