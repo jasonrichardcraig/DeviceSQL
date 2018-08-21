@@ -17,4 +17,4 @@
 ##### CREATE LOGIN [DeviceSqlClrLogin] FROM ASYMMETRIC KEY [DeviceSqlKey]
 ##### GRANT UNSAFE ASSEMBLY TO [DeviceSqlClrLogin]
 
-
+You must enable the Lock Pages In Memory option: https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/enable-the-lock-pages-in-memory-option-windows?view=sql-server-2017
