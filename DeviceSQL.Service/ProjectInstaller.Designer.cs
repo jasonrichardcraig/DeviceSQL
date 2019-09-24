@@ -33,12 +33,16 @@
             // 
             // serviceProcessInstaller
             // 
+            this.serviceProcessInstaller.Account = System.ServiceProcess.ServiceAccount.NetworkService;
             this.serviceProcessInstaller.Password = null;
             this.serviceProcessInstaller.Username = null;
             // 
             // serviceInstaller
             // 
-            this.serviceInstaller.ServiceName = "Service1";
+            this.serviceInstaller.Description = "DeviceSQL Web API REST Services";
+            this.serviceInstaller.DisplayName = "DeviceSQL Service";
+            this.serviceInstaller.ServiceName = "DeviceSqlSvc";
+            this.serviceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
             // 

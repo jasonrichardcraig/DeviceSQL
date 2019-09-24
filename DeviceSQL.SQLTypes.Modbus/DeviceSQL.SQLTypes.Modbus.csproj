@@ -1,0 +1,122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CD45D76E-D2ED-4587-9873-F35AD24E42A5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeviceSQL.SQLTypes.Modbus</RootNamespace>
+    <AssemblyName>DeviceSQL.SQLTypes.Modbus</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\BooleanRegister.cs">
+      <Link>Devices\BooleanRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\CoilRegister.cs">
+      <Link>Devices\CoilRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\DiscreteInputRegister.cs">
+      <Link>Devices\DiscreteInputRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\EventArchiveRecord.cs">
+      <Link>Devices\EventArchiveRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\FloatRegister.cs">
+      <Link>Devices\FloatRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\HistoryArchiveRecord.cs">
+      <Link>Devices\HistoryArchiveRecord.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\HoldingRegister.cs">
+      <Link>Devices\HoldingRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\IModbusRegisterData.cs">
+      <Link>Devices\IModbusRegisterData.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\InputRegister.cs">
+      <Link>Devices\InputRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\LongRegister.cs">
+      <Link>Devices\LongRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\ModbusAddress.cs">
+      <Link>Devices\ModbusAddress.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\ModbusRegister.cs">
+      <Link>Devices\ModbusRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\ShortRegister.cs">
+      <Link>Devices\ShortRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\Data\StringRegister.cs">
+      <Link>Devices\StringRegister.cs</Link>
+    </Compile>
+    <Compile Include="..\DeviceSQL.Devices.Modbus\ModbusConverter.cs">
+      <Link>Devices\ModbusConverter.cs</Link>
+    </Compile>
+    <Compile Include="BooleanRegister.cs" />
+    <Compile Include="BooleanRegisterArray.cs" />
+    <Compile Include="CoilRegister.cs" />
+    <Compile Include="CoilRegisterArray.cs" />
+    <Compile Include="DiscreteInputRegister.cs" />
+    <Compile Include="DiscreteInputRegisterArray.cs" />
+    <Compile Include="EventArchiveRecord.cs" />
+    <Compile Include="EventArchiveRecordArray.cs" />
+    <Compile Include="FloatRegister.cs" />
+    <Compile Include="FloatRegisterArray.cs" />
+    <Compile Include="HistoryArchiveRecord.cs" />
+    <Compile Include="HistoryArchiveRecordArray.cs" />
+    <Compile Include="HoldingRegister.cs" />
+    <Compile Include="HoldingRegisterArray.cs" />
+    <Compile Include="InputRegister.cs" />
+    <Compile Include="InputRegisterArray.cs" />
+    <Compile Include="LongRegister.cs" />
+    <Compile Include="LongRegisterArray.cs" />
+    <Compile Include="ModbusAddress.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ShortRegister.cs" />
+    <Compile Include="ShortRegisterArray.cs" />
+    <Compile Include="StringRegister.cs" />
+    <Compile Include="StringRegisterArray.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

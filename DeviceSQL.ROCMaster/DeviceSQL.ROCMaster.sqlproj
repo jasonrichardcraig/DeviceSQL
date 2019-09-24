@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>DeviceSQL.ROCMaster</Name>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>4.1</ProjectVersion>
+    <ProjectGuid>{c5358adc-eca3-464d-aeb9-ce99048d4be3}</ProjectGuid>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql140DatabaseSchemaProvider</DSP>
+    <OutputType>Database</OutputType>
+    <RootPath>
+    </RootPath>
+    <RootNamespace>DeviceSQL.ROCMaster</RootNamespace>
+    <AssemblyName>DeviceSQL.ROCMaster</AssemblyName>
+    <ModelCollation>1033, CI</ModelCollation>
+    <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
+    <DeployToDatabase>True</DeployToDatabase>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetLanguage>CS</TargetLanguage>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <SqlServerVerification>False</SqlServerVerification>
+    <IncludeCompositeObjects>True</IncludeCompositeObjects>
+    <TargetDatabaseSet>True</TargetDatabaseSet>
+    <DefaultSchema>ROCMaster</DefaultSchema>
+    <TargetFrameworkProfile />
+    <PermissionSet>UNSAFE</PermissionSet>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\DeviceSQL-Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">11.0</VisualStudioVersion>
+    <!-- Default to the v11.0 targets path if the targets file for the current VS version is not found -->
+    <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
+    <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
+  </PropertyGroup>
+  <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
+  <ItemGroup>
+    <Folder Include="Properties" />
+    <Folder Include="Schemas" />
+    <Folder Include="Functions" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Functions\ClearAuditLogEventFlags.cs" />
+    <Compile Include="Functions\GetAlarms.cs" />
+    <Compile Include="Functions\GetArchiveInfo.cs" />
+    <Compile Include="Functions\GetAuditLogRecords.cs" />
+    <Compile Include="Functions\GetCurrentROCPlusAlarmIndex.cs" />
+    <Compile Include="Functions\GetCurrentROCPlusEventIndex.cs" />
+    <Compile Include="Functions\GetCurrentROCPlusHistorySegmentIndex.cs" />
+    <Compile Include="Functions\GetDoubleValue.cs" />
+    <Compile Include="Functions\GetEvents.cs" />
+    <Compile Include="Functions\GetFloatValue.cs" />
+    <Compile Include="Functions\GetFstInformation.cs" />
+    <Compile Include="Functions\GetHistory.cs" />
+    <Compile Include="Functions\GetInt8Value.cs" />
+    <Compile Include="Functions\GetInt16Value.cs" />
+    <Compile Include="Functions\GetInt32Value.cs" />
+    <Compile Include="Functions\GetMinutelyHistory.cs" />
+    <Compile Include="Functions\GetRealTimeClockValue.cs" />
+    <Compile Include="Functions\GetRealTimeClockValueWithCentury.cs" />
+    <Compile Include="Functions\GetROCPlusAlarms.cs" />
+    <Compile Include="Functions\GetROCPlusConfiguredHistoryPoints.cs" />
+    <Compile Include="Functions\GetROCPlusEvents.cs" />
+    <Compile Include="Functions\GetROCPlusHistory.cs" />
+    <Compile Include="Functions\GetROCPlusHistoryByHistoryPointArray.cs" />
+    <Compile Include="Functions\GetStringValue.cs" />
+    <Compile Include="Functions\GetTimeValue.cs" />
+    <Compile Include="Functions\GetUInt8Value.cs" />
+    <Compile Include="Functions\GetUInt16Value.cs" />
+    <Compile Include="Functions\GetUInt32Value.cs" />
+    <Compile Include="Functions\ReadParameters.cs" />
+    <Compile Include="Functions\SetFloatValue.cs" />
+    <Compile Include="Functions\SetInt8Value.cs" />
+    <Compile Include="Functions\SetInt16Value.cs" />
+    <Compile Include="Functions\SetInt32Value.cs" />
+    <Compile Include="Functions\SetOperatorIdentification.cs" />
+    <Compile Include="Functions\SetRealTimeClock.cs" />
+    <Compile Include="Functions\SetStringValue.cs" />
+    <Compile Include="Functions\SetTimeValue.cs" />
+    <Compile Include="Functions\SetUInt8Value.cs" />
+    <Compile Include="Functions\SetUInt16Value.cs" />
+    <Compile Include="Functions\SetUInt32Value.cs" />
+    <Compile Include="Functions\WriteParameters.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeviceSQL.SQLTypes.ROC\DeviceSQL.SQLTypes.ROC.csproj">
+      <Name>DeviceSQL.SQLTypes.ROC</Name>
+      <Project>{256ca566-5436-4543-bc13-d2480bee70c2}</Project>
+      <Private>True</Private>
+      <IsModelAware>True</IsModelAware>
+      <GenerateSqlClrDdl>True</GenerateSqlClrDdl>
+      <SqlPermissionSet>UNSAFE</SqlPermissionSet>
+      <IsVisible>True</IsVisible>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Build Include="Schemas\ROCMaster.sql" />
+  </ItemGroup>
+</Project>

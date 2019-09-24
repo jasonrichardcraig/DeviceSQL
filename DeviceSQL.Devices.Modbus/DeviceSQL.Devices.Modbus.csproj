@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0869E7FE-4FAC-4FC5-A2A8-313F410CF8CD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeviceSQL.Devices.Modbus</RootNamespace>
+    <AssemblyName>DeviceSQL.Devices.Modbus</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Crc16.cs" />
+    <Compile Include="Data\BooleanRegister.cs" />
+    <Compile Include="Data\CoilRegister.cs" />
+    <Compile Include="Data\DiscreteInputRegister.cs" />
+    <Compile Include="Data\EventArchiveRecord.cs" />
+    <Compile Include="Data\FloatRegister.cs" />
+    <Compile Include="Data\HistoryArchiveRecord.cs" />
+    <Compile Include="Data\HoldingRegister.cs" />
+    <Compile Include="Data\IModbusRegisterData.cs" />
+    <Compile Include="Data\InputRegister.cs" />
+    <Compile Include="Data\LongRegister.cs" />
+    <Compile Include="Data\ModbusAddress.cs" />
+    <Compile Include="Data\ModbusRegister.cs" />
+    <Compile Include="Data\ShortRegister.cs" />
+    <Compile Include="Data\StringRegister.cs" />
+    <Compile Include="Device.cs" />
+    <Compile Include="IO\Transport\Transport.cs" />
+    <Compile Include="Message\IModbusMessage.cs" />
+    <Compile Include="Message\IModbusRequestMessage.cs" />
+    <Compile Include="Message\IModbusResponseMessage.cs" />
+    <Compile Include="Message\ModbusErrorResponse.cs" />
+    <Compile Include="Message\ModbusMessage.cs" />
+    <Compile Include="Message\ModbusMessageFactory.cs" />
+    <Compile Include="Message\ReadCoilRegistersRequest.cs" />
+    <Compile Include="Message\ReadCoilRegistersResponse.cs" />
+    <Compile Include="Message\ReadDiscreteInputRegistersRequest.cs" />
+    <Compile Include="Message\ReadDiscreteInputRegistersResponse.cs" />
+    <Compile Include="Message\ReadEventArchiveRequest.cs" />
+    <Compile Include="Message\ReadEventArchiveResponse.cs" />
+    <Compile Include="Message\ReadFloatsRequest.cs" />
+    <Compile Include="Message\ReadFloatsResponse.cs" />
+    <Compile Include="Message\ReadHistoryArchiveRequest.cs" />
+    <Compile Include="Message\ReadHistoryArchiveResponse.cs" />
+    <Compile Include="Message\ReadHoldingRegistersRequest.cs" />
+    <Compile Include="Message\ReadHoldingRegistersResponse.cs" />
+    <Compile Include="Message\ReadInputRegistersRequest.cs" />
+    <Compile Include="Message\ReadInputRegistersResponse.cs" />
+    <Compile Include="Message\ReadLongsRequest.cs" />
+    <Compile Include="Message\ReadLongsResponse.cs" />
+    <Compile Include="Message\ReadShortsRequest.cs" />
+    <Compile Include="Message\ReadShortsResponse.cs" />
+    <Compile Include="Message\ReadStringRequest.cs" />
+    <Compile Include="Message\ReadStringResponse.cs" />
+    <Compile Include="Message\WriteBooleanRequest.cs" />
+    <Compile Include="Message\WriteBooleanResponse.cs" />
+    <Compile Include="Message\WriteFloatsRequest.cs" />
+    <Compile Include="Message\WriteFloatsResponse.cs" />
+    <Compile Include="ModbusConverter.cs" />
+    <Compile Include="ModbusMaster.cs" />
+    <Compile Include="ModbusSlaveException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DeviceSQL.Devices.Common\DeviceSQL.Devices.Common.csproj">
+      <Project>{5deadadf-be60-4774-80c6-97b3a83fa289}</Project>
+      <Name>DeviceSQL.Devices.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

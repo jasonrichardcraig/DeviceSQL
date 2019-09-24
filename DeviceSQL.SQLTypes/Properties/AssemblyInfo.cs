@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DeviceSQL.SQLTypes")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("DeviceSQL.SQLTypes")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DeviceSQL.SQLTypes")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("CloudSonix")]
+[assembly: AssemblyProduct("DeviceSQL")]
+[assembly: AssemblyCopyright("©  CloudSonix. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

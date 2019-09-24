@@ -3,14 +3,15 @@
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with the SQLCLR assembly.
-[assembly: AssemblyTitle("DeviceSQL libraries")]
-[assembly: AssemblyDescription("SQL Server libraries for communicating with anything")]
+[assembly: AssemblyTitle("DeviceSQL")]
+[assembly: AssemblyDescription("DeviceSQL")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("DeviceSQL")]
+[assembly: AssemblyCompany("CloudSonix")]
 [assembly: AssemblyProduct("DeviceSQL")]
-[assembly: AssemblyCopyright("2017 DeviceSQL")]
+[assembly: AssemblyCopyright("© CloudSonix. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: AssemblyKeyFileAttribute("../DeviceSQL-Key.snk")]
 
 // Version information for an assembly consists of the following four values:
 //

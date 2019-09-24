@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{cb6f0884-5a58-432a-800e-4abfeeab6f46}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql140DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -17,16 +17,17 @@
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
     <IncludeCompositeObjects>True</IncludeCompositeObjects>
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <PermissionSet>UNSAFE</PermissionSet>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>DeviceSQL-Key.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\DeviceSQL-Key.snk</AssemblyOriginatorKeyFile>
     <GenerateSqlClrSymbols>False</GenerateSqlClrSymbols>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -62,7 +63,6 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="Schemas" />
     <Folder Include="Deployment" />
   </ItemGroup>
   <ItemGroup>
@@ -75,15 +75,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Schemas\DeviceManager.sql" />
-    <Build Include="Schemas\MODBUSMaster.sql" />
-    <Build Include="Schemas\ROCMaster.sql" />
-    <Build Include="Schemas\ChannelManager.sql" />
-    <Build Include="Schemas\Watchdog.sql" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Deployment\Run Once.sql" />
     <None Include="Deployment\Rename.sql" />
-    <None Include="DeviceSQL-Key.snk" />
   </ItemGroup>
 </Project>

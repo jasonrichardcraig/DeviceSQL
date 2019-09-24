@@ -17,7 +17,7 @@ namespace DeviceSQL.Service
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new Service1()
+                new DeviceSqlService()
             };
             ServiceBase.Run(ServicesToRun);
         }

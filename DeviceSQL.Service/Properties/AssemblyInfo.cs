@@ -6,13 +6,14 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("DeviceSQL.Service")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("DeviceSQL.Service")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("DeviceSQL.Service")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCompany("CloudSonix")]
+[assembly: AssemblyProduct("DeviceSQL")]
+[assembly: AssemblyCopyright("©  CloudSonix. All rights reserved.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
+[assembly: AssemblyKeyFile("../DeviceSQL-Key.snk")]
 
 // Setting ComVisible to false makes the types in this assembly not visible
 // to COM components.  If you need to access a type in this assembly from
