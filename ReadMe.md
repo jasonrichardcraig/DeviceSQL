@@ -6,4 +6,4 @@
 [Version 1.0 Now Available for Download](https://github.com/jasonrichardcraig/DeviceSQL/tree/master/Version%201.0 "1.0")
 
 
-#### Support (Mountain Time): +1-825-733-1769 | Jason.Craig@Outlook.com | LinkedIn - JasonRichardCraig | Skype - JasonRichardCraig
+#### Support (Mountain Time): +1-825-733-1769 | Jason.Craig@Outlook.com | [LinkedIn]([https://git-scm.com](https://www.linkedin.com/in/jasonrichardcraig/)) | Skype - JasonRichardCraig
