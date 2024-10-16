@@ -4,9 +4,9 @@ using System.Diagnostics;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode120Request : ROCMessage, IROCRequestMessage
+    internal class OpCode120Request : RocMessage, IRocRequestMessage
     {
 
         #region Properties
@@ -44,7 +44,7 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IROCResponseMessage response)
+        public void ValidateResponse(IRocResponseMessage response)
         {
             var opCode120Response = response as OpCode120Response;
             Debug.Assert(opCode120Response != null, "Argument response should be of type OpCode120Response.");

@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -9,14 +10,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static Types.ROCMaster.ROCMaster_ROCPlusEventRecordArray ROCMaster_GetROCPlusEvents(SqlString deviceName, byte count, int startIndex)
+        public static Types.RocMaster.RocMaster_RocPlusEventRecordArray RocMaster_GetRocPlusEvents(SqlString deviceName, byte count, int startIndex)
         {
-            var deviceNameValue = deviceName.Value;
-            var rocPlusEventRecords = (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster).GetROCPlusEvents(null, null, null, null, count, Convert.ToUInt16(startIndex));
-            return new Types.ROCMaster.ROCMaster_ROCPlusEventRecordArray() { rocPlusEventRecords = rocPlusEventRecords.Select(e => new Types.ROCMaster.ROCMaster_ROCPlusEventRecord() { Data = e.data, Index = e.Index }).ToList() };
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var rocPlusEventRecords = (device as Device.Roc.RocMaster).GetRocPlusEvents(null, null, null, null, count, Convert.ToUInt16(startIndex));
+            return new Types.RocMaster.RocMaster_RocPlusEventRecordArray() { rocPlusEventRecords = rocPlusEventRecords.Select(e => new Types.RocMaster.RocMaster_RocPlusEventRecord() { Data = e.data, Index = e.Index }).ToList() };
         }
     }
 }

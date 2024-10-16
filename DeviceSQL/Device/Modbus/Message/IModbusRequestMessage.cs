@@ -1,8 +1,8 @@
-﻿namespace DeviceSQL.Device.MODBUS.Message
+﻿namespace DeviceSQL.Device.Modbus.Message
 {
-    internal interface IMODBUSRequestMessage : IMODBUSMessage
+    internal interface IModbusRequestMessage : IModbusMessage
     {
         Device.DataType DataType { get; }
-        void ValidateResponse(IMODBUSResponseMessage response);
+        void ValidateResponse(IModbusResponseMessage response);
     }
 }

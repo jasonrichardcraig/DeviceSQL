@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS
+namespace DeviceSQL.Device.Modbus
 {
     public class Crc16 : System.Security.Cryptography.HashAlgorithm
     {

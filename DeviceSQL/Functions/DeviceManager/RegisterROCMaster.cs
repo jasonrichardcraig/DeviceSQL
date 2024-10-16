@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -13,18 +14,15 @@ namespace DeviceSQL.Functions
     public partial class DeviceManager
     {
         [SqlFunction]
-        public static SqlBoolean DeviceManager_RegisterROCMaster(SqlString channelName, SqlString deviceName, SqlByte deviceAddress, SqlByte deviceGroup, SqlByte hostAddress, SqlByte hostGroup, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
+        public static SqlBoolean DeviceManager_RegisterRocMaster(SqlString channelName, SqlString deviceName, SqlByte deviceAddress, SqlByte deviceGroup, SqlByte hostAddress, SqlByte hostGroup, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
         {
             try
             {
-                var deviceNameValue = deviceName.Value;
-                var devices = DeviceSQL.Watchdog.Worker.Devices;
-                if (devices.Where(device => device.Name == deviceNameValue).Count() == 0)
+                if (ServiceRegistry.GetChannel(deviceName.Value) == null)
                 {
-                    var channelNameValue = channelName.Value;
-                    var rocMaster = new Device.ROC.ROCMaster(DeviceSQL.Watchdog.Worker.Channels.First(channel => channel.Name == channelNameValue))
+                    var rocMaster = new Device.Roc.RocMaster(ServiceRegistry.GetChannel(channelName.Value))
                     {
-                        Name = deviceNameValue,
+                        Name = deviceName.Value,
                         DeviceAddress = deviceAddress.Value,
                         DeviceGroup = deviceGroup.Value,
                         HostAddress = hostAddress.Value,
@@ -36,7 +34,7 @@ namespace DeviceSQL.Functions
                     rocMaster.Transport.RequestWriteDelayMilliseconds = requestWriteDelay.Value;
                     rocMaster.Transport.ResponseReadDelayMilliseconds = responseReadDelay.Value;
 
-                    devices.Add(rocMaster);
+                    ServiceRegistry.RegisterDevice(rocMaster);
 
                     return new SqlBoolean(true);
 

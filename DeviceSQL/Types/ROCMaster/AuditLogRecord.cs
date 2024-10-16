@@ -1,6 +1,6 @@
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -9,11 +9,11 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 29)]
-    public struct ROCMaster_AuditLogRecord : INullable, IBinarySerialize
+    public struct RocMaster_AuditLogRecord : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -30,11 +30,11 @@ namespace DeviceSQL.Types.ROCMaster
             internal set;
         }
 
-        public static ROCMaster_AuditLogRecord Null
+        public static RocMaster_AuditLogRecord Null
         {
             get
             {
-                return new ROCMaster_AuditLogRecord() { IsNull = true };
+                return new RocMaster_AuditLogRecord() { IsNull = true };
             }
         }
 
@@ -201,7 +201,7 @@ namespace DeviceSQL.Types.ROCMaster
             }
         }
 
-        public ROCMaster_Parameter OldParameterValue
+        public RocMaster_Parameter OldParameterValue
         {
             get
             {
@@ -209,50 +209,50 @@ namespace DeviceSQL.Types.ROCMaster
                 {
                     var pointType = PointType.Value;
                     var parameterNumber = ParameterNumber.Value;
-                    var parameterDefinition = Device.ROC.Message.ParameterDatabase.ParameterDefinitions.Where(pd => pd.PointType == pointType && pd.Parameter == parameterNumber).FirstOrDefault();
+                    var parameterDefinition = Device.Roc.Message.ParameterDatabase.ParameterDefinitions.Where(pd => pd.PointType == pointType && pd.Parameter == parameterNumber).FirstOrDefault();
                     switch (parameterDefinition.DataType)
                     {
                         case "AC":
                             switch (parameterDefinition.Length)
                             {
                                 case 3:
-                                    return new ROCMaster_Parameter() { RawType = ParameterType.AC3, RawValue = OldValue.Value.Take(3).ToArray() };
+                                    return new RocMaster_Parameter() { RawType = ParameterType.AC3, RawValue = OldValue.Value.Take(3).ToArray() };
                                 default:
-                                    return ROCMaster_Parameter.Null;
+                                    return RocMaster_Parameter.Null;
                             }
                         case "BIN":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.BIN, RawValue = OldValue.Value.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.BIN, RawValue = OldValue.Value.Take(1).ToArray() };
                         case "FL":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.FL, RawValue = OldValue.Value };
+                            return new RocMaster_Parameter() { RawType = ParameterType.FL, RawValue = OldValue.Value };
                         case "INT16":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT16, RawValue = OldValue.Value.Take(2).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT16, RawValue = OldValue.Value.Take(2).ToArray() };
                         case "INT32":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT32, RawValue = OldValue.Value };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT32, RawValue = OldValue.Value };
                         case "INT8":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT8, RawValue = OldValue.Value.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT8, RawValue = OldValue.Value.Take(1).ToArray() };
                         case "TLP":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.TLP, RawValue = OldValue.Value.Take(3).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.TLP, RawValue = OldValue.Value.Take(3).ToArray() };
                         case "UINT16":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT16, RawValue = OldValue.Value.Take(2).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT16, RawValue = OldValue.Value.Take(2).ToArray() };
                         case "UINT32":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT32, RawValue = OldValue.Value };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT32, RawValue = OldValue.Value };
                         case "TIME":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.TIME, RawValue = OldValue.Value };
+                            return new RocMaster_Parameter() { RawType = ParameterType.TIME, RawValue = OldValue.Value };
                         case "UINT8":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT8, RawValue = OldValue.Value.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT8, RawValue = OldValue.Value.Take(1).ToArray() };
                         default:
-                            return ROCMaster_Parameter.Null;
+                            return RocMaster_Parameter.Null;
                     }
 
                 }
                 else
                 {
-                    return ROCMaster_Parameter.Null;
+                    return RocMaster_Parameter.Null;
                 }
             }
         }
 
-        public ROCMaster_Parameter NewParameterValue
+        public RocMaster_Parameter NewParameterValue
         {
             get
             {
@@ -260,57 +260,57 @@ namespace DeviceSQL.Types.ROCMaster
                 {
                     var pointType = PointType.Value;
                     var parameterNumber = ParameterNumber.Value;
-                    var parameterDefinition = Device.ROC.Message.ParameterDatabase.ParameterDefinitions.Where(pd => pd.PointType == pointType && pd.Parameter == parameterNumber).FirstOrDefault();
+                    var parameterDefinition = Device.Roc.Message.ParameterDatabase.ParameterDefinitions.Where(pd => pd.PointType == pointType && pd.Parameter == parameterNumber).FirstOrDefault();
                     switch (parameterDefinition.DataType)
                     {
                         case "AC":
                             switch (parameterDefinition.Length)
                             {
                                 case 3:
-                                    return new ROCMaster_Parameter() { RawType = ParameterType.AC3, RawValue = NewValue.Value.Take(3).ToArray() };
+                                    return new RocMaster_Parameter() { RawType = ParameterType.AC3, RawValue = NewValue.Value.Take(3).ToArray() };
                                 case 7:
-                                    return new ROCMaster_Parameter() { RawType = ParameterType.AC7, RawValue = NewValue.Value.Union(new byte[3]).ToArray() };
+                                    return new RocMaster_Parameter() { RawType = ParameterType.AC7, RawValue = NewValue.Value.Union(new byte[3]).ToArray() };
                                 case 10:
-                                    return new ROCMaster_Parameter() { RawType = ParameterType.AC10, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).ToArray() };
+                                    return new RocMaster_Parameter() { RawType = ParameterType.AC10, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).ToArray() };
                                 case 12:
-                                    return new ROCMaster_Parameter() { RawType = ParameterType.AC12, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).Union(new byte[2]).ToArray() };
+                                    return new RocMaster_Parameter() { RawType = ParameterType.AC12, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).Union(new byte[2]).ToArray() };
                                 case 20:
-                                    return new ROCMaster_Parameter() { RawType = ParameterType.AC20, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).Union(new byte[10]).ToArray() };
+                                    return new RocMaster_Parameter() { RawType = ParameterType.AC20, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).Union(new byte[10]).ToArray() };
                                 case 30:
-                                    return new ROCMaster_Parameter() { RawType = ParameterType.AC30, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).Union(new byte[20]).ToArray() };
+                                    return new RocMaster_Parameter() { RawType = ParameterType.AC30, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).Union(new byte[20]).ToArray() };
                                 case 40:
-                                    return new ROCMaster_Parameter() { RawType = ParameterType.AC40, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).Union(new byte[30]).ToArray() };
+                                    return new RocMaster_Parameter() { RawType = ParameterType.AC40, RawValue = OldValue.Value.Union(NewValue.Value).Union(BitConverter.GetBytes(Convert.ToUInt16(Tag.Value))).Union(new byte[30]).ToArray() };
                                 default:
-                                    return ROCMaster_Parameter.Null;
+                                    return RocMaster_Parameter.Null;
                             }
                         case "BIN":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.BIN, RawValue = NewValue.Value.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.BIN, RawValue = NewValue.Value.Take(1).ToArray() };
                         case "FL":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.FL, RawValue = NewValue.Value };
+                            return new RocMaster_Parameter() { RawType = ParameterType.FL, RawValue = NewValue.Value };
                         case "INT16":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT16, RawValue = NewValue.Value.Take(2).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT16, RawValue = NewValue.Value.Take(2).ToArray() };
                         case "INT32":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT32, RawValue = NewValue.Value };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT32, RawValue = NewValue.Value };
                         case "INT8":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT8, RawValue = NewValue.Value.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT8, RawValue = NewValue.Value.Take(1).ToArray() };
                         case "TLP":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.TLP, RawValue = NewValue.Value.Take(3).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.TLP, RawValue = NewValue.Value.Take(3).ToArray() };
                         case "UINT16":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT16, RawValue = NewValue.Value.Take(2).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT16, RawValue = NewValue.Value.Take(2).ToArray() };
                         case "UINT32":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT32, RawValue = NewValue.Value };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT32, RawValue = NewValue.Value };
                         case "TIME":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.TIME, RawValue = NewValue.Value };
+                            return new RocMaster_Parameter() { RawType = ParameterType.TIME, RawValue = NewValue.Value };
                         case "UINT8":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT8, RawValue = NewValue.Value.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT8, RawValue = NewValue.Value.Take(1).ToArray() };
                         default:
-                            return ROCMaster_Parameter.Null;
+                            return RocMaster_Parameter.Null;
                     }
 
                 }
                 else
                 {
-                    return ROCMaster_Parameter.Null;
+                    return RocMaster_Parameter.Null;
                 }
             }
         }
@@ -335,13 +335,13 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        public static ROCMaster_AuditLogRecord Parse(SqlString stringToParse)
+        public static RocMaster_AuditLogRecord Parse(SqlString stringToParse)
         {
             var parsedAuditLogRecord = stringToParse.Value.Split(",".ToCharArray());
             var base64Bytes = Convert.FromBase64String(parsedAuditLogRecord[1]);
             if (base64Bytes.Length == 24)
             {
-                return new ROCMaster_AuditLogRecord() { Index = ushort.Parse(parsedAuditLogRecord[0]), Data = base64Bytes };
+                return new RocMaster_AuditLogRecord() { Index = ushort.Parse(parsedAuditLogRecord[0]), Data = base64Bytes };
             }
             else
             {

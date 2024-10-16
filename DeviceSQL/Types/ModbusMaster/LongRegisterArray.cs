@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.MODBUSMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct MODBUSMaster_LongRegisterArray : INullable, IBinarySerialize
+    public struct ModbusMaster_LongRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<MODBUSMaster_LongRegister> longRegisters;
+        internal List<ModbusMaster_LongRegister> longRegisters;
 
         #endregion
 
         #region Properties
 
-        internal MODBUSMaster_LongRegister this[int index]
+        internal ModbusMaster_LongRegister this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.MODBUSMaster
 
         #region Helper Methods
 
-        private List<MODBUSMaster_LongRegister> LongRegisters
+        private List<ModbusMaster_LongRegister> LongRegisters
         {
             get
             {
                 if (longRegisters == null)
                 {
-                    longRegisters = new List<MODBUSMaster_LongRegister>();
+                    longRegisters = new List<ModbusMaster_LongRegister>();
                 }
                 return longRegisters;
             }
         }
 
-        public static MODBUSMaster_LongRegisterArray Null
+        public static ModbusMaster_LongRegisterArray Null
         {
             get
             {
-                return (new MODBUSMaster_LongRegisterArray() { IsNull = true });
+                return (new ModbusMaster_LongRegisterArray() { IsNull = true });
             }
         }
 
@@ -79,42 +79,42 @@ namespace DeviceSQL.Types.MODBUSMaster
             return string.Join("|", LongRegisters.Select(longRegister => longRegister.ToString()));
         }
 
-        public MODBUSMaster_LongRegisterArray AddLongRegister(MODBUSMaster_LongRegister longRegister)
+        public ModbusMaster_LongRegisterArray AddLongRegister(ModbusMaster_LongRegister longRegister)
         {
             LongRegisters.Add(longRegister);
             return this;
         }
 
-        public static MODBUSMaster_LongRegisterArray Parse(SqlString stringToParse)
+        public static ModbusMaster_LongRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedLongRegisterArray = new MODBUSMaster_LongRegisterArray()
+            var parsedLongRegisterArray = new ModbusMaster_LongRegisterArray()
             {
-                longRegisters = new List<MODBUSMaster_LongRegister>()
+                longRegisters = new List<ModbusMaster_LongRegister>()
             };
 
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedLongRegisterArray.LongRegisters.Add(MODBUSMaster_LongRegister.Parse(parsedString[i]));
+                parsedLongRegisterArray.LongRegisters.Add(ModbusMaster_LongRegister.Parse(parsedString[i]));
             }
 
             return parsedLongRegisterArray;
         }
 
-        public MODBUSMaster_LongRegister GetLongRegister(SqlInt32 index)
+        public ModbusMaster_LongRegister GetLongRegister(SqlInt32 index)
         {
             return LongRegisters[index.Value];
         }
 
-        public static MODBUSMaster_LongRegisterArray Empty()
+        public static ModbusMaster_LongRegisterArray Empty()
         {
-            var longRegisterArray = new MODBUSMaster_LongRegisterArray() { longRegisters = new List<MODBUSMaster_LongRegister>() };
+            var longRegisterArray = new ModbusMaster_LongRegisterArray() { longRegisters = new List<ModbusMaster_LongRegister>() };
             return longRegisterArray;
         }
 
@@ -137,7 +137,7 @@ namespace DeviceSQL.Types.MODBUSMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var longRegister = new MODBUSMaster_LongRegister();
+                    var longRegister = new ModbusMaster_LongRegister();
                     longRegister.Read(binaryReader);
                     LongRegisters.Add(longRegister);
                 }

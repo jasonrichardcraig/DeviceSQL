@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
     public class TimeParameter : Parameter<DateTime>
     {

@@ -8,7 +8,7 @@ using System.Text;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
 
     #region Enums
@@ -16,7 +16,7 @@ namespace DeviceSQL.Device.ROC.Data
     public enum EventCode : byte
     {
         UploadToDisk = 49,
-        DownloadToROC = 50,
+        DownloadToRoc = 50,
         Calibration = 79,
         InitializationSequence = 144,
         AllPowerRemoved = 145,
@@ -287,7 +287,7 @@ namespace DeviceSQL.Device.ROC.Data
                 switch (EventCode)
                 {
                     case Data.EventCode.ClockSet:
-                    case Data.EventCode.DownloadToROC:
+                    case Data.EventCode.DownloadToRoc:
                     case Data.EventCode.Informational:
                     case Data.EventCode.UploadToDisk:
                     case Data.EventCode.Diagnostic:
@@ -307,7 +307,7 @@ namespace DeviceSQL.Device.ROC.Data
                 switch (EventCode)
                 {
                     case Data.EventCode.ClockSet:
-                    case Data.EventCode.DownloadToROC:
+                    case Data.EventCode.DownloadToRoc:
                     case Data.EventCode.Informational:
                     case Data.EventCode.UploadToDisk:
                         return System.Text.ASCIIEncoding.Default.GetString(data, 12, 10).Replace("\0", "").Trim();

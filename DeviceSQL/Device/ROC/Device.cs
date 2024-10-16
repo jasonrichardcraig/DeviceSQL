@@ -1,4 +1,4 @@
-﻿namespace DeviceSQL.Device.ROC
+﻿namespace DeviceSQL.Device.Roc
 {
     internal static class Device
     {

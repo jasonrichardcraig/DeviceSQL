@@ -1,7 +1,7 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.Message;
-using DeviceSQL.Device.ROC.Utility;
+using DeviceSQL.Device.Roc.Message;
+using DeviceSQL.Device.Roc.Utility;
 using DeviceSQL.IO.Channels;
 using DeviceSQL.IO.Channels.Transport;
 using System;
@@ -14,7 +14,7 @@ using System.Threading;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.IO
+namespace DeviceSQL.Device.Roc.IO
 {
     public class Transport : ITransport
     {
@@ -93,16 +93,16 @@ namespace DeviceSQL.Device.ROC.IO
 
         #region Transport Methods
 
-        internal virtual TResponseMessage UnicastMessage<TResponseMessage>(IROCRequestMessage requestMessage)
-            where TResponseMessage : IROCResponseMessage, new()
+        internal virtual TResponseMessage UnicastMessage<TResponseMessage>(IRocRequestMessage requestMessage)
+            where TResponseMessage : IRocResponseMessage, new()
         {
             if (TracingEnabled)
             {
-                Trace.WriteLine(string.Format("ROCMaster.Transport,WriteDelay,{0},{1}", requestMessage.OpCode.ToString(), DateTime.Now.ToString("O"), "Transport"));
+                Trace.WriteLine(string.Format("RocMaster.Transport,WriteDelay,{0},{1}", requestMessage.OpCode.ToString(), DateTime.Now.ToString("O"), "Transport"));
             }
             var lastException = (Exception)null;
             var transactionStopWatch = Stopwatch.StartNew();
-            IROCResponseMessage responseMessage = default(TResponseMessage);
+            IRocResponseMessage responseMessage = default(TResponseMessage);
             int attempt = 0;
             bool success = false;
             object channelLock = Channel.LockObject;
@@ -117,7 +117,7 @@ namespace DeviceSQL.Device.ROC.IO
                         {
                             if (TracingEnabled)
                             {
-                                Trace.WriteLine(string.Format("ROCMaster.Transport,WriteDelay,{0},{1}", requestMessage.OpCode.ToString(), RequestWriteDelayMilliseconds.ToString("0.0")));
+                                Trace.WriteLine(string.Format("RocMaster.Transport,WriteDelay,{0},{1}", requestMessage.OpCode.ToString(), RequestWriteDelayMilliseconds.ToString("0.0")));
                             }
                             TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
                         }
@@ -126,7 +126,7 @@ namespace DeviceSQL.Device.ROC.IO
                         {
                             if (TracingEnabled)
                             {
-                                Trace.WriteLine(string.Format("ROCMaster.Transport,ReadDelay,{0},{1}", requestMessage.OpCode.ToString(), ResponseReadDelayMilliseconds.ToString("0.0")));
+                                Trace.WriteLine(string.Format("RocMaster.Transport,ReadDelay,{0},{1}", requestMessage.OpCode.ToString(), ResponseReadDelayMilliseconds.ToString("0.0")));
                             }
                             TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
                         }
@@ -145,7 +145,7 @@ namespace DeviceSQL.Device.ROC.IO
                             transactionStopWatch.Stop();
                             if (TracingEnabled)
                             {
-                                Trace.WriteLine(string.Format("ROCMaster.Transport,Read,{0},{1},{3},{4}", requestMessage.OpCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString(), HexConverter.ToHexString(requestMessage.ProtocolDataUnit), HexConverter.ToHexString(responseMessage.ProtocolDataUnit), ""));
+                                Trace.WriteLine(string.Format("RocMaster.Transport,Read,{0},{1},{3},{4}", requestMessage.OpCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString(), HexConverter.ToHexString(requestMessage.ProtocolDataUnit), HexConverter.ToHexString(responseMessage.ProtocolDataUnit), ""));
                             }
                             return (TResponseMessage)responseMessage;
                         }
@@ -153,7 +153,7 @@ namespace DeviceSQL.Device.ROC.IO
                     catch (Exception e)
                     {
                         lastException = e;
-                        Trace.WriteLine(string.Format("ROCMaster.Transport.Error,{0},{1}", requestMessage.OpCode.ToString(), e.Message), "Transport");
+                        Trace.WriteLine(string.Format("RocMaster.Transport.Error,{0},{1}", requestMessage.OpCode.ToString(), e.Message), "Transport");
                         if (e is FormatException ||
                             e is NotImplementedException ||
                             e is TimeoutException ||
@@ -175,7 +175,7 @@ namespace DeviceSQL.Device.ROC.IO
                     }
                     if (TracingEnabled)
                     {
-                        Trace.WriteLine(string.Format("ROCMaster.Transport.Warning,Retry,{0},{1}", requestMessage.OpCode.ToString(), attempt.ToString()));
+                        Trace.WriteLine(string.Format("RocMaster.Transport.Warning,Retry,{0},{1}", requestMessage.OpCode.ToString(), attempt.ToString()));
                     }
                 } while (!success && NumberOfRetries > attempt);
             }
@@ -183,77 +183,77 @@ namespace DeviceSQL.Device.ROC.IO
             throw new TimeoutException("Device not responding to requests", lastException);
         }
 
-        internal virtual IROCResponseMessage CreateResponse<TResponseMessage>(byte[] frame, IROCRequestMessage requestMessage)
-            where TResponseMessage : IROCResponseMessage, new()
+        internal virtual IRocResponseMessage CreateResponse<TResponseMessage>(byte[] frame, IRocRequestMessage requestMessage)
+            where TResponseMessage : IRocResponseMessage, new()
         {
             byte opCode = frame[4];
 
-            IROCResponseMessage response;
+            IRocResponseMessage response;
 
             switch (opCode)
             {
                 case Device.OpCode7:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode007Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode007Response>(frame);
                     break;
                 case Device.OpCode8:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode008Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode008Response>(frame);
                     break;
                 case Device.OpCode17:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode017Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode017Response>(frame);
                     break;
                 case Device.OpCode80:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode080Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode080Response>(frame, requestMessage);
                     break;
                 case Device.OpCode120:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode120Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode120Response>(frame);
                     break;
                 case Device.OpCode118:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode118Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode118Response>(frame);
                     break;
                 case Device.OpCode119:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode119Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode119Response>(frame);
                     break;
                 case Device.OpCode121:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode121Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode121Response>(frame);
                     break;
                 case Device.OpCode122:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode122Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode122Response>(frame);
                     break;
                 case Device.OpCode126:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode126Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode126Response>(frame, requestMessage);
                     break;
                 case Device.OpCode130:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode130Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode130Response>(frame, requestMessage);
                     break;
                 case Device.OpCode131:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode131Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode131Response>(frame, requestMessage);
                     break;
                 case Device.OpCode132:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode132Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode132Response>(frame, requestMessage);
                     break;
                 case Device.OpCode136:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode136Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode136Response>(frame, requestMessage);
                     break;
                 case Device.OpCode139:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode139Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode139Response>(frame, requestMessage);
                     break;
                 case Device.OpCode165:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode165Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode165Response>(frame, requestMessage);
                     break;
                 case Device.OpCode166:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode166Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode166Response>(frame);
                     break;
                 case Device.OpCode167:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode167Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode167Response>(frame, requestMessage);
                     break;
                 case Device.OpCode180:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode180Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode180Response>(frame, requestMessage);
                     break;
                 case Device.OpCode181:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode181Response>(frame);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode181Response>(frame);
                     break;
                 case Device.OpCode255:
-                    response = ROCMessageFactory.CreateROCResponseMessage<OpCode255Response>(frame, requestMessage);
+                    response = RocMessageFactory.CreateRocResponseMessage<OpCode255Response>(frame, requestMessage);
                     break;
                 default:
                     throw new FormatException(string.Format("Unknown OpCode ({0}).", opCode.ToString()));
@@ -262,7 +262,7 @@ namespace DeviceSQL.Device.ROC.IO
             return response;
         }
 
-        internal void ValidateResponse(IROCRequestMessage request, IROCResponseMessage response)
+        internal void ValidateResponse(IRocRequestMessage request, IRocResponseMessage response)
         {
 
             if (request.OpCode != response.OpCode)
@@ -283,8 +283,8 @@ namespace DeviceSQL.Device.ROC.IO
             return frameStart[5] + CRC_LENGTH;
         }
 
-        internal IROCResponseMessage ReadResponse<TResponseMessage>(IROCRequestMessage requestMessage)
-            where TResponseMessage : IROCResponseMessage, new()
+        internal IRocResponseMessage ReadResponse<TResponseMessage>(IRocRequestMessage requestMessage)
+            where TResponseMessage : IRocResponseMessage, new()
         {
             var sequence = 0;
             var referenceHeader = new byte[] { requestMessage.SourceUnit, requestMessage.SourceGroup, requestMessage.DestinationUnit, requestMessage.DestinationGroup, requestMessage.OpCode };
@@ -352,7 +352,7 @@ namespace DeviceSQL.Device.ROC.IO
             }
         }
 
-        internal byte[] BuildMessageFrame(IROCMessage message)
+        internal byte[] BuildMessageFrame(IRocMessage message)
         {
             var messageBody = new List<byte>();
             messageBody.AddRange(message.MessageFrame);
@@ -374,7 +374,7 @@ namespace DeviceSQL.Device.ROC.IO
             return bufferedBytes;
         }
 
-        internal void Write(IROCMessage message)
+        internal void Write(IRocMessage message)
         {
             var frameBytes = BuildMessageFrame(message);
             var frameLength = frameBytes.Length;
@@ -387,7 +387,7 @@ namespace DeviceSQL.Device.ROC.IO
 
         #region Helper Methods
 
-        internal bool ChecksumsMatch(IROCMessage message, byte[] messageFrame)
+        internal bool ChecksumsMatch(IRocMessage message, byte[] messageFrame)
         {
             if (messageFrame.Length < message.MessageFrame.Length)
             {

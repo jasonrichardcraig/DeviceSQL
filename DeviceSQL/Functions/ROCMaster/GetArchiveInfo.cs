@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -9,14 +10,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static Types.ROCMaster.ROCMaster_ArchiveInformation ROCMaster_GetArchiveInfo(SqlString deviceName)
+        public static Types.RocMaster.RocMaster_ArchiveInformation RocMaster_GetArchiveInfo(SqlString deviceName)
         {
-            var deviceNameValue = deviceName.Value;
-            var archiveInfo = (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster).GetArchiveInfo(null, null, null, null);
-            return new Types.ROCMaster.ROCMaster_ArchiveInformation() { Data = archiveInfo.data };
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var archiveInfo = (device as Device.Roc.RocMaster).GetArchiveInfo(null, null, null, null);
+            return new Types.RocMaster.RocMaster_ArchiveInformation() { Data = archiveInfo.data };
         }
     }
 }

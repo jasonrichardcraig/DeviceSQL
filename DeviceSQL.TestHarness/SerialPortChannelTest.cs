@@ -18,7 +18,7 @@ namespace DeviceSQL.TestHarness
                 TracingEnabled = true
             })
             {
-                var rocMaster = new Device.ROC.ROCMaster(serialPortChannel)
+                var rocMaster = new Device.Roc.RocMaster(serialPortChannel)
                 {
                     Name = "FB103-01",
                     DeviceAddress = 1,

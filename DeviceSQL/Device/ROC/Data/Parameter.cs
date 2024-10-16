@@ -7,7 +7,7 @@ using System.Text;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
 
     #region Enumerations
@@ -36,7 +36,7 @@ namespace DeviceSQL.Device.ROC.Data
 
     #endregion
 
-    public abstract class Parameter : IROCParameterData
+    public abstract class Parameter : IRocParameterData
     {
 
         #region Fields
@@ -58,11 +58,11 @@ namespace DeviceSQL.Device.ROC.Data
         {
             get
             {
-                return ((IROCParameterData)this).Data;
+                return ((IRocParameterData)this).Data;
             }
             set
             {
-                ((IROCParameterData)this).Data = value;
+                ((IRocParameterData)this).Data = value;
             }
         }
 
@@ -83,9 +83,9 @@ namespace DeviceSQL.Device.ROC.Data
 
         #endregion
 
-        #region IROCParameterData Members
+        #region IRocParameterData Members
 
-        byte[] IROCParameterData.Data
+        byte[] IRocParameterData.Data
         {
             get
             {

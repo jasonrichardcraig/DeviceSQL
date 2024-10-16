@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
@@ -10,15 +11,15 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class MODBUSMaster
+    public partial class ModbusMaster
     {
         [SqlFunction]
-        public static Types.MODBUSMaster.MODBUSMaster_HoldingRegisterArray MODBUSMaster_ReadHoldings(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_HoldingRegisterArray holdingRegisterArray)
+        public static Types.ModbusMaster.ModbusMaster_HoldingRegisterArray ModbusMaster_ReadHoldings(SqlString deviceName, Types.ModbusMaster.ModbusMaster_HoldingRegisterArray holdingRegisterArray)
         {
-            var deviceNameValue = deviceName.Value;
-            var holdingRegisters = new List<Device.MODBUS.Data.HoldingRegister>(holdingRegisterArray.holdingRegisters.Select(holdingRegister => new Device.MODBUS.Data.HoldingRegister(new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(holdingRegister.Address.RelativeAddress.Value), holdingRegister.Address.IsZeroBased.Value), holdingRegister.ByteSwap.Value)));
-            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.MODBUS.MODBUSMaster).ReadHoldingRegisters(null, ref holdingRegisters, null);
-            return new Types.MODBUSMaster.MODBUSMaster_HoldingRegisterArray() { holdingRegisters = holdingRegisters.Select(holdingRegister => new Types.MODBUSMaster.MODBUSMaster_HoldingRegister() { Address = new Types.MODBUSMaster.MODBUSMaster_MODBUSAddress { RelativeAddress = holdingRegister.Address.RelativeAddress, IsZeroBased = holdingRegister.Address.IsZeroBased }, ByteSwap = holdingRegister.ByteSwap, Data = holdingRegister.Data }).ToList() };
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var holdingRegisters = new List<Device.Modbus.Data.HoldingRegister>(holdingRegisterArray.holdingRegisters.Select(holdingRegister => new Device.Modbus.Data.HoldingRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(holdingRegister.Address.RelativeAddress.Value), holdingRegister.Address.IsZeroBased.Value), holdingRegister.ByteSwap.Value)));
+            (device as Device.Modbus.ModbusMaster).ReadHoldingRegisters(null, ref holdingRegisters, null);
+            return new Types.ModbusMaster.ModbusMaster_HoldingRegisterArray() { holdingRegisters = holdingRegisters.Select(holdingRegister => new Types.ModbusMaster.ModbusMaster_HoldingRegister() { Address = new Types.ModbusMaster.ModbusMaster_ModbusAddress { RelativeAddress = holdingRegister.Address.RelativeAddress, IsZeroBased = holdingRegister.Address.IsZeroBased }, ByteSwap = holdingRegister.ByteSwap, Data = holdingRegister.Data }).ToList() };
         }
     }
 }

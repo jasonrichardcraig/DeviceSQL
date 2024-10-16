@@ -1,6 +1,6 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,9 +8,9 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode166Request : ROCMessage, IROCRequestMessage
+    internal class OpCode166Request : RocMessage, IRocRequestMessage
     {
 
         #region Fields
@@ -76,7 +76,7 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IROCResponseMessage response)
+        public void ValidateResponse(IRocResponseMessage response)
         {
             var opCode166Response = response as OpCode166Response;
             Debug.Assert(opCode166Response != null, "Argument response should be of type OpCode166Response.");

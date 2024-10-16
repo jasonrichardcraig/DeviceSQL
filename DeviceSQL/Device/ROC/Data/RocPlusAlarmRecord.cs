@@ -7,24 +7,24 @@ using System.Text;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
 
     #region Enums
 
-    public enum ROCPlusAlarmSrbxState
+    public enum RocPlusAlarmSrbxState
     {
         NoSrbx = 0,
         SrbxIssued = 1
     }
 
-    public enum ROCPlusAlarmCondition
+    public enum RocPlusAlarmCondition
     {
         Cleared = 0,
         Set = 1
     }
 
-    public enum ROCPlusAlarmType : byte
+    public enum RocPlusAlarmType : byte
     {
         NoAlarm = 0,
         ParameterAlarm = 1,
@@ -33,7 +33,7 @@ namespace DeviceSQL.Device.ROC.Data
         UserValueAlarm = 4
     }
 
-    public enum ROCPlusAlarmCode
+    public enum RocPlusAlarmCode
     {
         LowAlarm = 0,
         LowLowAlarm = 1,
@@ -73,7 +73,7 @@ namespace DeviceSQL.Device.ROC.Data
 
     #endregion
 
-    public class ROCPlusAlarmRecord
+    public class RocPlusAlarmRecord
     {
 
         #region Fields
@@ -107,40 +107,40 @@ namespace DeviceSQL.Device.ROC.Data
             get { return index; }
         }
 
-        public ROCPlusAlarmSrbxState AlarmSrbxState
+        public RocPlusAlarmSrbxState AlarmSrbxState
         {
             get
             {
                 var alarmSrbxState = (byte)(data[0] & (byte)128) >> 7;
-                return (ROCPlusAlarmSrbxState)alarmSrbxState;
+                return (RocPlusAlarmSrbxState)alarmSrbxState;
             }
         }
 
-        public ROCPlusAlarmCondition AlarmCondition
+        public RocPlusAlarmCondition AlarmCondition
         {
             get
             {
                 var alarmCondition = (byte)(data[0] & (byte)64) >> 6;
-                return (ROCPlusAlarmCondition)alarmCondition;
+                return (RocPlusAlarmCondition)alarmCondition;
             }
         }
 
-        public ROCPlusAlarmType AlarmType
+        public RocPlusAlarmType AlarmType
         {
             get
             {
                 var alarmType = (byte)(data[0] & (byte)31);
-                return (ROCPlusAlarmType)alarmType;
+                return (RocPlusAlarmType)alarmType;
             }
         }
 
-        public ROCPlusAlarmCode? AlarmCode
+        public RocPlusAlarmCode? AlarmCode
         {
             get
             {
-                if (AlarmType == ROCPlusAlarmType.ParameterAlarm)
+                if (AlarmType == RocPlusAlarmType.ParameterAlarm)
                 {
-                    return (ROCPlusAlarmCode)data[5];
+                    return (RocPlusAlarmCode)data[5];
                 }
                 else
                 {
@@ -155,13 +155,13 @@ namespace DeviceSQL.Device.ROC.Data
             {
                 switch (AlarmType)
                 {
-                    case ROCPlusAlarmType.ParameterAlarm:
+                    case RocPlusAlarmType.ParameterAlarm:
                         return System.Text.ASCIIEncoding.Default.GetString(data, 9, 10).Replace("\0", "").Trim();
-                    case ROCPlusAlarmType.FstAlarm:
+                    case RocPlusAlarmType.FstAlarm:
                         return System.Text.ASCIIEncoding.Default.GetString(data, 6, 13).Replace("\0", "").Trim();
-                    case ROCPlusAlarmType.UserTextAlarm:
+                    case RocPlusAlarmType.UserTextAlarm:
                         return System.Text.ASCIIEncoding.Default.GetString(data, 5, 18).Replace("\0", "").Trim();
-                    case ROCPlusAlarmType.UserValueAlarm:
+                    case RocPlusAlarmType.UserValueAlarm:
                         return System.Text.ASCIIEncoding.Default.GetString(data, 5, 14).Replace("\0", "").Trim();
                     default:
                         return null;
@@ -173,7 +173,7 @@ namespace DeviceSQL.Device.ROC.Data
         {
             get
             {
-                if (AlarmType == ROCPlusAlarmType.ParameterAlarm)
+                if (AlarmType == RocPlusAlarmType.ParameterAlarm)
                 {
                     return new Tlp(data[6], data[7], data[8]);
                 }
@@ -190,11 +190,11 @@ namespace DeviceSQL.Device.ROC.Data
             {
                 switch (AlarmType)
                 {
-                    case ROCPlusAlarmType.ParameterAlarm:
-                    case ROCPlusAlarmType.FstAlarm:
-                    case ROCPlusAlarmType.UserValueAlarm:
+                    case RocPlusAlarmType.ParameterAlarm:
+                    case RocPlusAlarmType.FstAlarm:
+                    case RocPlusAlarmType.UserValueAlarm:
                         return BitConverter.ToSingle(data, 19);
-                    case ROCPlusAlarmType.UserTextAlarm:
+                    case RocPlusAlarmType.UserTextAlarm:
                     default:
                         return null;
                 }
@@ -229,7 +229,7 @@ namespace DeviceSQL.Device.ROC.Data
 
         #region Constructor(s)
 
-        internal ROCPlusAlarmRecord(ushort index, byte[] data)
+        internal RocPlusAlarmRecord(ushort index, byte[] data)
         {
 
             if (data == null)

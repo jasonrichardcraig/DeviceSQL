@@ -1,14 +1,14 @@
-﻿CREATE TABLE [ROCMaster].[ROCMeters] (
+﻿CREATE TABLE [RocMaster].[RocMeters] (
     [Id]                BIGINT        NOT NULL,
     [Name]              VARCHAR (255) NOT NULL,
     [Description]       VARCHAR (255) NOT NULL,
-    [ROCChannelId]      BIGINT        NOT NULL,
-    [ROCChannelGroupId] INT           NOT NULL,
+    [RocChannelId]      BIGINT        NOT NULL,
+    [RocChannelGroupId] INT           NOT NULL,
     [DeviceAddress]     TINYINT       NOT NULL,
     [DeviceGroup]       TINYINT       NOT NULL,
     [RowVersion]        ROWVERSION    NULL,
-    CONSTRAINT [PK_ROCMeters] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_ROCMeters_ROCChannelGroup] FOREIGN KEY ([ROCChannelGroupId]) REFERENCES [ROCMaster].[ROCChannelGroup] ([Id]),
-    CONSTRAINT [FK_ROCMeters_ROCChannels] FOREIGN KEY ([ROCChannelId]) REFERENCES [ROCMaster].[ROCChannels] ([Id])
+    CONSTRAINT [PK_RocMeters] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_RocMeters_RocChannelGroup] FOREIGN KEY ([RocChannelGroupId]) REFERENCES [RocMaster].[RocChannelGroup] ([Id]),
+    CONSTRAINT [FK_RocMeters_RocChannels] FOREIGN KEY ([RocChannelId]) REFERENCES [RocMaster].[RocChannels] ([Id])
 );
 

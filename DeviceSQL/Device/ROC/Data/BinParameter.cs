@@ -7,7 +7,7 @@ using System.Text;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
     public class BinParameter : Parameter<System.Byte>
     {

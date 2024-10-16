@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -9,14 +10,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class MODBUSMaster
+    public partial class ModbusMaster
     {
         [SqlFunction]
-        public static Types.MODBUSMaster.MODBUSMaster_StringRegister MODBUSMaster_ReadString(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_StringRegister stringRegister)
+        public static Types.ModbusMaster.ModbusMaster_StringRegister ModbusMaster_ReadString(SqlString deviceName, Types.ModbusMaster.ModbusMaster_StringRegister stringRegister)
         {
-            var deviceNameValue = deviceName.Value;
-            var stringRegisterValue = new Device.MODBUS.Data.StringRegister(new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(stringRegister.Address.RelativeAddress.Value), stringRegister.Address.IsZeroBased.Value), stringRegister.Length.Value);
-            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.MODBUS.MODBUSMaster).ReadStringRegister(null, null, ref stringRegisterValue);
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var stringRegisterValue = new Device.Modbus.Data.StringRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(stringRegister.Address.RelativeAddress.Value), stringRegister.Address.IsZeroBased.Value), stringRegister.Length.Value);
+            (device as Device.Modbus.ModbusMaster).ReadStringRegister(null, null, ref stringRegisterValue);
             stringRegister.Data = stringRegisterValue.Data;
             return stringRegister;
         }

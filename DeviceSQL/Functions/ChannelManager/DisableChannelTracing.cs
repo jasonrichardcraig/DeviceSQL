@@ -1,6 +1,7 @@
 #region Imported Types
 
 using DeviceSQL.IO.Channels;
+using DeviceSQL.Registries;
 using System;
 using System.Data.SqlTypes;
 using System.Diagnostics;
@@ -17,9 +18,7 @@ namespace DeviceSQL.Functions
         {
             try
             {
-                var channelNameValue = channelName.Value;
-                var channels = DeviceSQL.Watchdog.Worker.Channels;
-                var channel = channels.FirstOrDefault(c => c.Name == channelName.Value);
+                var channel = ServiceRegistry.GetChannel(channelName.Value);
 
                 if (channel != null)
                 {

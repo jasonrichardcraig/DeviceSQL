@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_HistoryRecordArray : INullable, IBinarySerialize
+    public struct RocMaster_HistoryRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<ROCMaster_HistoryRecord> historyRecords;
+        internal List<RocMaster_HistoryRecord> historyRecords;
 
         #endregion
 
         #region Properties
 
-        internal ROCMaster_HistoryRecord this[int index]
+        internal RocMaster_HistoryRecord this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        private List<ROCMaster_HistoryRecord> HistoryRecords
+        private List<RocMaster_HistoryRecord> HistoryRecords
         {
             get
             {
                 if (historyRecords == null)
                 {
-                    historyRecords = new List<ROCMaster_HistoryRecord>();
+                    historyRecords = new List<RocMaster_HistoryRecord>();
                 }
                 return historyRecords;
             }
         }
 
-        public static ROCMaster_HistoryRecordArray Null
+        public static RocMaster_HistoryRecordArray Null
         {
             get
             {
-                return (new ROCMaster_HistoryRecordArray() { IsNull = true });
+                return (new RocMaster_HistoryRecordArray() { IsNull = true });
             }
         }
 
@@ -79,39 +79,39 @@ namespace DeviceSQL.Types.ROCMaster
             return string.Join("|", HistoryRecords.Select(parameter => parameter.ToString()));
         }
 
-        public ROCMaster_HistoryRecordArray AddHistoryRecord(ROCMaster_HistoryRecord historyRecord)
+        public RocMaster_HistoryRecordArray AddHistoryRecord(RocMaster_HistoryRecord historyRecord)
         {
             HistoryRecords.Add(historyRecord);
             return this;
         }
 
-        public static ROCMaster_HistoryRecordArray Parse(SqlString stringToParse)
+        public static RocMaster_HistoryRecordArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCHistoryRecords = new ROCMaster_HistoryRecordArray();
-            parsedROCHistoryRecords.historyRecords = new List<ROCMaster_HistoryRecord>();
+            var parsedRocHistoryRecords = new RocMaster_HistoryRecordArray();
+            parsedRocHistoryRecords.historyRecords = new List<RocMaster_HistoryRecord>();
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedROCHistoryRecords.historyRecords.Add(ROCMaster_HistoryRecord.Parse(parsedString[i]));
+                parsedRocHistoryRecords.historyRecords.Add(RocMaster_HistoryRecord.Parse(parsedString[i]));
             }
 
-            return parsedROCHistoryRecords;
+            return parsedRocHistoryRecords;
         }
 
-        public ROCMaster_HistoryRecord GetHistoryRecord(SqlInt32 index)
+        public RocMaster_HistoryRecord GetHistoryRecord(SqlInt32 index)
         {
             return HistoryRecords[index.Value];
         }
 
-        public static ROCMaster_HistoryRecordArray Empty()
+        public static RocMaster_HistoryRecordArray Empty()
         {
-            var historyRecord = new ROCMaster_HistoryRecordArray { historyRecords = new List<ROCMaster_HistoryRecord>() };
+            var historyRecord = new RocMaster_HistoryRecordArray { historyRecords = new List<RocMaster_HistoryRecord>() };
             return historyRecord;
         }
 
@@ -134,7 +134,7 @@ namespace DeviceSQL.Types.ROCMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var historyRecord = new ROCMaster_HistoryRecord();
+                    var historyRecord = new RocMaster_HistoryRecord();
                     historyRecord.Read(binaryReader);
                     HistoryRecords.Add(historyRecord);
                 }

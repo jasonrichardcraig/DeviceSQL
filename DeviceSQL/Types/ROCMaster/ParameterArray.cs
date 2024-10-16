@@ -9,23 +9,23 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
 
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_ParameterArray : INullable, IBinarySerialize
+    public struct RocMaster_ParameterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        private List<ROCMaster_Parameter> parameters;
+        private List<RocMaster_Parameter> parameters;
 
         #endregion
 
         #region Properties
 
-        internal ROCMaster_Parameter this[int index]
+        internal RocMaster_Parameter this[int index]
         {
             get
             {
@@ -55,23 +55,23 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        private List<ROCMaster_Parameter> Parameters
+        private List<RocMaster_Parameter> Parameters
         {
             get
             {
                 if (parameters == null)
                 {
-                    parameters = new List<ROCMaster_Parameter>();
+                    parameters = new List<RocMaster_Parameter>();
                 }
                 return parameters;
             }
         }
 
-        public static ROCMaster_ParameterArray Null
+        public static RocMaster_ParameterArray Null
         {
             get
             {
-                return (new ROCMaster_ParameterArray() { IsNull = true });
+                return (new RocMaster_ParameterArray() { IsNull = true });
             }
         }
 
@@ -80,42 +80,42 @@ namespace DeviceSQL.Types.ROCMaster
             return string.Join("|", Parameters.Select(parameter => parameter.ToString()));
         }
 
-        public ROCMaster_ParameterArray AddParameter(ROCMaster_Parameter parameter)
+        public RocMaster_ParameterArray AddParameter(RocMaster_Parameter parameter)
         {
             Parameters.Add(parameter);
             return this;
         }
 
-        public static ROCMaster_ParameterArray Parse(SqlString stringToParse)
+        public static RocMaster_ParameterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCParameterArray = new ROCMaster_ParameterArray()
+            var parsedRocParameterArray = new RocMaster_ParameterArray()
             {
-                parameters = new List<ROCMaster_Parameter>()
+                parameters = new List<RocMaster_Parameter>()
             };
 
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedROCParameterArray.Parameters.Add(ROCMaster_Parameter.Parse(parsedString[i]));
+                parsedRocParameterArray.Parameters.Add(RocMaster_Parameter.Parse(parsedString[i]));
             }
 
-            return parsedROCParameterArray;
+            return parsedRocParameterArray;
         }
 
-        public ROCMaster_Parameter GetParameter(SqlInt32 index)
+        public RocMaster_Parameter GetParameter(SqlInt32 index)
         {
             return Parameters[index.Value];
         }
 
-        public static ROCMaster_ParameterArray Empty()
+        public static RocMaster_ParameterArray Empty()
         {
-            var rocParameterArray = new ROCMaster_ParameterArray() { parameters = new List<ROCMaster_Parameter>() };
+            var rocParameterArray = new RocMaster_ParameterArray() { parameters = new List<RocMaster_Parameter>() };
             return rocParameterArray;
         }
 
@@ -138,7 +138,7 @@ namespace DeviceSQL.Types.ROCMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var parameter = new ROCMaster_Parameter();
+                    var parameter = new RocMaster_Parameter();
                     parameter.Read(binaryReader);
                     Parameters.Add(parameter);
                 }

@@ -4,9 +4,9 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
-    public struct ROCPlusHistoryRecord
+    public struct RocPlusHistoryRecord
     {
 
         #region Fields

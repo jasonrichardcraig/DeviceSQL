@@ -1,14 +1,14 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using System;
 using System.Collections.Generic;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode136Response : ROCMessage, IROCResponseMessage
+    internal class OpCode136Response : RocMessage, IRocResponseMessage
     {
 
         #region Fields
@@ -70,7 +70,7 @@ namespace DeviceSQL.Device.ROC.Message
             }
         }
 
-        public List<ROCPlusHistoryRecord> MeterHistory
+        public List<RocPlusHistoryRecord> MeterHistory
         {
             get
             {
@@ -78,7 +78,7 @@ namespace DeviceSQL.Device.ROC.Message
                 var recordCount = (numberOfTimePeriods * numberOfHistoryPoints);
                 var recordIndex = HistoryIndex;
 
-                var meterHistory = new List<ROCPlusHistoryRecord>(recordCount);
+                var meterHistory = new List<RocPlusHistoryRecord>(recordCount);
 
                 for (var timeStampOffset = 6; (timeStampOffset + (numberOfHistoryPoints * (4))) < Data.Length; timeStampOffset += (4 + (numberOfHistoryPoints * (4))))
                 {
@@ -86,7 +86,7 @@ namespace DeviceSQL.Device.ROC.Message
 
                     for (var historyPoint = startingHistoryPoint; historyPoint < (startingHistoryPoint + numberOfHistoryPoints); historyPoint++)
                     {
-                        meterHistory.Add(new ROCPlusHistoryRecord() { HistorySegment = HistorySegment, HistoryPointNumber = historyPoint, Index = recordIndex, Value = new byte[] { Data[timeStampOffset], Data[timeStampOffset + 1], Data[timeStampOffset + 2], Data[timeStampOffset + 3], Data[dataOffset + 0], Data[dataOffset + 1], Data[dataOffset + 2], Data[dataOffset + 3] } });
+                        meterHistory.Add(new RocPlusHistoryRecord() { HistorySegment = HistorySegment, HistoryPointNumber = historyPoint, Index = recordIndex, Value = new byte[] { Data[timeStampOffset], Data[timeStampOffset + 1], Data[timeStampOffset + 2], Data[timeStampOffset + 3], Data[dataOffset + 0], Data[dataOffset + 1], Data[dataOffset + 2], Data[dataOffset + 3] } });
                         dataOffset += 4;
                     }
                     recordIndex++;
@@ -100,12 +100,12 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Helper Methods
 
-        void IROCResponseMessage.Initialize(byte[] frame)
+        void IRocResponseMessage.Initialize(byte[] frame)
         {
             base.Initialize(frame);
         }
 
-        void IROCResponseMessage.Initialize(byte[] frame, IROCRequestMessage requestMessage)
+        void IRocResponseMessage.Initialize(byte[] frame, IRocRequestMessage requestMessage)
         {
 
             var opCode136RequestMessage = requestMessage as OpCode136Request;

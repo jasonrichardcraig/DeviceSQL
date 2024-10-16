@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_AlarmRecordArray : INullable, IBinarySerialize
+    public struct RocMaster_AlarmRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<ROCMaster_AlarmRecord> alarmRecords;
+        internal List<RocMaster_AlarmRecord> alarmRecords;
 
         #endregion
 
         #region Properties
 
-        internal ROCMaster_AlarmRecord this[int index]
+        internal RocMaster_AlarmRecord this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        private List<ROCMaster_AlarmRecord> AlarmRecords
+        private List<RocMaster_AlarmRecord> AlarmRecords
         {
             get
             {
                 if (alarmRecords == null)
                 {
-                    alarmRecords = new List<ROCMaster_AlarmRecord>();
+                    alarmRecords = new List<RocMaster_AlarmRecord>();
                 }
                 return alarmRecords;
             }
         }
 
-        public static ROCMaster_AlarmRecordArray Null
+        public static RocMaster_AlarmRecordArray Null
         {
             get
             {
-                return (new ROCMaster_AlarmRecordArray() { IsNull = true });
+                return (new RocMaster_AlarmRecordArray() { IsNull = true });
             }
         }
 
@@ -79,39 +79,39 @@ namespace DeviceSQL.Types.ROCMaster
             return string.Join("|", AlarmRecords.Select(parameter => parameter.ToString()));
         }
 
-        public ROCMaster_AlarmRecordArray AddAlarmRecord(ROCMaster_AlarmRecord alarmRecord)
+        public RocMaster_AlarmRecordArray AddAlarmRecord(RocMaster_AlarmRecord alarmRecord)
         {
             AlarmRecords.Add(alarmRecord);
             return this;
         }
 
-        public static ROCMaster_AlarmRecordArray Parse(SqlString stringToParse)
+        public static RocMaster_AlarmRecordArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCAlarmRecords = new ROCMaster_AlarmRecordArray();
-            parsedROCAlarmRecords.alarmRecords = new List<ROCMaster_AlarmRecord>();
+            var parsedRocAlarmRecords = new RocMaster_AlarmRecordArray();
+            parsedRocAlarmRecords.alarmRecords = new List<RocMaster_AlarmRecord>();
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedROCAlarmRecords.alarmRecords.Add(ROCMaster_AlarmRecord.Parse(parsedString[i]));
+                parsedRocAlarmRecords.alarmRecords.Add(RocMaster_AlarmRecord.Parse(parsedString[i]));
             }
 
-            return parsedROCAlarmRecords;
+            return parsedRocAlarmRecords;
         }
 
-        public ROCMaster_AlarmRecord GetAlarmRecord(SqlInt32 index)
+        public RocMaster_AlarmRecord GetAlarmRecord(SqlInt32 index)
         {
             return AlarmRecords[index.Value];
         }
 
-        public static ROCMaster_AlarmRecordArray Empty()
+        public static RocMaster_AlarmRecordArray Empty()
         {
-            var alarmRecordArray = new ROCMaster_AlarmRecordArray { alarmRecords = new List<ROCMaster_AlarmRecord>() };
+            var alarmRecordArray = new RocMaster_AlarmRecordArray { alarmRecords = new List<RocMaster_AlarmRecord>() };
             return alarmRecordArray;
         }
 
@@ -134,7 +134,7 @@ namespace DeviceSQL.Types.ROCMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var alarmRecord = new ROCMaster_AlarmRecord();
+                    var alarmRecord = new RocMaster_AlarmRecord();
                     alarmRecord.Read(binaryReader);
                     AlarmRecords.Add(alarmRecord);
                 }

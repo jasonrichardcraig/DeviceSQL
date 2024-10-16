@@ -1,4 +1,4 @@
-﻿namespace DeviceSQL.Device.ROC.FST.Instructions
+﻿namespace DeviceSQL.Device.Roc.FST.Instructions
 {
     public enum InstructionCategory : byte
     {

@@ -6,9 +6,9 @@ using System.Globalization;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS.Message
+namespace DeviceSQL.Device.Modbus.Message
 {
-    internal abstract class MODBUSMessage : IMODBUSMessage
+    internal abstract class ModbusMessage : IModbusMessage
     {
 
         #region Properties
@@ -76,11 +76,11 @@ namespace DeviceSQL.Device.MODBUS.Message
 
         #region Constructor(s)
 
-        public MODBUSMessage()
+        public ModbusMessage()
         {
         }
 
-        public MODBUSMessage(ushort unitId, byte functionCode)
+        public ModbusMessage(ushort unitId, byte functionCode)
         {
             this.UnitId = unitId;
             this.FunctionCode = functionCode;

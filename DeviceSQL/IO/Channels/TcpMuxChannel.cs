@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -17,7 +18,8 @@ namespace DeviceSQL.IO.Channels
 
         #region Fields
 
-        private object lockObject = new object();
+        private readonly object lockObject = new object();
+        private int listenerPort = 0;
         private volatile int numberOfTcpClients = 0;
         private volatile bool stopRequested;
         private volatile bool hasStopped;
@@ -27,7 +29,7 @@ namespace DeviceSQL.IO.Channels
         private int responseTimeout = 3000;
         private int maximumNumberOfTcpClients = 5;
         private TcpListener tcpListener;
-        private List<TcpClient> tcpClients = new List<TcpClient>();
+        private readonly List<TcpClient> tcpClients = new List<TcpClient>();
 
         #endregion
 
@@ -37,7 +39,7 @@ namespace DeviceSQL.IO.Channels
         {
             get
             {
-                return DeviceSQL.Watchdog.Worker.Channels.FirstOrDefault();
+                return ServiceRegistry.GetChannel(SourceChannelName);
             }
         }
 
@@ -88,6 +90,18 @@ namespace DeviceSQL.IO.Channels
             }
         }
 
+        public int ListenerPort
+        {
+            get
+            {
+                return listenerPort;
+            }
+            set
+            {
+                listenerPort = value;
+            }
+        }
+
         public int MaximumNumberOfTcpClients
         {
             get
@@ -118,7 +132,7 @@ namespace DeviceSQL.IO.Channels
             {
                 try
                 {
-
+                    tcpListener = new TcpListener(System.Net.IPAddress.Any, ListenerPort);
                     tcpListener.Start(MaximumNumberOfTcpClients);
                     stopRequested = false;
                     hasStopped = false;

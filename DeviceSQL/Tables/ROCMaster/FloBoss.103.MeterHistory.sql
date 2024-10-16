@@ -1,16 +1,16 @@
-﻿CREATE TABLE [ROCMaster].[FloBoss.103.MeterHistory] (
+﻿CREATE TABLE [RocMaster].[FloBoss.103.MeterHistory] (
     [Id]                   BIGINT                      IDENTITY (1, 1) NOT NULL,
-    [ROCMeterId]           INT                         NOT NULL,
-    [FlowDuration]         [ROCMaster].[HistoryRecord] NOT NULL,
-    [DIfferentialPressure] [ROCMaster].[HistoryRecord] NOT NULL,
-    [StaticPressure]       [ROCMaster].[HistoryRecord] NOT NULL,
-    [Temperature]          [ROCMaster].[HistoryRecord] NOT NULL,
-    [IMV]                  [ROCMaster].[HistoryRecord] NOT NULL,
-    [HwPf]                 [ROCMaster].[HistoryRecord] NOT NULL,
-    [Energy]               [ROCMaster].[HistoryRecord] NOT NULL,
-    [Volume]               [ROCMaster].[HistoryRecord] NOT NULL,
+    [RocMeterId]           INT                         NOT NULL,
+    [FlowDuration]         [RocMaster].[HistoryRecord] NOT NULL,
+    [DIfferentialPressure] [RocMaster].[HistoryRecord] NOT NULL,
+    [StaticPressure]       [RocMaster].[HistoryRecord] NOT NULL,
+    [Temperature]          [RocMaster].[HistoryRecord] NOT NULL,
+    [IMV]                  [RocMaster].[HistoryRecord] NOT NULL,
+    [HwPf]                 [RocMaster].[HistoryRecord] NOT NULL,
+    [Energy]               [RocMaster].[HistoryRecord] NOT NULL,
+    [Volume]               [RocMaster].[HistoryRecord] NOT NULL,
     [RowVersion]           ROWVERSION                  NULL,
     CONSTRAINT [PK_FloBoss.103.MeterHistory] PRIMARY KEY CLUSTERED ([Id] ASC),
-    CONSTRAINT [FK_FloBoss.103.MeterHistory_ROCMeters] FOREIGN KEY ([Id]) REFERENCES [ROCMaster].[ROCMeters] ([Id])
+    CONSTRAINT [FK_FloBoss.103.MeterHistory_RocMeters] FOREIGN KEY ([Id]) REFERENCES [RocMaster].[RocMeters] ([Id])
 );
 

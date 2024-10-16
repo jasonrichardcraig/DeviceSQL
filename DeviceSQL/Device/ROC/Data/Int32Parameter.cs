@@ -7,7 +7,7 @@ using System.Text;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
     public class Int32Parameter : Parameter<System.Int32>
     {

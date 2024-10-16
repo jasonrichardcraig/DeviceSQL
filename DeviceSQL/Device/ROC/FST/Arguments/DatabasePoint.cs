@@ -1,4 +1,4 @@
-﻿namespace DeviceSQL.Device.ROC.Data.FST.Arguments
+﻿namespace DeviceSQL.Device.Roc.Data.FST.Arguments
 {
     public class DatabasePoint
     {

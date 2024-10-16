@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.MODBUSMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct MODBUSMaster_ShortRegisterArray : INullable, IBinarySerialize
+    public struct ModbusMaster_ShortRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<MODBUSMaster_ShortRegister> shortRegisters;
+        internal List<ModbusMaster_ShortRegister> shortRegisters;
 
         #endregion
 
         #region Properties
 
-        internal MODBUSMaster_ShortRegister this[int index]
+        internal ModbusMaster_ShortRegister this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.MODBUSMaster
 
         #region Helper Methods
 
-        private List<MODBUSMaster_ShortRegister> ShortRegisters
+        private List<ModbusMaster_ShortRegister> ShortRegisters
         {
             get
             {
                 if (shortRegisters == null)
                 {
-                    shortRegisters = new List<MODBUSMaster_ShortRegister>();
+                    shortRegisters = new List<ModbusMaster_ShortRegister>();
                 }
                 return shortRegisters;
             }
         }
 
-        public static MODBUSMaster_ShortRegisterArray Null
+        public static ModbusMaster_ShortRegisterArray Null
         {
             get
             {
-                return (new MODBUSMaster_ShortRegisterArray() { IsNull = true });
+                return (new ModbusMaster_ShortRegisterArray() { IsNull = true });
             }
         }
 
@@ -79,42 +79,42 @@ namespace DeviceSQL.Types.MODBUSMaster
             return string.Join("|", ShortRegisters.Select(shortRegister => shortRegister.ToString()));
         }
 
-        public MODBUSMaster_ShortRegisterArray AddShortRegister(MODBUSMaster_ShortRegister shortRegister)
+        public ModbusMaster_ShortRegisterArray AddShortRegister(ModbusMaster_ShortRegister shortRegister)
         {
             ShortRegisters.Add(shortRegister);
             return this;
         }
 
-        public static MODBUSMaster_ShortRegisterArray Parse(SqlString stringToParse)
+        public static ModbusMaster_ShortRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedShortRegisterArray = new MODBUSMaster_ShortRegisterArray()
+            var parsedShortRegisterArray = new ModbusMaster_ShortRegisterArray()
             {
-                shortRegisters = new List<MODBUSMaster_ShortRegister>()
+                shortRegisters = new List<ModbusMaster_ShortRegister>()
             };
 
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedShortRegisterArray.ShortRegisters.Add(MODBUSMaster_ShortRegister.Parse(parsedString[i]));
+                parsedShortRegisterArray.ShortRegisters.Add(ModbusMaster_ShortRegister.Parse(parsedString[i]));
             }
 
             return parsedShortRegisterArray;
         }
 
-        public MODBUSMaster_ShortRegister GetShortRegister(SqlInt32 index)
+        public ModbusMaster_ShortRegister GetShortRegister(SqlInt32 index)
         {
             return ShortRegisters[index.Value];
         }
 
-        public static MODBUSMaster_ShortRegisterArray Empty()
+        public static ModbusMaster_ShortRegisterArray Empty()
         {
-            var shortRegisterArray = new MODBUSMaster_ShortRegisterArray() { shortRegisters = new List<MODBUSMaster_ShortRegister>() };
+            var shortRegisterArray = new ModbusMaster_ShortRegisterArray() { shortRegisters = new List<ModbusMaster_ShortRegister>() };
             return shortRegisterArray;
         }
 
@@ -137,7 +137,7 @@ namespace DeviceSQL.Types.MODBUSMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var shortRegister = new MODBUSMaster_ShortRegister();
+                    var shortRegister = new ModbusMaster_ShortRegister();
                     shortRegister.Read(binaryReader);
                     ShortRegisters.Add(shortRegister);
                 }

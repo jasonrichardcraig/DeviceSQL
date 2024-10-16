@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -9,14 +10,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static Types.ROCMaster.ROCMaster_AlarmRecordArray ROCMaster_GetAlarms(SqlString deviceName, byte count, int startIndex)
+        public static Types.RocMaster.RocMaster_AlarmRecordArray RocMaster_GetAlarms(SqlString deviceName, byte count, int startIndex)
         {
-            var deviceNameValue = deviceName.Value;
-            var alarmsRecords = (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster).GetAlarms(null, null, null, null, count, Convert.ToUInt16(startIndex));
-            return new Types.ROCMaster.ROCMaster_AlarmRecordArray() { alarmRecords = alarmsRecords.Select(a => new Types.ROCMaster.ROCMaster_AlarmRecord() { data = a.data, Index = a.Index }).ToList() };
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var alarmsRecords = (device as Device.Roc.RocMaster).GetAlarms(null, null, null, null, count, Convert.ToUInt16(startIndex));
+            return new Types.RocMaster.RocMaster_AlarmRecordArray() { alarmRecords = alarmsRecords.Select(a => new Types.RocMaster.RocMaster_AlarmRecord() { data = a.data, Index = a.Index }).ToList() };
         }
     }
 }

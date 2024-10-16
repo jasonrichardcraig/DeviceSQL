@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using System;
 using System.Diagnostics;
 using System.IO.Ports;
@@ -27,7 +28,7 @@ namespace DeviceSQL.IO.Channels
         {
             get
             {
-                return Watchdog.Worker.Channels.FirstOrDefault(channel => channel.Name == sourceChannelName);
+                return ServiceRegistry.GetChannel(sourceChannelName);
             }
         }
 

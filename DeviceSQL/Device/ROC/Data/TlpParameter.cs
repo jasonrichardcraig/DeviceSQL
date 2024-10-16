@@ -1,4 +1,4 @@
-﻿namespace DeviceSQL.Device.ROC.Data
+﻿namespace DeviceSQL.Device.Roc.Data
 {
     public class TlpParameter : Parameter<Tlp>
     {

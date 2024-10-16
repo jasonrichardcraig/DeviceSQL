@@ -1,6 +1,6 @@
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -9,11 +9,11 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 28)]
-    public struct ROCMaster_ROCPlusAlarmRecord : INullable, IBinarySerialize
+    public struct RocMaster_RocPlusAlarmRecord : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -30,11 +30,11 @@ namespace DeviceSQL.Types.ROCMaster
             internal set;
         }
 
-        public static ROCMaster_ROCPlusAlarmRecord Null
+        public static RocMaster_RocPlusAlarmRecord Null
         {
             get
             {
-                return new ROCMaster_ROCPlusAlarmRecord() { IsNull = true };
+                return new RocMaster_RocPlusAlarmRecord() { IsNull = true };
             }
         }
 
@@ -65,7 +65,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                var dateTimeStamp = new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).DateTimeStamp;
+                var dateTimeStamp = new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).DateTimeStamp;
                 return dateTimeStamp.HasValue ? dateTimeStamp.Value : SqlDateTime.Null;
             }
         }
@@ -74,7 +74,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                return new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmSrbxState.ToString();
+                return new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmSrbxState.ToString();
             }
         }
 
@@ -82,7 +82,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                return new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmCondition.ToString();
+                return new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmCondition.ToString();
             }
         }
 
@@ -90,7 +90,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                return new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmType.ToString();
+                return new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmType.ToString();
             }
         }
 
@@ -98,7 +98,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                var alarmCode = new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmCode;
+                var alarmCode = new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmCode;
                 return alarmCode.HasValue ? alarmCode.Value.ToString() : SqlString.Null;
             }
         }
@@ -107,7 +107,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                return new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmDescription;
+                return new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).AlarmDescription;
             }
         }
 
@@ -115,7 +115,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                return new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).Tlp;
+                return new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).Tlp;
             }
         }
 
@@ -143,7 +143,7 @@ namespace DeviceSQL.Types.ROCMaster
             }
         }
 
-        public ROCMaster_Parameter ParameterValue
+        public RocMaster_Parameter ParameterValue
         {
             get
             {
@@ -151,38 +151,38 @@ namespace DeviceSQL.Types.ROCMaster
                 {
                     var pointType = PointType.Value;
                     var parameterNumber = ParameterNumber.Value;
-                    var parameterDefinition = Device.ROC.Message.ParameterDatabase.ParameterDefinitions.Where(pd => pd.PointType == pointType && pd.Parameter == parameterNumber).FirstOrDefault();
-                    var data = new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).data.Skip(19).Take(4).ToArray();
+                    var parameterDefinition = Device.Roc.Message.ParameterDatabase.ParameterDefinitions.Where(pd => pd.PointType == pointType && pd.Parameter == parameterNumber).FirstOrDefault();
+                    var data = new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).data.Skip(19).Take(4).ToArray();
                     switch (parameterDefinition.DataType)
                     {
                         case "BIN":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.BIN, RawValue = data.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.BIN, RawValue = data.Take(1).ToArray() };
                         case "FL":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.FL, RawValue = data };
+                            return new RocMaster_Parameter() { RawType = ParameterType.FL, RawValue = data };
                         case "INT16":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT16, RawValue = data.Take(2).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT16, RawValue = data.Take(2).ToArray() };
                         case "INT32":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT32, RawValue = data };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT32, RawValue = data };
                         case "INT8":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.INT8, RawValue = data.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.INT8, RawValue = data.Take(1).ToArray() };
                         case "TLP":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.TLP, RawValue = data.Take(3).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.TLP, RawValue = data.Take(3).ToArray() };
                         case "UINT16":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT16, RawValue = data.Take(2).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT16, RawValue = data.Take(2).ToArray() };
                         case "UINT32":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT32, RawValue = data };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT32, RawValue = data };
                         case "TIME":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.TIME, RawValue = data };
+                            return new RocMaster_Parameter() { RawType = ParameterType.TIME, RawValue = data };
                         case "UINT8":
-                            return new ROCMaster_Parameter() { RawType = ParameterType.UINT8, RawValue = data.Take(1).ToArray() };
+                            return new RocMaster_Parameter() { RawType = ParameterType.UINT8, RawValue = data.Take(1).ToArray() };
                         default:
-                            return ROCMaster_Parameter.Null;
+                            return RocMaster_Parameter.Null;
                     }
 
                 }
                 else
                 {
-                    return ROCMaster_Parameter.Null;
+                    return RocMaster_Parameter.Null;
                 }
             }
         }
@@ -191,7 +191,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                var value = new Device.ROC.Data.ROCPlusAlarmRecord(Convert.ToUInt16(Index), Data).Value;
+                var value = new Device.Roc.Data.RocPlusAlarmRecord(Convert.ToUInt16(Index), Data).Value;
                 return value.HasValue ? value.Value : SqlSingle.Null;
             }
         }
@@ -200,13 +200,13 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        public static ROCMaster_ROCPlusAlarmRecord Parse(SqlString stringToParse)
+        public static RocMaster_RocPlusAlarmRecord Parse(SqlString stringToParse)
         {
-            var parsedROCPlusAlarmRecord = stringToParse.Value.Split(",".ToCharArray());
-            var base64Bytes = Convert.FromBase64String(parsedROCPlusAlarmRecord[1]);
+            var parsedRocPlusAlarmRecord = stringToParse.Value.Split(",".ToCharArray());
+            var base64Bytes = Convert.FromBase64String(parsedRocPlusAlarmRecord[1]);
             if (base64Bytes.Length == 23)
             {
-                return new ROCMaster_ROCPlusAlarmRecord() { Index = ushort.Parse(parsedROCPlusAlarmRecord[0]), Data = base64Bytes };
+                return new RocMaster_RocPlusAlarmRecord() { Index = ushort.Parse(parsedRocPlusAlarmRecord[0]), Data = base64Bytes };
             }
             else
             {

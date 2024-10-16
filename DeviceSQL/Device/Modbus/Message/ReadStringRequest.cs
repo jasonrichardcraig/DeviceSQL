@@ -1,16 +1,16 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.MODBUS.Data;
+using DeviceSQL.Device.Modbus.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS.Message
+namespace DeviceSQL.Device.Modbus.Message
 
 {
-    internal class ReadStringRequest : MODBUSMessage, IMODBUSRequestMessage
+    internal class ReadStringRequest : ModbusMessage, IModbusRequestMessage
     {
 
         #region Properties
@@ -69,7 +69,7 @@ namespace DeviceSQL.Device.MODBUS.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IMODBUSResponseMessage response)
+        public void ValidateResponse(IModbusResponseMessage response)
         {
             var readStringResponse = response as ReadStringResponse;
             Debug.Assert(readStringResponse != null, "Argument response should be of type ReadStringResponse.");

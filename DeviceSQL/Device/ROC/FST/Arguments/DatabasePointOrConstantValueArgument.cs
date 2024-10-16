@@ -1,11 +1,11 @@
-﻿using DeviceSQL.Device.ROC.Data;
+﻿using DeviceSQL.Device.Roc.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeviceSQL.Device.ROC.FST.Arguments
+namespace DeviceSQL.Device.Roc.FST.Arguments
 {
     public class DatabasePointOrConstantValueArgument : ArgumentBase
     {

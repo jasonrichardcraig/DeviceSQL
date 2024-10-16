@@ -1,6 +1,7 @@
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
@@ -10,12 +11,12 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static SqlBoolean ROCMaster_WriteParameters(SqlString deviceName, Types.ROCMaster.ROCMaster_ParameterArray parameterArray)
+        public static SqlBoolean RocMaster_WriteParameters(SqlString deviceName, Types.RocMaster.RocMaster_ParameterArray parameterArray)
         {
-            var deviceNameValue = deviceName.Value;
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
             var parameters = new List<Parameter>();
             var length = parameterArray.Length;
 
@@ -83,7 +84,7 @@ namespace DeviceSQL.Functions
 
             }
 
-    (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster).WriteParameters(null, null, null, null, parameters);
+            (device as Device.Roc.RocMaster).WriteParameters(null, null, null, null, parameters);
 
             return true;
 

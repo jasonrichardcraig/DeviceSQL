@@ -7,11 +7,11 @@ using System.IO;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 15)]
-    public struct ROCMaster_ROCPlusHistoryRecord : INullable, IBinarySerialize
+    public struct RocMaster_RocPlusHistoryRecord : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -36,11 +36,11 @@ namespace DeviceSQL.Types.ROCMaster
             }
         }
 
-        public static ROCMaster_ROCPlusHistoryRecord Null
+        public static RocMaster_RocPlusHistoryRecord Null
         {
             get
             {
-                return new ROCMaster_ROCPlusHistoryRecord() { IsNull = true };
+                return new RocMaster_RocPlusHistoryRecord() { IsNull = true };
             }
         }
 
@@ -92,23 +92,23 @@ namespace DeviceSQL.Types.ROCMaster
 
         public SqlDateTime ToDateTimeStamp(DateTime deviceDateTime)
         {
-            var dateTimeStamp = new Device.ROC.Data.ROCPlusHistoryRecord() { HistoryPointNumber = this.HistoryPointNumber, HistorySegment = this.HistorySegment, Index = this.Index, Value = this.Value }.DateTimeStamp;
+            var dateTimeStamp = new Device.Roc.Data.RocPlusHistoryRecord() { HistoryPointNumber = this.HistoryPointNumber, HistorySegment = this.HistorySegment, Index = this.Index, Value = this.Value }.DateTimeStamp;
             return dateTimeStamp.HasValue ? dateTimeStamp.Value : SqlDateTime.Null;
         }
 
         public SqlSingle ToFloat()
         {
-            var floatValue = new Device.ROC.Data.ROCPlusHistoryRecord() { HistoryPointNumber = this.HistoryPointNumber, HistorySegment = this.HistorySegment, Index = this.Index, Value = this.Value }.ToNullableFloat();
+            var floatValue = new Device.Roc.Data.RocPlusHistoryRecord() { HistoryPointNumber = this.HistoryPointNumber, HistorySegment = this.HistorySegment, Index = this.Index, Value = this.Value }.ToNullableFloat();
             return floatValue.HasValue ? floatValue.Value : SqlSingle.Null;
         }
 
-        public static ROCMaster_ROCPlusHistoryRecord Parse(SqlString stringToParse)
+        public static RocMaster_RocPlusHistoryRecord Parse(SqlString stringToParse)
         {
-            var parsedROCPlusHistoryRecord = stringToParse.Value.Split(",".ToCharArray());
-            var base64Bytes = Convert.FromBase64String(parsedROCPlusHistoryRecord[3]);
+            var parsedRocPlusHistoryRecord = stringToParse.Value.Split(",".ToCharArray());
+            var base64Bytes = Convert.FromBase64String(parsedRocPlusHistoryRecord[3]);
             if (base64Bytes.Length == 8 || base64Bytes.Length == 4)
             {
-                return new ROCMaster_ROCPlusHistoryRecord() { Index = ushort.Parse(parsedROCPlusHistoryRecord[0]), HistorySegment = byte.Parse(parsedROCPlusHistoryRecord[1]), HistoryPointNumber = byte.Parse(parsedROCPlusHistoryRecord[2]), value = base64Bytes };
+                return new RocMaster_RocPlusHistoryRecord() { Index = ushort.Parse(parsedRocPlusHistoryRecord[0]), HistorySegment = byte.Parse(parsedRocPlusHistoryRecord[1]), HistoryPointNumber = byte.Parse(parsedRocPlusHistoryRecord[2]), value = base64Bytes };
             }
             else
             {

@@ -9,30 +9,30 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_ROCPlusHistoryRecordArray : INullable, IBinarySerialize
+    public struct RocMaster_RocPlusHistoryRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<ROCMaster_ROCPlusHistoryRecord> rocPlusHistoryRecords;
+        internal List<RocMaster_RocPlusHistoryRecord> rocPlusHistoryRecords;
 
         #endregion
 
         #region Properties
 
-        internal ROCMaster_ROCPlusHistoryRecord this[int index]
+        internal RocMaster_RocPlusHistoryRecord this[int index]
         {
             get
             {
-                return ROCPlusHistoryRecords[index];
+                return RocPlusHistoryRecords[index];
             }
             set
             {
-                ROCPlusHistoryRecords[index] = value;
+                RocPlusHistoryRecords[index] = value;
             }
         }
 
@@ -46,7 +46,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                return ROCPlusHistoryRecords.Count;
+                return RocPlusHistoryRecords.Count;
             }
         }
 
@@ -54,64 +54,64 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        private List<ROCMaster_ROCPlusHistoryRecord> ROCPlusHistoryRecords
+        private List<RocMaster_RocPlusHistoryRecord> RocPlusHistoryRecords
         {
             get
             {
                 if (rocPlusHistoryRecords == null)
                 {
-                    rocPlusHistoryRecords = new List<ROCMaster_ROCPlusHistoryRecord>();
+                    rocPlusHistoryRecords = new List<RocMaster_RocPlusHistoryRecord>();
                 }
                 return rocPlusHistoryRecords;
             }
         }
 
-        public static ROCMaster_ROCPlusHistoryRecordArray Null
+        public static RocMaster_RocPlusHistoryRecordArray Null
         {
             get
             {
-                return (new ROCMaster_ROCPlusHistoryRecordArray() { IsNull = true });
+                return (new RocMaster_RocPlusHistoryRecordArray() { IsNull = true });
             }
         }
 
         public override string ToString()
         {
-            return string.Join("|", ROCPlusHistoryRecords.Select(parameter => parameter.ToString()));
+            return string.Join("|", RocPlusHistoryRecords.Select(parameter => parameter.ToString()));
         }
 
-        public ROCMaster_ROCPlusHistoryRecordArray AddROCPlusHistoryRecord(ROCMaster_ROCPlusHistoryRecord rocPlusHistoryRecord)
+        public RocMaster_RocPlusHistoryRecordArray AddRocPlusHistoryRecord(RocMaster_RocPlusHistoryRecord rocPlusHistoryRecord)
         {
-            ROCPlusHistoryRecords.Add(rocPlusHistoryRecord);
+            RocPlusHistoryRecords.Add(rocPlusHistoryRecord);
             return this;
         }
 
-        public static ROCMaster_ROCPlusHistoryRecordArray Parse(SqlString stringToParse)
+        public static RocMaster_RocPlusHistoryRecordArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCPlusHistoryRecords = new ROCMaster_ROCPlusHistoryRecordArray();
-            parsedROCPlusHistoryRecords.rocPlusHistoryRecords = new List<ROCMaster_ROCPlusHistoryRecord>();
+            var parsedRocPlusHistoryRecords = new RocMaster_RocPlusHistoryRecordArray();
+            parsedRocPlusHistoryRecords.rocPlusHistoryRecords = new List<RocMaster_RocPlusHistoryRecord>();
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedROCPlusHistoryRecords.rocPlusHistoryRecords.Add(ROCMaster_ROCPlusHistoryRecord.Parse(parsedString[i]));
+                parsedRocPlusHistoryRecords.rocPlusHistoryRecords.Add(RocMaster_RocPlusHistoryRecord.Parse(parsedString[i]));
             }
 
-            return parsedROCPlusHistoryRecords;
+            return parsedRocPlusHistoryRecords;
         }
 
-        public ROCMaster_ROCPlusHistoryRecord GetROCPlusHistoryRecord(SqlInt32 index)
+        public RocMaster_RocPlusHistoryRecord GetRocPlusHistoryRecord(SqlInt32 index)
         {
-            return ROCPlusHistoryRecords[index.Value];
+            return RocPlusHistoryRecords[index.Value];
         }
 
-        public static ROCMaster_ROCPlusHistoryRecordArray Empty()
+        public static RocMaster_RocPlusHistoryRecordArray Empty()
         {
-            var rocPlusHistoryRecord = new ROCMaster_ROCPlusHistoryRecordArray { rocPlusHistoryRecords = new List<ROCMaster_ROCPlusHistoryRecord>() };
+            var rocPlusHistoryRecord = new RocMaster_RocPlusHistoryRecordArray { rocPlusHistoryRecords = new List<RocMaster_RocPlusHistoryRecord>() };
             return rocPlusHistoryRecord;
         }
 
@@ -121,7 +121,7 @@ namespace DeviceSQL.Types.ROCMaster
 
         public void Read(BinaryReader binaryReader)
         {
-            ROCPlusHistoryRecords.Clear();
+            RocPlusHistoryRecords.Clear();
             IsNull = binaryReader.ReadBoolean();
 
             if (IsNull)
@@ -134,9 +134,9 @@ namespace DeviceSQL.Types.ROCMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var rocPlusHistoryRecord = new ROCMaster_ROCPlusHistoryRecord();
+                    var rocPlusHistoryRecord = new RocMaster_RocPlusHistoryRecord();
                     rocPlusHistoryRecord.Read(binaryReader);
-                    ROCPlusHistoryRecords.Add(rocPlusHistoryRecord);
+                    RocPlusHistoryRecords.Add(rocPlusHistoryRecord);
                 }
             }
 
@@ -149,9 +149,9 @@ namespace DeviceSQL.Types.ROCMaster
 
             if (Length > 0)
             {
-                for (var i = 0; ROCPlusHistoryRecords.Count > i; i++)
+                for (var i = 0; RocPlusHistoryRecords.Count > i; i++)
                 {
-                    ROCPlusHistoryRecords[i].Write(binaryWriter);
+                    RocPlusHistoryRecords[i].Write(binaryWriter);
                 }
             }
         }

@@ -4,7 +4,7 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Utility
+namespace DeviceSQL.Device.Roc.Utility
 {
     public class CRC16 : System.Security.Cryptography.HashAlgorithm
     {

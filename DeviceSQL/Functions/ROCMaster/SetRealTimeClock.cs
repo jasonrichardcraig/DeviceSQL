@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -8,13 +9,13 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static SqlBoolean ROCMaster_SetRealTimeClock(SqlString deviceName, SqlDateTime dateTime)
+        public static SqlBoolean RocMaster_SetRealTimeClock(SqlString deviceName, SqlDateTime dateTime)
         {
-            var deviceNameValue = deviceName.Value;
-            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster).SetRealTimeClock(null, null, null, null, dateTime.Value);
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            (device as Device.Roc.RocMaster).SetRealTimeClock(null, null, null, null, dateTime.Value);
             return true;
         }
     }

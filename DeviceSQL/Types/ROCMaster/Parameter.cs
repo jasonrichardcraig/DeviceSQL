@@ -1,6 +1,6 @@
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -8,12 +8,12 @@ using System.IO;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
 
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 61)]
-    public struct ROCMaster_Parameter : INullable, IBinarySerialize
+    public struct RocMaster_Parameter : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -31,11 +31,11 @@ namespace DeviceSQL.Types.ROCMaster
             private set;
         }
 
-        public static ROCMaster_Parameter Null
+        public static RocMaster_Parameter Null
         {
             get
             {
-                return (new ROCMaster_Parameter() { IsNull = true });
+                return (new RocMaster_Parameter() { IsNull = true });
             }
         }
 
@@ -257,169 +257,169 @@ namespace DeviceSQL.Types.ROCMaster
             return doubleValue.HasValue ? doubleValue.Value : SqlDouble.Null;
         }
 
-        public static ROCMaster_Parameter Parse(SqlString stringToParse)
+        public static RocMaster_Parameter Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCPointData = stringToParse.Value.Split(",".ToCharArray());
-            var parsedROCParameter = new ROCMaster_Parameter() { PointType = byte.Parse(parsedROCPointData[0]), LogicalNumber = byte.Parse(parsedROCPointData[1]), Parameter = byte.Parse(parsedROCPointData[2]) };
+            var parsedRocPointData = stringToParse.Value.Split(",".ToCharArray());
+            var parsedRocParameter = new RocMaster_Parameter() { PointType = byte.Parse(parsedRocPointData[0]), LogicalNumber = byte.Parse(parsedRocPointData[1]), Parameter = byte.Parse(parsedRocPointData[2]) };
 
-            parsedROCParameter.parameterType = (byte)((ParameterType)Enum.Parse(typeof(ParameterType), parsedROCPointData[3]));
+            parsedRocParameter.parameterType = (byte)((ParameterType)Enum.Parse(typeof(ParameterType), parsedRocPointData[3]));
 
-            switch (parsedROCPointData[3])
+            switch (parsedRocPointData[3])
             {
                 case "AC3":
-                    parsedROCParameter.rawValue = (new Ac3Parameter() { Value = parsedROCPointData[4] }).Data;
+                    parsedRocParameter.rawValue = (new Ac3Parameter() { Value = parsedRocPointData[4] }).Data;
                     break;
                 case "AC7":
-                    parsedROCParameter.rawValue = (new Ac7Parameter() { Value = parsedROCPointData[4] }).Data;
+                    parsedRocParameter.rawValue = (new Ac7Parameter() { Value = parsedRocPointData[4] }).Data;
                     break;
                 case "AC10":
-                    parsedROCParameter.rawValue = (new Ac10Parameter() { Value = parsedROCPointData[4] }).Data;
+                    parsedRocParameter.rawValue = (new Ac10Parameter() { Value = parsedRocPointData[4] }).Data;
                     break;
                 case "AC12":
-                    parsedROCParameter.rawValue = (new Ac12Parameter() { Value = parsedROCPointData[4] }).Data;
+                    parsedRocParameter.rawValue = (new Ac12Parameter() { Value = parsedRocPointData[4] }).Data;
                     break;
                 case "AC20":
-                    parsedROCParameter.rawValue = (new Ac20Parameter() { Value = parsedROCPointData[4] }).Data;
+                    parsedRocParameter.rawValue = (new Ac20Parameter() { Value = parsedRocPointData[4] }).Data;
                     break;
                 case "AC30":
-                    parsedROCParameter.rawValue = (new Ac30Parameter() { Value = parsedROCPointData[4] }).Data;
+                    parsedRocParameter.rawValue = (new Ac30Parameter() { Value = parsedRocPointData[4] }).Data;
                     break;
                 case "AC40":
-                    parsedROCParameter.rawValue = (new Ac40Parameter() { Value = parsedROCPointData[4] }).Data;
+                    parsedRocParameter.rawValue = (new Ac40Parameter() { Value = parsedRocPointData[4] }).Data;
                     break;
                 case "BIN":
-                    parsedROCParameter.rawValue = (new BinParameter() { Value = byte.Parse(parsedROCPointData[4]) }).Data;
+                    parsedRocParameter.rawValue = (new BinParameter() { Value = byte.Parse(parsedRocPointData[4]) }).Data;
                     break;
                 case "FL":
-                    parsedROCParameter.rawValue = (new FlpParameter() { Value = float.Parse(parsedROCPointData[4]) }).Data;
+                    parsedRocParameter.rawValue = (new FlpParameter() { Value = float.Parse(parsedRocPointData[4]) }).Data;
                     break;
                 case "DOUBLE":
-                    parsedROCParameter.rawValue = (new DoubleParameter() { Value = double.Parse(parsedROCPointData[8]) }).Data;
+                    parsedRocParameter.rawValue = (new DoubleParameter() { Value = double.Parse(parsedRocPointData[8]) }).Data;
                     break;
                 case "INT16":
-                    parsedROCParameter.rawValue = (new Int16Parameter() { Value = short.Parse(parsedROCPointData[4]) }).Data;
+                    parsedRocParameter.rawValue = (new Int16Parameter() { Value = short.Parse(parsedRocPointData[4]) }).Data;
                     break;
                 case "INT32":
-                    parsedROCParameter.rawValue = (new Int32Parameter() { Value = int.Parse(parsedROCPointData[4]) }).Data;
+                    parsedRocParameter.rawValue = (new Int32Parameter() { Value = int.Parse(parsedRocPointData[4]) }).Data;
                     break;
                 case "Int8":
-                    parsedROCParameter.rawValue = (new Int8Parameter() { Value = SByte.Parse(parsedROCPointData[4]) }).Data;
+                    parsedRocParameter.rawValue = (new Int8Parameter() { Value = SByte.Parse(parsedRocPointData[4]) }).Data;
                     break;
                 case "TLP":
                     {
-                        var parsedTlp = parsedROCPointData[4].Split(".".ToCharArray());
-                        parsedROCParameter.rawValue = (new TlpParameter() { Value = new Tlp(byte.Parse(parsedTlp[0]), byte.Parse(parsedTlp[1]), byte.Parse(parsedTlp[2])) }).Data;
+                        var parsedTlp = parsedRocPointData[4].Split(".".ToCharArray());
+                        parsedRocParameter.rawValue = (new TlpParameter() { Value = new Tlp(byte.Parse(parsedTlp[0]), byte.Parse(parsedTlp[1]), byte.Parse(parsedTlp[2])) }).Data;
                     }
                     break;
                 case "UINT16":
-                    parsedROCParameter.rawValue = (new UInt16Parameter() { Value = ushort.Parse(parsedROCPointData[4]) }).Data;
+                    parsedRocParameter.rawValue = (new UInt16Parameter() { Value = ushort.Parse(parsedRocPointData[4]) }).Data;
                     break;
                 case "UINT32":
-                    parsedROCParameter.rawValue = (new UInt32Parameter() { Value = uint.Parse(parsedROCPointData[4]) }).Data;
+                    parsedRocParameter.rawValue = (new UInt32Parameter() { Value = uint.Parse(parsedRocPointData[4]) }).Data;
                     break;
                 case "TIME":
-                    parsedROCParameter.rawValue = (new TimeParameter() { Value = (new DateTime(1970, 01, 01).AddSeconds(uint.Parse(parsedROCPointData[4]))) }).Data;
+                    parsedRocParameter.rawValue = (new TimeParameter() { Value = (new DateTime(1970, 01, 01).AddSeconds(uint.Parse(parsedRocPointData[4]))) }).Data;
                     break;
                 case "UINT8":
-                    parsedROCParameter.rawValue = (new UInt8Parameter() { Value = byte.Parse(parsedROCPointData[4]) }).Data;
+                    parsedRocParameter.rawValue = (new UInt8Parameter() { Value = byte.Parse(parsedRocPointData[4]) }).Data;
                     break;
             }
-            return parsedROCParameter;
+            return parsedRocParameter;
         }
 
-        public static ROCMaster_Parameter ParseTlp(byte pointType, byte logicalNumber, byte parameter, byte pointTypeValue, byte logicalNumberValue, byte parameterValue)
+        public static RocMaster_Parameter ParseTlp(byte pointType, byte logicalNumber, byte parameter, byte pointTypeValue, byte logicalNumberValue, byte parameterValue)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.TLP, rawValue = (new TlpParameter() { Value = new Tlp(pointTypeValue, logicalNumberValue, parameterValue) }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.TLP, rawValue = (new TlpParameter() { Value = new Tlp(pointTypeValue, logicalNumberValue, parameterValue) }).Data };
         }
 
-        public static ROCMaster_Parameter ParseAc3(byte pointType, byte logicalNumber, byte parameter, string value)
+        public static RocMaster_Parameter ParseAc3(byte pointType, byte logicalNumber, byte parameter, string value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC3, rawValue = (new Ac3Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC3, rawValue = (new Ac3Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseAc7(byte pointType, byte logicalNumber, byte parameter, string value)
+        public static RocMaster_Parameter ParseAc7(byte pointType, byte logicalNumber, byte parameter, string value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC7, rawValue = (new Ac3Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC7, rawValue = (new Ac3Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseAc10(byte pointType, byte logicalNumber, byte parameter, string value)
+        public static RocMaster_Parameter ParseAc10(byte pointType, byte logicalNumber, byte parameter, string value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC10, rawValue = (new Ac10Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC10, rawValue = (new Ac10Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseAc12(byte pointType, byte logicalNumber, byte parameter, string value)
+        public static RocMaster_Parameter ParseAc12(byte pointType, byte logicalNumber, byte parameter, string value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC12, rawValue = (new Ac12Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC12, rawValue = (new Ac12Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseAc20(byte pointType, byte logicalNumber, byte parameter, string value)
+        public static RocMaster_Parameter ParseAc20(byte pointType, byte logicalNumber, byte parameter, string value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC20, rawValue = (new Ac20Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC20, rawValue = (new Ac20Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseAc30(byte pointType, byte logicalNumber, byte parameter, string value)
+        public static RocMaster_Parameter ParseAc30(byte pointType, byte logicalNumber, byte parameter, string value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC30, rawValue = (new Ac30Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC30, rawValue = (new Ac30Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseAc40(byte pointType, byte logicalNumber, byte parameter, string value)
+        public static RocMaster_Parameter ParseAc40(byte pointType, byte logicalNumber, byte parameter, string value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC40, rawValue = (new Ac40Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.AC40, rawValue = (new Ac40Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseBin(byte pointType, byte logicalNumber, byte parameter, byte value)
+        public static RocMaster_Parameter ParseBin(byte pointType, byte logicalNumber, byte parameter, byte value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.BIN, rawValue = (new BinParameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.BIN, rawValue = (new BinParameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseInt8(byte pointType, byte logicalNumber, byte parameter, short value)
+        public static RocMaster_Parameter ParseInt8(byte pointType, byte logicalNumber, byte parameter, short value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.INT8, rawValue = (new Int8Parameter() { Value = Convert.ToSByte(value) }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.INT8, rawValue = (new Int8Parameter() { Value = Convert.ToSByte(value) }).Data };
         }
 
-        public static ROCMaster_Parameter ParseUInt8(byte pointType, byte logicalNumber, byte parameter, byte value)
+        public static RocMaster_Parameter ParseUInt8(byte pointType, byte logicalNumber, byte parameter, byte value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.UINT8, rawValue = (new UInt8Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.UINT8, rawValue = (new UInt8Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseInt16(byte pointType, byte logicalNumber, byte parameter, short value)
+        public static RocMaster_Parameter ParseInt16(byte pointType, byte logicalNumber, byte parameter, short value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.INT16, rawValue = (new Int16Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.INT16, rawValue = (new Int16Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseUInt16(byte pointType, byte logicalNumber, byte parameter, int value)
+        public static RocMaster_Parameter ParseUInt16(byte pointType, byte logicalNumber, byte parameter, int value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.UINT16, rawValue = (new UInt16Parameter() { Value = Convert.ToUInt16(value) }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.UINT16, rawValue = (new UInt16Parameter() { Value = Convert.ToUInt16(value) }).Data };
         }
 
-        public static ROCMaster_Parameter ParseInt32(byte pointType, byte logicalNumber, byte parameter, int value)
+        public static RocMaster_Parameter ParseInt32(byte pointType, byte logicalNumber, byte parameter, int value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.INT32, rawValue = (new Int32Parameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.INT32, rawValue = (new Int32Parameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseUInt32(byte pointType, byte logicalNumber, byte parameter, long value)
+        public static RocMaster_Parameter ParseUInt32(byte pointType, byte logicalNumber, byte parameter, long value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.UINT32, rawValue = (new UInt32Parameter() { Value = Convert.ToUInt32(value) }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.UINT32, rawValue = (new UInt32Parameter() { Value = Convert.ToUInt32(value) }).Data };
         }
 
-        public static ROCMaster_Parameter ParseTime(byte pointType, byte logicalNumber, byte parameter, DateTime value)
+        public static RocMaster_Parameter ParseTime(byte pointType, byte logicalNumber, byte parameter, DateTime value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.TIME, rawValue = (new TimeParameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.TIME, rawValue = (new TimeParameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseFl(byte pointType, byte logicalNumber, byte parameter, float value)
+        public static RocMaster_Parameter ParseFl(byte pointType, byte logicalNumber, byte parameter, float value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.FL, rawValue = (new FlpParameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.FL, rawValue = (new FlpParameter() { Value = value }).Data };
         }
 
-        public static ROCMaster_Parameter ParseDouble(byte pointType, byte logicalNumber, byte parameter, double value)
+        public static RocMaster_Parameter ParseDouble(byte pointType, byte logicalNumber, byte parameter, double value)
         {
-            return new ROCMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.DOUBLE, rawValue = (new DoubleParameter() { Value = value }).Data };
+            return new RocMaster_Parameter() { PointType = pointType, LogicalNumber = logicalNumber, Parameter = parameter, parameterType = (byte)ParameterType.DOUBLE, rawValue = (new DoubleParameter() { Value = value }).Data };
         }
 
         #endregion

@@ -1,6 +1,7 @@
 #region Imported Types
 
 using DeviceSQL.IO.Channels;
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -18,12 +19,9 @@ namespace DeviceSQL.Functions
         {
             try
             {
-                var channelNameValue = channelName.Value;
-                var channels = DeviceSQL.Watchdog.Worker.Channels;
-
-                if (channels.Where(serialPortChannel => serialPortChannel.Name == channelNameValue).Count() == 0)
+                if (ServiceRegistry.GetChannel(channelName.Value) == null)
                 {
-                    if (channelNameValue.Count(c =>
+                    if (channelName.Value.Count(c =>
                     {
                         switch (c)
                         {
@@ -41,7 +39,7 @@ namespace DeviceSQL.Functions
 
                     var serialPortChannel = new SerialPortChannel()
                     {
-                        Name = channelNameValue,
+                        Name = channelName.Value,
                         ReadTimeout = readTimeout.Value,
                         WriteTimeout = writeTimeout.Value
                     };
@@ -56,7 +54,7 @@ namespace DeviceSQL.Functions
 
                     serialPortChannel.SerialPort.Open();
 
-                    channels.Add(serialPortChannel);
+                    ServiceRegistry.RegisterChannel(serialPortChannel);
 
                     return new SqlBoolean(true);
 

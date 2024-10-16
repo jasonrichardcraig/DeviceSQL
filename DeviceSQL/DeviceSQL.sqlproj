@@ -8,7 +8,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>4.1</ProjectVersion>
     <ProjectGuid>{cb6f0884-5a58-432a-800e-4abfeeab6f46}</ProjectGuid>
-    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql130DatabaseSchemaProvider</DSP>
+    <DSP>Microsoft.Data.Tools.Schema.Sql.Sql160DatabaseSchemaProvider</DSP>
     <OutputType>Database</OutputType>
     <RootPath>
     </RootPath>
@@ -17,7 +17,7 @@
     <ModelCollation>1033, CI</ModelCollation>
     <DefaultFileStructure>BySchemaAndSchemaType</DefaultFileStructure>
     <DeployToDatabase>True</DeployToDatabase>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <TargetLanguage>CS</TargetLanguage>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <SqlServerVerification>False</SqlServerVerification>
@@ -25,8 +25,9 @@
     <TargetDatabaseSet>True</TargetDatabaseSet>
     <PermissionSet>UNSAFE</PermissionSet>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>DeviceSQL-Key.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>DeviceSQL-Key.pfx</AssemblyOriginatorKeyFile>
     <GenerateSqlClrSymbols>False</GenerateSqlClrSymbols>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <OutputPath>bin\Release\</OutputPath>
@@ -79,19 +80,15 @@
     <Folder Include="Deployment" />
     <Folder Include="Tests" />
     <Folder Include="Tutorials" />
-    <Folder Include="IOC" />
-    <Folder Include="ServiceLocation" />
     <Folder Include="Functions" />
     <Folder Include="Functions\ChannelManager" />
-    <Folder Include="Functions\Watchdog" />
-    <Folder Include="Watchdog" />
     <Folder Include="Functions\DeviceManager" />
     <Folder Include="Types" />
     <Folder Include="Types\MODBUSMaster" />
     <Folder Include="Functions\MODBUSMaster" />
     <Folder Include="Documentation" />
-    <Folder Include="Types\ROCMaster" />
-    <Folder Include="Functions\ROCMaster" />
+    <Folder Include="Types\RocMaster" />
+    <Folder Include="Functions\RocMaster" />
     <Folder Include="Tables" />
     <Folder Include="Tables\ROCMaster" />
     <Folder Include="Tables\FlowSQL" />
@@ -99,6 +96,7 @@
     <Folder Include="Device\ROC\IO\Transport" />
     <Folder Include="Device\Modbus\IO" />
     <Folder Include="Device\Modbus\IO\Transport" />
+    <Folder Include="Registries" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -242,7 +240,7 @@
     <Compile Include="Device\ROC\Message\RocMessage.cs" />
     <Compile Include="Device\ROC\Message\RocMessageFactory.cs" />
     <Compile Include="Device\IMessage.cs" />
-    <Compile Include="Device\IMaster.cs" />
+    <Compile Include="Device\IDevice.cs" />
     <Compile Include="Device\ROC\FST\Instructions\AddInstruction.cs" />
     <Compile Include="Device\ROC\FST\Instructions\InstructionBase.cs" />
     <Compile Include="Device\ROC\FST\Instructions\InstructionCategory.cs" />
@@ -253,24 +251,11 @@
     <Compile Include="Device\ROC\FST\Arguments\DatabasePoint.cs" />
     <Compile Include="Device\ROC\FST\Arguments\DatabasePointOrConstantValueArgument.cs" />
     <Compile Include="Device\ROC\FST\Arguments\NullArgument.cs" />
-    <Compile Include="IOC\ISimpleIOC.cs" />
-    <Compile Include="IOC\PreferredConstructor.cs" />
-    <Compile Include="IOC\SimpleIOC.cs" />
-    <Compile Include="ServiceLocation\ActivationException.cs" />
-    <Compile Include="ServiceLocation\IServiceLocator.cs" />
-    <Compile Include="ServiceLocation\ServiceLocator.cs" />
-    <Compile Include="ServiceLocation\ServiceLocatorImplBase.cs" />
-    <Compile Include="ServiceLocation\ServiceLocatorProvider.cs" />
     <Compile Include="Functions\ChannelManager\RegisterTcpChannel.cs" />
     <Compile Include="Functions\ChannelManager\RegisterSerialPortChannel.cs" />
     <Compile Include="Functions\ChannelManager\UnregisterChannel.cs" />
     <Compile Include="Functions\ChannelManager\GetChannels.cs" />
-    <Compile Include="Functions\Watchdog\GetCounterValue.cs" />
-    <Compile Include="Functions\Watchdog\IsAlive.cs" />
-    <Compile Include="Functions\Watchdog\Run.cs" />
-    <Compile Include="Functions\Watchdog\Stop.cs" />
-    <Compile Include="Watchdog\Worker.cs" />
-    <Compile Include="Functions\DeviceManager\RegisterROCMaster.cs" />
+    <Compile Include="Functions\DeviceManager\RegisterRocMaster.cs" />
     <Compile Include="Functions\DeviceManager\RegisterModbusMaster.cs" />
     <Compile Include="Functions\DeviceManager\UnregisterDevice.cs" />
     <Compile Include="Functions\DeviceManager\GetDevices.cs" />
@@ -318,15 +303,15 @@
     <Compile Include="Types\ROCMaster\EventRecordArray.cs" />
     <Compile Include="Types\ROCMaster\AuditLogRecord.cs" />
     <Compile Include="Types\ROCMaster\AuditLogRecordArray.cs" />
-    <Compile Include="Types\ROCMaster\ROCPlusAlarmRecord.cs" />
-    <Compile Include="Types\ROCMaster\ROCPlusAlarmRecordArray.cs" />
-    <Compile Include="Types\ROCMaster\ROCPlusEventRecord.cs" />
-    <Compile Include="Types\ROCMaster\ROCPlusEventRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\RocPlusAlarmRecord.cs" />
+    <Compile Include="Types\ROCMaster\RocPlusAlarmRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\RocPlusEventRecord.cs" />
+    <Compile Include="Types\ROCMaster\RocPlusEventRecordArray.cs" />
     <Compile Include="Types\ROCMaster\HistoryRecord.cs" />
     <Compile Include="Types\ROCMaster\HistoryRecordArray.cs" />
-    <Compile Include="Types\ROCMaster\ROCPlusHistoryRecord.cs" />
-    <Compile Include="Types\ROCMaster\ROCPlusHistoryRecordArray.cs" />
-    <Compile Include="Types\ROCMaster\ROCPlusHistoryPointArray.cs" />
+    <Compile Include="Types\ROCMaster\RocPlusHistoryRecord.cs" />
+    <Compile Include="Types\ROCMaster\RocPlusHistoryRecordArray.cs" />
+    <Compile Include="Types\ROCMaster\RocPlusHistoryPointArray.cs" />
     <Compile Include="Types\ROCMaster\FSTInformation.cs" />
     <Compile Include="Functions\ROCMaster\SetOperatorIdentification.cs" />
     <Compile Include="Functions\ROCMaster\GetRealTimeClockValueWithCentury.cs" />
@@ -353,20 +338,20 @@
     <Compile Include="Functions\ROCMaster\SetInt32Value.cs" />
     <Compile Include="Functions\ROCMaster\SetUInt32Value.cs" />
     <Compile Include="Functions\ROCMaster\GetArchiveInfo.cs" />
-    <Compile Include="Functions\ROCMaster\GetCurrentROCPlusAlarmIndex.cs" />
+    <Compile Include="Functions\ROCMaster\GetCurrentRocPlusAlarmIndex.cs" />
     <Compile Include="Functions\ROCMaster\ClearAuditLogEventFlags.cs" />
-    <Compile Include="Functions\ROCMaster\GetCurrentROCPlusEventIndex.cs" />
-    <Compile Include="Functions\ROCMaster\GetCurrentROCPlusHistorySegmentIndex.cs" />
-    <Compile Include="Functions\ROCMaster\GetROCPlusConfiguredHistoryPoints.cs" />
+    <Compile Include="Functions\ROCMaster\GetCurrentRocPlusEventIndex.cs" />
+    <Compile Include="Functions\ROCMaster\GetCurrentRocPlusHistorySegmentIndex.cs" />
+    <Compile Include="Functions\ROCMaster\GetRocPlusConfiguredHistoryPoints.cs" />
     <Compile Include="Functions\ROCMaster\GetAlarms.cs" />
-    <Compile Include="Functions\ROCMaster\GetROCPlusAlarms.cs" />
+    <Compile Include="Functions\ROCMaster\GetRocPlusAlarms.cs" />
     <Compile Include="Functions\ROCMaster\GetEvents.cs" />
-    <Compile Include="Functions\ROCMaster\GetROCPlusEvents.cs" />
+    <Compile Include="Functions\ROCMaster\GetRocPlusEvents.cs" />
     <Compile Include="Functions\ROCMaster\GetAuditLogRecords.cs" />
     <Compile Include="Functions\ROCMaster\GetMinutelyHistory.cs" />
     <Compile Include="Functions\ROCMaster\GetHistory.cs" />
-    <Compile Include="Functions\ROCMaster\GetROCPlusHistory.cs" />
-    <Compile Include="Functions\ROCMaster\GetROCPlusHistoryByHistoryPointArray.cs" />
+    <Compile Include="Functions\ROCMaster\GetRocPlusHistory.cs" />
+    <Compile Include="Functions\ROCMaster\GetRocPlusHistoryByHistoryPointArray.cs" />
     <Compile Include="Functions\ROCMaster\GetFstInformation.cs" />
     <Compile Include="Functions\ROCMaster\GetInt8Value.cs" />
     <Compile Include="Functions\ChannelManager\TraceChannels.cs" />
@@ -379,6 +364,7 @@
     <Compile Include="IO\Channels\TcpMuxChannel.cs" />
     <Compile Include="Device\ROC\IO\Transport\Transport.cs" />
     <Compile Include="Device\Modbus\IO\Transport\Transport.cs" />
+    <Compile Include="Registries\ServiceRegistry.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -388,10 +374,9 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="Schemas\DeviceManager.sql" />
-    <Build Include="Schemas\MODBUSMaster.sql" />
-    <Build Include="Schemas\ROCMaster.sql" />
+    <Build Include="Schemas\ModbusMaster.sql" />
+    <Build Include="Schemas\RocMaster.sql" />
     <Build Include="Schemas\ChannelManager.sql" />
-    <Build Include="Schemas\Watchdog.sql" />
     <None Include="Tables\FlowSQL\DifferentialPressureMeterProcessVariableAlarms.sql" />
     <None Include="Tables\FlowSQL\DifferentialPressureMeterProcessVariableValues.sql" />
     <None Include="Tables\FlowSQL\MeterAttributes.sql" />
@@ -407,6 +392,6 @@
     <None Include="Documentation\Modbus_Application_Protocol_V1_1b3.pdf" />
     <None Include="Deployment\Run Once.sql" />
     <None Include="Deployment\Rename.sql" />
-    <None Include="DeviceSQL-Key.snk" />
+    <None Include="DeviceSQL-Key.pfx" />
   </ItemGroup>
 </Project>

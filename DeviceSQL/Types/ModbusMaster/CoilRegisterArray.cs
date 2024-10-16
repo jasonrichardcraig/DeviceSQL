@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.MODBUSMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct MODBUSMaster_CoilRegisterArray : INullable, IBinarySerialize
+    public struct ModbusMaster_CoilRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<MODBUSMaster_CoilRegister> coilRegisters;
+        internal List<ModbusMaster_CoilRegister> coilRegisters;
 
         #endregion
 
         #region Properties
 
-        internal MODBUSMaster_CoilRegister this[int index]
+        internal ModbusMaster_CoilRegister this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.MODBUSMaster
 
         #region Helper Methods
 
-        private List<MODBUSMaster_CoilRegister> CoilRegisters
+        private List<ModbusMaster_CoilRegister> CoilRegisters
         {
             get
             {
                 if (coilRegisters == null)
                 {
-                    coilRegisters = new List<MODBUSMaster_CoilRegister>();
+                    coilRegisters = new List<ModbusMaster_CoilRegister>();
                 }
                 return coilRegisters;
             }
         }
 
-        public static MODBUSMaster_CoilRegisterArray Null
+        public static ModbusMaster_CoilRegisterArray Null
         {
             get
             {
-                return (new MODBUSMaster_CoilRegisterArray() { IsNull = true });
+                return (new ModbusMaster_CoilRegisterArray() { IsNull = true });
             }
         }
 
@@ -79,41 +79,41 @@ namespace DeviceSQL.Types.MODBUSMaster
             return string.Join("|", CoilRegisters.Select(coilRegister => coilRegister.ToString()));
         }
 
-        public MODBUSMaster_CoilRegisterArray AddCoilRegister(MODBUSMaster_CoilRegister coilRegister)
+        public ModbusMaster_CoilRegisterArray AddCoilRegister(ModbusMaster_CoilRegister coilRegister)
         {
             CoilRegisters.Add(coilRegister);
             return this;
         }
 
-        public static MODBUSMaster_CoilRegisterArray Parse(SqlString stringToParse)
+        public static ModbusMaster_CoilRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedCoilRegisterArray = new MODBUSMaster_CoilRegisterArray()
+            var parsedCoilRegisterArray = new ModbusMaster_CoilRegisterArray()
             {
-                coilRegisters = new List<MODBUSMaster_CoilRegister>()
+                coilRegisters = new List<ModbusMaster_CoilRegister>()
             };
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedCoilRegisterArray.CoilRegisters.Add(MODBUSMaster_CoilRegister.Parse(parsedString[i]));
+                parsedCoilRegisterArray.CoilRegisters.Add(ModbusMaster_CoilRegister.Parse(parsedString[i]));
             }
 
             return parsedCoilRegisterArray;
         }
 
-        public MODBUSMaster_CoilRegister GetCoilRegister(SqlInt32 index)
+        public ModbusMaster_CoilRegister GetCoilRegister(SqlInt32 index)
         {
             return CoilRegisters[index.Value];
         }
 
-        public static MODBUSMaster_CoilRegisterArray Empty()
+        public static ModbusMaster_CoilRegisterArray Empty()
         {
-            var coilRegisterArray = new MODBUSMaster_CoilRegisterArray() { coilRegisters = new List<MODBUSMaster_CoilRegister>() };
+            var coilRegisterArray = new ModbusMaster_CoilRegisterArray() { coilRegisters = new List<ModbusMaster_CoilRegister>() };
             return coilRegisterArray;
         }
 
@@ -136,7 +136,7 @@ namespace DeviceSQL.Types.MODBUSMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var coilRegister = new MODBUSMaster_CoilRegister();
+                    var coilRegister = new ModbusMaster_CoilRegister();
                     coilRegister.Read(binaryReader);
                     CoilRegisters.Add(coilRegister);
                 }

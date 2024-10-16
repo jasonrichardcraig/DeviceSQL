@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System.Collections;
 using System.Data.SqlTypes;
@@ -15,8 +16,7 @@ namespace DeviceSQL.Functions
         public static IEnumerable ChannelManager_GetChannels()
         {
             ArrayList resultCollection = new ArrayList();
-            var channels = DeviceSQL.Watchdog.Worker.Channels;
-            channels.ToList().ForEach(channel => resultCollection.Add(new GetChannels_Result(channel.Name, channel.GetType().Name, channel.ReadTimeout, channel.WriteTimeout, channel.ConnectionString, channel.TracingEnabled)));
+            ServiceRegistry.GetChannels().ToList().ForEach(channel => resultCollection.Add(new GetChannels_Result(channel.Name, channel.GetType().Name, channel.ReadTimeout, channel.WriteTimeout, channel.ConnectionString, channel.TracingEnabled)));
             return resultCollection;
         }
 

@@ -7,11 +7,11 @@ using System.IO;
 
 #endregion
 
-namespace DeviceSQL.Types.MODBUSMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 8)]
-    public struct MODBUSMaster_CoilRegister : INullable, IBinarySerialize
+    public struct ModbusMaster_CoilRegister : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -38,7 +38,7 @@ namespace DeviceSQL.Types.MODBUSMaster
             }
         }
 
-        public MODBUSMaster_MODBUSAddress Address
+        public ModbusMaster_ModbusAddress Address
         {
             get;
             set;
@@ -54,19 +54,19 @@ namespace DeviceSQL.Types.MODBUSMaster
         {
             get
             {
-                return new DeviceSQL.Device.MODBUS.Data.CoilRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)).Value;
+                return new DeviceSQL.Device.Modbus.Data.CoilRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)).Value;
             }
             set
             {
-                Data = new DeviceSQL.Device.MODBUS.Data.CoilRegister(new DeviceSQL.Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)) { Value = value.Value }.Data;
+                Data = new DeviceSQL.Device.Modbus.Data.CoilRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)) { Value = value.Value }.Data;
             }
         }
 
-        public static MODBUSMaster_CoilRegister Null
+        public static ModbusMaster_CoilRegister Null
         {
             get
             {
-                return (new MODBUSMaster_CoilRegister() { IsNull = true });
+                return (new ModbusMaster_CoilRegister() { IsNull = true });
             }
         }
 
@@ -86,7 +86,7 @@ namespace DeviceSQL.Types.MODBUSMaster
             }
         }
 
-        public static MODBUSMaster_CoilRegister Parse(SqlString stringToParse)
+        public static ModbusMaster_CoilRegister Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
@@ -94,7 +94,7 @@ namespace DeviceSQL.Types.MODBUSMaster
             }
 
             var parsedCoilRegisterData = stringToParse.Value.Split(",".ToCharArray());
-            var parsedCoilRegister = new MODBUSMaster_CoilRegister() { Address = MODBUSMaster_MODBUSAddress.Parse(parsedCoilRegisterData[0]), Value = bool.Parse(parsedCoilRegisterData[1]) };
+            var parsedCoilRegister = new ModbusMaster_CoilRegister() { Address = ModbusMaster_ModbusAddress.Parse(parsedCoilRegisterData[0]), Value = bool.Parse(parsedCoilRegisterData[1]) };
             return parsedCoilRegister;
         }
 

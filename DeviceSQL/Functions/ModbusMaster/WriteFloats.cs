@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
@@ -10,14 +11,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class MODBUSMaster
+    public partial class ModbusMaster
     {
         [SqlFunction]
-        public static SqlBoolean MODBUSMaster_WriteFloats(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_FloatRegisterArray floatRegisterArray)
+        public static SqlBoolean ModbusMaster_WriteFloats(SqlString deviceName, Types.ModbusMaster.ModbusMaster_FloatRegisterArray floatRegisterArray)
         {
-            var deviceNameValue = deviceName.Value;
-            var floatRegisters = new List<Device.MODBUS.Data.FloatRegister>(floatRegisterArray.floatRegisters.Select(floatRegister => new Device.MODBUS.Data.FloatRegister(new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(floatRegister.Address.RelativeAddress.Value), floatRegister.Address.IsZeroBased.Value), floatRegister.ByteSwap.Value, floatRegister.WordSwap.Value)));
-            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.MODBUS.MODBUSMaster).WriteFloatRegisters(null, floatRegisters, null);
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var floatRegisters = new List<Device.Modbus.Data.FloatRegister>(floatRegisterArray.floatRegisters.Select(floatRegister => new Device.Modbus.Data.FloatRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(floatRegister.Address.RelativeAddress.Value), floatRegister.Address.IsZeroBased.Value), floatRegister.ByteSwap.Value, floatRegister.WordSwap.Value)));
+            (device as Device.Modbus.ModbusMaster).WriteFloatRegisters(null, floatRegisters, null);
             return true;
         }
     }

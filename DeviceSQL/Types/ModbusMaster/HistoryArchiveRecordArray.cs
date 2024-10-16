@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.MODBUSMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct MODBUSMaster_HistoryArchiveRecordArray : INullable, IBinarySerialize
+    public struct ModbusMaster_HistoryArchiveRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<MODBUSMaster_HistoryArchiveRecord> historyArchiveRecords;
+        internal List<ModbusMaster_HistoryArchiveRecord> historyArchiveRecords;
 
         #endregion
 
         #region Properties
 
-        internal MODBUSMaster_HistoryArchiveRecord this[int index]
+        internal ModbusMaster_HistoryArchiveRecord this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.MODBUSMaster
 
         #region Helper Methods
 
-        private List<MODBUSMaster_HistoryArchiveRecord> HistoryArchiveRecords
+        private List<ModbusMaster_HistoryArchiveRecord> HistoryArchiveRecords
         {
             get
             {
                 if (historyArchiveRecords == null)
                 {
-                    historyArchiveRecords = new List<MODBUSMaster_HistoryArchiveRecord>();
+                    historyArchiveRecords = new List<ModbusMaster_HistoryArchiveRecord>();
                 }
                 return historyArchiveRecords;
             }
         }
 
-        public static MODBUSMaster_HistoryArchiveRecordArray Null
+        public static ModbusMaster_HistoryArchiveRecordArray Null
         {
             get
             {
-                return (new MODBUSMaster_HistoryArchiveRecordArray() { IsNull = true });
+                return (new ModbusMaster_HistoryArchiveRecordArray() { IsNull = true });
             }
         }
 
@@ -79,42 +79,42 @@ namespace DeviceSQL.Types.MODBUSMaster
             return string.Join("|", HistoryArchiveRecords.Select(historyArchiveRecord => historyArchiveRecord.ToString()));
         }
 
-        public MODBUSMaster_HistoryArchiveRecordArray AddHistoryArchiveRecord(MODBUSMaster_HistoryArchiveRecord historyArchiveRecord)
+        public ModbusMaster_HistoryArchiveRecordArray AddHistoryArchiveRecord(ModbusMaster_HistoryArchiveRecord historyArchiveRecord)
         {
             HistoryArchiveRecords.Add(historyArchiveRecord);
             return this;
         }
 
-        public static MODBUSMaster_HistoryArchiveRecordArray Parse(SqlString historyArchiveToParse)
+        public static ModbusMaster_HistoryArchiveRecordArray Parse(SqlString historyArchiveToParse)
         {
             if (historyArchiveToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedHistoryArchiveRecordArray = new MODBUSMaster_HistoryArchiveRecordArray()
+            var parsedHistoryArchiveRecordArray = new ModbusMaster_HistoryArchiveRecordArray()
             {
-                historyArchiveRecords = new List<MODBUSMaster_HistoryArchiveRecord>()
+                historyArchiveRecords = new List<ModbusMaster_HistoryArchiveRecord>()
             };
 
             var parsedHistoryArchive = historyArchiveToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedHistoryArchive.Length > i; i++)
             {
-                parsedHistoryArchiveRecordArray.HistoryArchiveRecords.Add(MODBUSMaster_HistoryArchiveRecord.Parse(parsedHistoryArchive[i]));
+                parsedHistoryArchiveRecordArray.HistoryArchiveRecords.Add(ModbusMaster_HistoryArchiveRecord.Parse(parsedHistoryArchive[i]));
             }
 
             return parsedHistoryArchiveRecordArray;
         }
 
-        public MODBUSMaster_HistoryArchiveRecord GetHistoryArchiveRecord(SqlInt32 index)
+        public ModbusMaster_HistoryArchiveRecord GetHistoryArchiveRecord(SqlInt32 index)
         {
             return HistoryArchiveRecords[index.Value];
         }
 
-        public static MODBUSMaster_HistoryArchiveRecordArray Empty()
+        public static ModbusMaster_HistoryArchiveRecordArray Empty()
         {
-            var historyArchiveRecordArray = new MODBUSMaster_HistoryArchiveRecordArray() { historyArchiveRecords = new List<MODBUSMaster_HistoryArchiveRecord>() };
+            var historyArchiveRecordArray = new ModbusMaster_HistoryArchiveRecordArray() { historyArchiveRecords = new List<ModbusMaster_HistoryArchiveRecord>() };
             return historyArchiveRecordArray;
         }
 
@@ -137,7 +137,7 @@ namespace DeviceSQL.Types.MODBUSMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var historyArchiveRecord = new MODBUSMaster_HistoryArchiveRecord();
+                    var historyArchiveRecord = new ModbusMaster_HistoryArchiveRecord();
                     historyArchiveRecord.Read(binaryReader);
                     HistoryArchiveRecords.Add(historyArchiveRecord);
                 }

@@ -1,10 +1,10 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.FST.Arguments;
+using DeviceSQL.Device.Roc.FST.Arguments;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.FST.Instructions
+namespace DeviceSQL.Device.Roc.FST.Instructions
 {
     public abstract class InstructionBase<TArgument1, TArgument2> where TArgument1 : ArgumentBase
                                                                         where TArgument2 : ArgumentBase

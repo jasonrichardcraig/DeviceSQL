@@ -9,30 +9,30 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_ROCPlusEventRecordArray : INullable, IBinarySerialize
+    public struct RocMaster_RocPlusEventRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<ROCMaster_ROCPlusEventRecord> rocPlusEventRecords;
+        internal List<RocMaster_RocPlusEventRecord> rocPlusEventRecords;
 
         #endregion
 
         #region Properties
 
-        internal ROCMaster_ROCPlusEventRecord this[int index]
+        internal RocMaster_RocPlusEventRecord this[int index]
         {
             get
             {
-                return ROCPlusEventRecords[index];
+                return RocPlusEventRecords[index];
             }
             set
             {
-                ROCPlusEventRecords[index] = value;
+                RocPlusEventRecords[index] = value;
             }
         }
 
@@ -46,7 +46,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                return ROCPlusEventRecords.Count;
+                return RocPlusEventRecords.Count;
             }
         }
 
@@ -54,64 +54,64 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        private List<ROCMaster_ROCPlusEventRecord> ROCPlusEventRecords
+        private List<RocMaster_RocPlusEventRecord> RocPlusEventRecords
         {
             get
             {
                 if (rocPlusEventRecords == null)
                 {
-                    rocPlusEventRecords = new List<ROCMaster_ROCPlusEventRecord>();
+                    rocPlusEventRecords = new List<RocMaster_RocPlusEventRecord>();
                 }
                 return rocPlusEventRecords;
             }
         }
 
-        public static ROCMaster_ROCPlusEventRecordArray Null
+        public static RocMaster_RocPlusEventRecordArray Null
         {
             get
             {
-                return (new ROCMaster_ROCPlusEventRecordArray() { IsNull = true });
+                return (new RocMaster_RocPlusEventRecordArray() { IsNull = true });
             }
         }
 
         public override string ToString()
         {
-            return string.Join("|", ROCPlusEventRecords.Select(parameter => parameter.ToString()));
+            return string.Join("|", RocPlusEventRecords.Select(parameter => parameter.ToString()));
         }
 
-        public ROCMaster_ROCPlusEventRecordArray AddROCPlusEventRecord(ROCMaster_ROCPlusEventRecord rocPlusEventRecord)
+        public RocMaster_RocPlusEventRecordArray AddRocPlusEventRecord(RocMaster_RocPlusEventRecord rocPlusEventRecord)
         {
-            ROCPlusEventRecords.Add(rocPlusEventRecord);
+            RocPlusEventRecords.Add(rocPlusEventRecord);
             return this;
         }
 
-        public static ROCMaster_ROCPlusEventRecordArray Parse(SqlString stringToParse)
+        public static RocMaster_RocPlusEventRecordArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCPlusEventRecords = new ROCMaster_ROCPlusEventRecordArray();
-            parsedROCPlusEventRecords.rocPlusEventRecords = new List<ROCMaster_ROCPlusEventRecord>();
+            var parsedRocPlusEventRecords = new RocMaster_RocPlusEventRecordArray();
+            parsedRocPlusEventRecords.rocPlusEventRecords = new List<RocMaster_RocPlusEventRecord>();
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedROCPlusEventRecords.rocPlusEventRecords.Add(ROCMaster_ROCPlusEventRecord.Parse(parsedString[i]));
+                parsedRocPlusEventRecords.rocPlusEventRecords.Add(RocMaster_RocPlusEventRecord.Parse(parsedString[i]));
             }
 
-            return parsedROCPlusEventRecords;
+            return parsedRocPlusEventRecords;
         }
 
-        public ROCMaster_ROCPlusEventRecord GetROCPlusEventRecord(SqlInt32 index)
+        public RocMaster_RocPlusEventRecord GetRocPlusEventRecord(SqlInt32 index)
         {
-            return ROCPlusEventRecords[index.Value];
+            return RocPlusEventRecords[index.Value];
         }
 
-        public static ROCMaster_EventRecordArray Empty()
+        public static RocMaster_EventRecordArray Empty()
         {
-            var eventRecord = new ROCMaster_EventRecordArray { eventRecords = new List<ROCMaster_EventRecord>() };
+            var eventRecord = new RocMaster_EventRecordArray { eventRecords = new List<RocMaster_EventRecord>() };
             return eventRecord;
         }
 
@@ -121,7 +121,7 @@ namespace DeviceSQL.Types.ROCMaster
 
         public void Read(BinaryReader binaryReader)
         {
-            ROCPlusEventRecords.Clear();
+            RocPlusEventRecords.Clear();
             IsNull = binaryReader.ReadBoolean();
 
             if (IsNull)
@@ -134,9 +134,9 @@ namespace DeviceSQL.Types.ROCMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var rocPlusEventRecord = new ROCMaster_ROCPlusEventRecord();
+                    var rocPlusEventRecord = new RocMaster_RocPlusEventRecord();
                     rocPlusEventRecord.Read(binaryReader);
-                    ROCPlusEventRecords.Add(rocPlusEventRecord);
+                    RocPlusEventRecords.Add(rocPlusEventRecord);
                 }
             }
 
@@ -149,9 +149,9 @@ namespace DeviceSQL.Types.ROCMaster
 
             if (Length > 0)
             {
-                for (var i = 0; ROCPlusEventRecords.Count > i; i++)
+                for (var i = 0; RocPlusEventRecords.Count > i; i++)
                 {
-                    ROCPlusEventRecords[i].Write(binaryWriter);
+                    RocPlusEventRecords[i].Write(binaryWriter);
                 }
             }
         }

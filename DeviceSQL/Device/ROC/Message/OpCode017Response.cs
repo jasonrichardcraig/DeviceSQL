@@ -1,6 +1,6 @@
-﻿namespace DeviceSQL.Device.ROC.Message
+﻿namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode017Response : ROCMessage, IROCResponseMessage
+    internal class OpCode017Response : RocMessage, IRocResponseMessage
     {
 
         #region Properties
@@ -25,12 +25,12 @@
 
         #region Helper Methods
 
-        void IROCResponseMessage.Initialize(byte[] frame)
+        void IRocResponseMessage.Initialize(byte[] frame)
         {
             base.Initialize(frame);
         }
 
-        void IROCResponseMessage.Initialize(byte[] frame, IROCRequestMessage requestMessage)
+        void IRocResponseMessage.Initialize(byte[] frame, IRocRequestMessage requestMessage)
         {
             this.Initialize(frame);
         }

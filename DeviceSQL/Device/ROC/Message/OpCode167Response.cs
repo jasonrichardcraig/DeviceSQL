@@ -1,15 +1,15 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode167Response : ROCMessage, IROCResponseMessage
+    internal class OpCode167Response : RocMessage, IRocResponseMessage
     {
 
         #region Fields
@@ -49,12 +49,12 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Helper Methods
 
-        void IROCResponseMessage.Initialize(byte[] frame)
+        void IRocResponseMessage.Initialize(byte[] frame)
         {
             base.Initialize(frame);
         }
 
-        void IROCResponseMessage.Initialize(byte[] frame, IROCRequestMessage requestMessage)
+        void IRocResponseMessage.Initialize(byte[] frame, IRocRequestMessage requestMessage)
         {
             base.Initialize(frame);
             if (frame.Length < MinimumFrameSize)

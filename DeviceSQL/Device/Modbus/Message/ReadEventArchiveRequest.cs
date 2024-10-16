@@ -1,6 +1,6 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.MODBUS.Data;
+using DeviceSQL.Device.Modbus.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,10 +8,10 @@ using System.Net;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS.Message
+namespace DeviceSQL.Device.Modbus.Message
 
 {
-    internal class ReadEventArchiveRequest : MODBUSMessage, IMODBUSRequestMessage
+    internal class ReadEventArchiveRequest : ModbusMessage, IModbusRequestMessage
     {
 
         #region Properties
@@ -32,7 +32,7 @@ namespace DeviceSQL.Device.MODBUS.Message
             }
         }
 
-        public MODBUSAddress EventArchiveAddress
+        public ModbusAddress EventArchiveAddress
         {
             get;
             private set;
@@ -65,10 +65,10 @@ namespace DeviceSQL.Device.MODBUS.Message
         {
         }
 
-        public ReadEventArchiveRequest(ushort unitId, MODBUSAddress eventArchiveAddress, ushort index, bool isExtendedUnitId)
+        public ReadEventArchiveRequest(ushort unitId, ModbusAddress eventArchiveAddress, ushort index, bool isExtendedUnitId)
             : base(unitId, Device.ReadHoldingRegisters)
         {
-            this.EventArchiveAddress = new MODBUSAddress(eventArchiveAddress.RelativeAddress, eventArchiveAddress.IsZeroBased);
+            this.EventArchiveAddress = new ModbusAddress(eventArchiveAddress.RelativeAddress, eventArchiveAddress.IsZeroBased);
             this.Index = index;
             this.IsExtendedUnitId = isExtendedUnitId;
         }
@@ -77,7 +77,7 @@ namespace DeviceSQL.Device.MODBUS.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IMODBUSResponseMessage response)
+        public void ValidateResponse(IModbusResponseMessage response)
         {
             var readEventArchiveResponse = response as ReadEventArchiveResponse;
             Debug.Assert(readEventArchiveResponse != null, "Argument response should be of type ReadEventArchiveResponse.");

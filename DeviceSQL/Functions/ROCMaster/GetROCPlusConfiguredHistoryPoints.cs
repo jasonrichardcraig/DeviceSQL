@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System.Data.SqlTypes;
 using System.Linq;
@@ -8,14 +9,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static Types.ROCMaster.ROCMaster_ROCPlusHistoryPointArray ROCMaster_GetROCPlusConfiguredHistoryPoints(SqlString deviceName, byte historySegment)
+        public static Types.RocMaster.RocMaster_RocPlusHistoryPointArray RocMaster_GetRocPlusConfiguredHistoryPoints(SqlString deviceName, byte historySegment)
         {
-            var deviceNameValue = deviceName.Value;
-            var configuredHistoryPoints = (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster).GetROCPlusConfiguredHistoryPoints(null, null, null, null, historySegment);
-            return new Types.ROCMaster.ROCMaster_ROCPlusHistoryPointArray() { historyPoints = configuredHistoryPoints };
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var configuredHistoryPoints = (device as Device.Roc.RocMaster).GetRocPlusConfiguredHistoryPoints(null, null, null, null, historySegment);
+            return new Types.RocMaster.RocMaster_RocPlusHistoryPointArray() { historyPoints = configuredHistoryPoints };
         }
     }
 }

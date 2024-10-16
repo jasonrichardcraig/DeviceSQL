@@ -6,9 +6,9 @@ using System.Globalization;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal abstract class ROCMessage : IROCMessage
+    internal abstract class RocMessage : IRocMessage
     {
 
         #region Properties
@@ -72,11 +72,11 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Constructor(s)
 
-        public ROCMessage()
+        public RocMessage()
         {
         }
 
-        public ROCMessage(byte destinationUnit, byte destinationGroup, byte sourceUnit, byte sourceGroup, byte opCode)
+        public RocMessage(byte destinationUnit, byte destinationGroup, byte sourceUnit, byte sourceGroup, byte opCode)
         {
             this.DestinationUnit = destinationUnit;
             this.DestinationGroup = destinationGroup;

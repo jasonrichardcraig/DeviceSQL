@@ -1,15 +1,15 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode119Response : ROCMessage, IROCResponseMessage
+    internal class OpCode119Response : RocMessage, IRocResponseMessage
     {
 
         #region Fields
@@ -60,14 +60,14 @@ namespace DeviceSQL.Device.ROC.Message
             }
         }
 
-        public List<ROCPlusEventRecord> ROCPlusEvents
+        public List<RocPlusEventRecord> RocPlusEvents
         {
             get
             {
                 byte alarmCount = NumberOfEvents;
                 ushort startIndex = StartingEventLogIndex;
 
-                var ROCPlusEvents = new List<ROCPlusEventRecord>(alarmCount);
+                var RocPlusEvents = new List<RocPlusEventRecord>(alarmCount);
 
                 for (ushort eventIndex = 5; eventIndex < Data.Length; eventIndex += 22)
                 {
@@ -75,10 +75,10 @@ namespace DeviceSQL.Device.ROC.Message
 
                     var eventBytes = Data.ToList().GetRange(eventIndex, 22).ToArray();
 
-                    ROCPlusEvents.Add(new ROCPlusEventRecord(relativeEventIndex, eventBytes));
+                    RocPlusEvents.Add(new RocPlusEventRecord(relativeEventIndex, eventBytes));
                 }
 
-                return ROCPlusEvents;
+                return RocPlusEvents;
             }
         }
 
@@ -86,12 +86,12 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Helper Methods
 
-        void IROCResponseMessage.Initialize(byte[] frame)
+        void IRocResponseMessage.Initialize(byte[] frame)
         {
             base.Initialize(frame);
         }
 
-        void IROCResponseMessage.Initialize(byte[] frame, IROCRequestMessage requestMessage)
+        void IRocResponseMessage.Initialize(byte[] frame, IRocRequestMessage requestMessage)
         {
             base.Initialize(frame);
 

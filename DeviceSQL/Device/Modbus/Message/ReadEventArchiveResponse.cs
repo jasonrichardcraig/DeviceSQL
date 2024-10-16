@@ -1,15 +1,15 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.MODBUS.Data;
+using DeviceSQL.Device.Modbus.Data;
 using System;
 using System.Collections.Generic;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS.Message
+namespace DeviceSQL.Device.Modbus.Message
 
 {
-    internal class ReadEventArchiveResponse : MODBUSMessage, IMODBUSResponseMessage
+    internal class ReadEventArchiveResponse : ModbusMessage, IModbusResponseMessage
     {
 
         #region Fields
@@ -54,12 +54,12 @@ namespace DeviceSQL.Device.MODBUS.Message
 
         #region Helper Methods
 
-        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
+        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
         {
             base.Initialize(frame, isExtendedUnitId);
         }
 
-        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IMODBUSRequestMessage requestMessage)
+        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IModbusRequestMessage requestMessage)
         {
             base.Initialize(frame, isExtendedUnitId);
 

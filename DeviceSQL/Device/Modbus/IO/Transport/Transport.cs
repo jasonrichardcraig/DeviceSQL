@@ -1,6 +1,6 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.MODBUS.Message;
+using DeviceSQL.Device.Modbus.Message;
 using DeviceSQL.IO.Channels;
 using DeviceSQL.IO.Channels.Transport;
 using System;
@@ -13,7 +13,7 @@ using System.Threading;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS.IO
+namespace DeviceSQL.Device.Modbus.IO
 {
     public class Transport : ITransport
     {
@@ -93,8 +93,8 @@ namespace DeviceSQL.Device.MODBUS.IO
 
         #region Transport Methods
 
-        internal virtual TResponseMessage UnicastMessage<TResponseMessage>(IMODBUSRequestMessage requestMessage)
-where TResponseMessage : IMODBUSResponseMessage, new()
+        internal virtual TResponseMessage UnicastMessage<TResponseMessage>(IModbusRequestMessage requestMessage)
+where TResponseMessage : IModbusResponseMessage, new()
         {
             if (TracingEnabled)
             {
@@ -102,7 +102,7 @@ where TResponseMessage : IMODBUSResponseMessage, new()
             }
             var lastException = (Exception)null;
             var transactionStopWatch = Stopwatch.StartNew();
-            IMODBUSResponseMessage response = default(TResponseMessage);
+            IModbusResponseMessage response = default(TResponseMessage);
             int attempt = 0;
             bool success = false;
             lock (channelLock)
@@ -130,9 +130,9 @@ where TResponseMessage : IMODBUSResponseMessage, new()
                             TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
                         }
                         response = ReadResponse<TResponseMessage>(requestMessage);
-                        if (response is MODBUSErrorResponse)
+                        if (response is ModbusErrorResponse)
                         {
-                            throw new MODBUSSlaveException(response as MODBUSErrorResponse);
+                            throw new ModbusSlaveException(response as ModbusErrorResponse);
                         }
                         else
                         {
@@ -179,61 +179,61 @@ where TResponseMessage : IMODBUSResponseMessage, new()
             throw new TimeoutException("Device not responding to requests", lastException);
         }
 
-        internal virtual IMODBUSResponseMessage CreateResponse<TResponseMessage>(byte[] frame, IMODBUSRequestMessage requestMessage)
-                where TResponseMessage : IMODBUSResponseMessage, new()
+        internal virtual IModbusResponseMessage CreateResponse<TResponseMessage>(byte[] frame, IModbusRequestMessage requestMessage)
+                where TResponseMessage : IModbusResponseMessage, new()
         {
 
             byte functionCode = (requestMessage.IsExtendedUnitId ? frame[2] : frame[1]);
 
-            IMODBUSResponseMessage response;
+            IModbusResponseMessage response;
 
             switch (functionCode)
             {
                 case Device.ReadCoils:
-                    response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadCoilRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    response = ModbusMessageFactory.CreateModbusResponseMessage<ReadCoilRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                     break;
                 case Device.ReadDiscreteInputs:
-                    response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadDiscreteInputRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    response = ModbusMessageFactory.CreateModbusResponseMessage<ReadDiscreteInputRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                     break;
                 case Device.WriteSingleCoil:
-                    response = MODBUSMessageFactory.CreateMODBUSResponseMessage<WriteBooleanResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    response = ModbusMessageFactory.CreateModbusResponseMessage<WriteBooleanResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                     break;
                 case Device.ReadInputRegisters:
-                    response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadInputRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    response = ModbusMessageFactory.CreateModbusResponseMessage<ReadInputRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                     break;
                 case Device.ReadHoldingRegisters:
                     switch (requestMessage.DataType)
                     {
                         case Device.DataType.EventArchive:
-                            response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadEventArchiveResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                            response = ModbusMessageFactory.CreateModbusResponseMessage<ReadEventArchiveResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                             break;
                         case Device.DataType.HistoryArchive:
-                            response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadHistoryArchiveResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                            response = ModbusMessageFactory.CreateModbusResponseMessage<ReadHistoryArchiveResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                             break;
                         case Device.DataType.Short:
-                            response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadShortsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                            response = ModbusMessageFactory.CreateModbusResponseMessage<ReadShortsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                             break;
                         case Device.DataType.Long:
-                            response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadLongsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                            response = ModbusMessageFactory.CreateModbusResponseMessage<ReadLongsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                             break;
                         case Device.DataType.String:
-                            response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadStringResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                            response = ModbusMessageFactory.CreateModbusResponseMessage<ReadStringResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                             break;
                         case Device.DataType.Float:
-                            response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadFloatsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                            response = ModbusMessageFactory.CreateModbusResponseMessage<ReadFloatsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                             break;
                         default:
-                            response = MODBUSMessageFactory.CreateMODBUSResponseMessage<ReadHoldingRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                            response = ModbusMessageFactory.CreateModbusResponseMessage<ReadHoldingRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                             break;
                     }
                     break;
                 case Device.WriteMultipleRegisters:
-                    response = MODBUSMessageFactory.CreateMODBUSResponseMessage<WriteFloatsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    response = ModbusMessageFactory.CreateModbusResponseMessage<WriteFloatsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                     break;
                 default:
                     if (functionCode > Device.ExceptionOffset)
                     {
-                        response = MODBUSMessageFactory.CreateMODBUSResponseMessage<MODBUSErrorResponse>(frame, requestMessage.IsExtendedUnitId);
+                        response = ModbusMessageFactory.CreateModbusResponseMessage<ModbusErrorResponse>(frame, requestMessage.IsExtendedUnitId);
                         break;
                     }
                     else
@@ -245,7 +245,7 @@ where TResponseMessage : IMODBUSResponseMessage, new()
             return response;
         }
 
-        internal void ValidateResponse(IMODBUSRequestMessage request, IMODBUSResponseMessage response)
+        internal void ValidateResponse(IModbusRequestMessage request, IModbusResponseMessage response)
         {
 
             if (request.FunctionCode != response.FunctionCode)
@@ -288,8 +288,8 @@ where TResponseMessage : IMODBUSResponseMessage, new()
             return numBytes;
         }
 
-        internal IMODBUSResponseMessage ReadResponse<TResponseMessage>(IMODBUSRequestMessage requestMessage)
-            where TResponseMessage : IMODBUSResponseMessage, new()
+        internal IModbusResponseMessage ReadResponse<TResponseMessage>(IModbusRequestMessage requestMessage)
+            where TResponseMessage : IModbusResponseMessage, new()
         {
             var sequence = 0;
             var referenceHeader = requestMessage.IsExtendedUnitId ? BitConverter.GetBytes(requestMessage.UnitId).Concat(new byte[] { requestMessage.FunctionCode }) : new byte[] { Convert.ToByte(requestMessage.UnitId) }.Concat(new byte[] { requestMessage.FunctionCode });
@@ -336,7 +336,7 @@ where TResponseMessage : IMODBUSResponseMessage, new()
             return responseMessage;
         }
 
-        internal byte[] BuildMessageFrame(IMODBUSMessage message)
+        internal byte[] BuildMessageFrame(IModbusMessage message)
         {
             List<byte> messageBody = new List<byte>();
             messageBody.AddRange(message.MessageFrame);
@@ -359,7 +359,7 @@ where TResponseMessage : IMODBUSResponseMessage, new()
             return bufferedBytes;
         }
 
-        internal void Write(IMODBUSMessage message)
+        internal void Write(IModbusMessage message)
         {
             var frameBytes = BuildMessageFrame(message);
             var frameLength = frameBytes.Length;

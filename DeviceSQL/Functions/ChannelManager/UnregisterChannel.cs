@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using System;
 using System.Data.SqlTypes;
 using System.Diagnostics;
@@ -16,21 +17,16 @@ namespace DeviceSQL.Functions
         {
             try
             {
-                var channelNameValue = channelName.Value;
-                var channels = DeviceSQL.Watchdog.Worker.Channels;
-                var channelsToRemove = channels.Where(channel => channel.Name == channelNameValue).ToList();
-                channelsToRemove.ForEach((channel) =>
+                try
                 {
-                    try
-                    {
-                        channel.Dispose();
-                        channels.TryTake(out channel);
-                    }
-                    catch (Exception ex)
-                    {
-                        Trace.TraceError(string.Format("Error unregistering channel: {0}", ex.Message));
-                    }
-                });
+                    var channel = ServiceRegistry.GetChannel(channelName.Value);
+                    channel.Dispose();
+                    ServiceRegistry.RemoveChannel(channelName.Value);
+                }
+                catch (Exception ex)
+                {
+                    Trace.TraceError(string.Format("Error unregistering channel: {0}", ex.Message));
+                }
             }
             catch (Exception ex)
             {

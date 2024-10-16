@@ -1,11 +1,11 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.Message;
+using DeviceSQL.Device.Roc.Message;
 using System;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC
+namespace DeviceSQL.Device.Roc
 {
     public class OpCode255Exception : Exception
     {

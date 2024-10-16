@@ -6,12 +6,12 @@ using System.Globalization;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode255Response : ROCMessage, IROCResponseMessage
+    internal class OpCode255Response : RocMessage, IRocResponseMessage
     {
 
-        public struct ROCPlusError
+        public struct RocPlusError
         {
             public byte ErrorCode
             {
@@ -33,7 +33,7 @@ namespace DeviceSQL.Device.ROC.Message
         private const string OpCode121_Error57 = "Number of data bytes <> 3 or Starting alarm pointer > 239.";
         private const string OpCode122_Error58 = "Number of data bytes <> 3 or Starting event pointer > 239.";
         private const string OpCode126_Error59 = "One of the following conditions: 1) Number of data bytes > 2. 2) Invalid point number for requested RAM area.3) Invalid RAM area number.";
-        private const string OpCode130_Error62 = "One of the following conditions: 1) The number of data values requested exceeds the number of data values defined for that history RAM area. 2) The data portion of the message did not consist soley of 5 bytes. 3) The module number exceeds or is equal to the maximum number of modules supported by the ROC.";
+        private const string OpCode130_Error62 = "One of the following conditions: 1) The number of data values requested exceeds the number of data values defined for that history RAM area. 2) The data portion of the message did not consist soley of 5 bytes. 3) The module number exceeds or is equal to the maximum number of modules supported by the Roc.";
         private const string OpCode130_Error63 = "One of the following conditions: 1) The point number exceeds the number in the requested module. 2) The requested point number has an invalid archival type.";
         private const string OpCode131_Error103 = "Industry Canada audit log retrieval error.";
         private const string OpCode132_Error104 = "Industry Canada clear audit log error.";
@@ -123,7 +123,7 @@ namespace DeviceSQL.Device.ROC.Message
             }
         }
 
-        public List<ROCPlusError> ROCPlusErrors
+        public List<RocPlusError> RocPlusErrors
         {
             get;
             internal set;
@@ -179,7 +179,7 @@ namespace DeviceSQL.Device.ROC.Message
 
         internal static Dictionary<ushort, string> CreateErrorMessages()
         {
-            // TODO: Add ROC Plus Specific errors
+            // TODO: Add Roc Plus Specific errors
             Dictionary<ushort, string> messages = new Dictionary<ushort, string>();
 
             messages.Add(((Device.OpCode120 << 8) | 56), OpCode120_Error56);
@@ -210,12 +210,12 @@ namespace DeviceSQL.Device.ROC.Message
             return messages;
         }
 
-        void IROCResponseMessage.Initialize(byte[] frame)
+        void IRocResponseMessage.Initialize(byte[] frame)
         {
             base.Initialize(frame);
         }
 
-        void IROCResponseMessage.Initialize(byte[] frame, IROCRequestMessage requestMessage)
+        void IRocResponseMessage.Initialize(byte[] frame, IRocRequestMessage requestMessage)
         {
             base.Initialize(frame);
 
@@ -240,10 +240,10 @@ namespace DeviceSQL.Device.ROC.Message
                 default:
                     {
                         var messageFrameLengthNoCrc = Convert.ToByte(frame.Length - 2);
-                        ROCPlusErrors = new List<ROCPlusError>();
+                        RocPlusErrors = new List<RocPlusError>();
                         for (var i = 5; messageFrameLengthNoCrc > i; i += 2)
                         {
-                            ROCPlusErrors.Add(new ROCPlusError() { ErrorCode = frame[i - 1], Offset = frame[i] });
+                            RocPlusErrors.Add(new RocPlusError() { ErrorCode = frame[i - 1], Offset = frame[i] });
                         }
                     }
                     break;

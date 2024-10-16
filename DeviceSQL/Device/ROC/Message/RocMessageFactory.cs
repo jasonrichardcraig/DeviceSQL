@@ -1,4 +1,4 @@
-﻿// DeviceSQL Device ROC Libraries
+﻿// DeviceSQL Device Roc Libraries
 // Copyright 2015, DeviceSQL
 // Date: 2017-08-07
 // Author: Jason R. Craig
@@ -15,9 +15,9 @@ using System.Globalization;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal static class ROCMessageFactory
+    internal static class RocMessageFactory
     {
 
         #region Constants
@@ -28,16 +28,16 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Factory Methods
 
-        public static IROCResponseMessage CreateROCResponseMessage<TResponseMessage>(byte[] frame)
-            where TResponseMessage : IROCResponseMessage, new()
+        public static IRocResponseMessage CreateRocResponseMessage<TResponseMessage>(byte[] frame)
+            where TResponseMessage : IRocResponseMessage, new()
         {
             TResponseMessage responseMessage = new TResponseMessage();
             responseMessage.Initialize(frame, null);
             return responseMessage;
         }
 
-        public static IROCResponseMessage CreateROCResponseMessage<TResponseMessage>(byte[] frame, IROCRequestMessage requestMessage)
-            where TResponseMessage : IROCResponseMessage, new()
+        public static IRocResponseMessage CreateRocResponseMessage<TResponseMessage>(byte[] frame, IRocRequestMessage requestMessage)
+            where TResponseMessage : IRocResponseMessage, new()
         {
             TResponseMessage responseMessage = new TResponseMessage();
             responseMessage.Initialize(frame, requestMessage);

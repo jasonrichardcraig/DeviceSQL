@@ -1,4 +1,4 @@
-﻿CREATE TABLE [ROCMaster].[ROCChannels] (
+﻿CREATE TABLE [RocMaster].[RocChannels] (
     [Id]                  BIGINT         IDENTITY (1, 1) NOT NULL,
     [Name]                VARCHAR (1024) NOT NULL,
     [IsSerialPortChannel] BIT            NOT NULL,
@@ -7,6 +7,6 @@
     [HostName]            VARCHAR (255)  NOT NULL,
     [HostPort]            INT            NOT NULL,
     [RowVersion]          ROWVERSION     NULL,
-    CONSTRAINT [PK_ROCChannels] PRIMARY KEY CLUSTERED ([Id] ASC)
+    CONSTRAINT [PK_RocChannels] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 

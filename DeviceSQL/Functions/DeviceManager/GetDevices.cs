@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System.Collections;
 using System.Data.SqlTypes;
@@ -16,8 +17,7 @@ namespace DeviceSQL.Functions
         public static IEnumerable DeviceManager_GetDevices()
         {
             ArrayList resultCollection = new ArrayList();
-            var devices = DeviceSQL.Watchdog.Worker.Devices;
-            devices.ToList().ForEach(device => resultCollection.Add(new GetDevices_Result(device.Name, device.Transport.Channel.Name, device.GetType().Name, device.Address, device.Transport.NumberOfRetries, device.Transport.WaitToRetryMilliseconds, device.Transport.RequestWriteDelayMilliseconds, device.Transport.ResponseReadDelayMilliseconds)));
+            ServiceRegistry.GetDevices().ToList().ForEach(device => resultCollection.Add(new GetDevices_Result(device.Name, device.Transport.Channel.Name, device.GetType().Name, device.Address, device.Transport.NumberOfRetries, device.Transport.WaitToRetryMilliseconds, device.Transport.RequestWriteDelayMilliseconds, device.Transport.ResponseReadDelayMilliseconds)));
             return resultCollection;
         }
 

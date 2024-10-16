@@ -1,15 +1,15 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode139Response : ROCMessage, IROCResponseMessage
+    internal class OpCode139Response : RocMessage, IRocResponseMessage
     {
 
         #region Fields
@@ -145,7 +145,7 @@ namespace DeviceSQL.Device.ROC.Message
             }
         }
 
-        public List<ROCPlusHistoryRecord> MeterHistory
+        public List<RocPlusHistoryRecord> MeterHistory
         {
             get
             {
@@ -160,7 +160,7 @@ namespace DeviceSQL.Device.ROC.Message
                     var requestTimeStamps = RequestTimeStamps;
                     var recordOffset = requestTimeStamps ? (4 + (NumberOfPoints * (4))) : (NumberOfPoints * (4));
 
-                    var meterHistory = new List<ROCPlusHistoryRecord>(recordCount);
+                    var meterHistory = new List<RocPlusHistoryRecord>(recordCount);
 
                     for (var offset = 7; (offset + (NumberOfPoints * (4))) < Data.Length; offset += recordOffset)
                     {
@@ -170,11 +170,11 @@ namespace DeviceSQL.Device.ROC.Message
                         {
                             if (requestTimeStamps)
                             {
-                                meterHistory.Add(new ROCPlusHistoryRecord() { HistorySegment = HistorySegment, HistoryPointNumber = historyPoint, Index = index, Value = new byte[] { Data[offset], Data[offset + 1], Data[offset + 2], Data[offset + 3], Data[dataOffset + 0], Data[dataOffset + 1], Data[dataOffset + 2], Data[dataOffset + 3] } });
+                                meterHistory.Add(new RocPlusHistoryRecord() { HistorySegment = HistorySegment, HistoryPointNumber = historyPoint, Index = index, Value = new byte[] { Data[offset], Data[offset + 1], Data[offset + 2], Data[offset + 3], Data[dataOffset + 0], Data[dataOffset + 1], Data[dataOffset + 2], Data[dataOffset + 3] } });
                             }
                             else
                             {
-                                meterHistory.Add(new ROCPlusHistoryRecord() { HistorySegment = HistorySegment, HistoryPointNumber = historyPoint, Index = index, Value = new byte[] { Data[dataOffset + 0], Data[dataOffset + 1], Data[dataOffset + 2], Data[dataOffset + 3] } });
+                                meterHistory.Add(new RocPlusHistoryRecord() { HistorySegment = HistorySegment, HistoryPointNumber = historyPoint, Index = index, Value = new byte[] { Data[dataOffset + 0], Data[dataOffset + 1], Data[dataOffset + 2], Data[dataOffset + 3] } });
                             }
                             dataOffset += 4;
                         }
@@ -189,12 +189,12 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Helper Methods
 
-        void IROCResponseMessage.Initialize(byte[] frame)
+        void IRocResponseMessage.Initialize(byte[] frame)
         {
             base.Initialize(frame);
         }
 
-        void IROCResponseMessage.Initialize(byte[] frame, IROCRequestMessage requestMessage)
+        void IRocResponseMessage.Initialize(byte[] frame, IRocRequestMessage requestMessage)
         {
 
             var opCode139RequestMessage = requestMessage as OpCode139Request;

@@ -1,9 +1,9 @@
 ﻿
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
-using DeviceSQL.Device.ROC.IO;
-using DeviceSQL.Device.ROC.Message;
+using DeviceSQL.Device.Roc.Data;
+using DeviceSQL.Device.Roc.IO;
+using DeviceSQL.Device.Roc.Message;
 using DeviceSQL.IO.Channels;
 using DeviceSQL.IO.Channels.Transport;
 using System;
@@ -12,9 +12,9 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC
+namespace DeviceSQL.Device.Roc
 {
-    public class ROCMaster : IMaster
+    public class RocMaster : IDevice
     {
 
         #region Fields
@@ -37,7 +37,7 @@ namespace DeviceSQL.Device.ROC
             }
         }
 
-        ITransport IMaster.Transport
+        ITransport IDevice.Transport
         {
             get
             {
@@ -91,7 +91,7 @@ namespace DeviceSQL.Device.ROC
 
         #region Constructor(s)
 
-        public ROCMaster(IChannel channel)
+        public RocMaster(IChannel channel)
         {
             this.transport = new Transport(channel);
         }
@@ -245,28 +245,28 @@ namespace DeviceSQL.Device.ROC
             return response.AuditLogSize;
         }
 
-        public ushort GetCurrentROCPlusAlarmIndex(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup)
+        public ushort GetCurrentRocPlusAlarmIndex(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup)
         {
             var request = new OpCode118Request(destinationUnit.GetValueOrDefault(DeviceAddress), destinationGroup.GetValueOrDefault(DeviceGroup), sourceUnit.GetValueOrDefault(HostAddress), sourceGroup.GetValueOrDefault(HostGroup), 0, 0);
             var response = Transport.UnicastMessage<OpCode118Response>(request);
             return response.CurrentAlarmLogIndex;
         }
 
-        public ushort GetCurrentROCPlusEventIndex(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup)
+        public ushort GetCurrentRocPlusEventIndex(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup)
         {
             var request = new OpCode119Request(destinationUnit.GetValueOrDefault(DeviceAddress), destinationGroup.GetValueOrDefault(DeviceGroup), sourceUnit.GetValueOrDefault(HostAddress), sourceGroup.GetValueOrDefault(HostGroup), 0, 0);
             var response = Transport.UnicastMessage<OpCode119Response>(request);
             return response.CurrentEventLogIndex;
         }
 
-        public ushort GetCurrentROCPlusHistorySegmentIndex(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historySegment, byte historyType)
+        public ushort GetCurrentRocPlusHistorySegmentIndex(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historySegment, byte historyType)
         {
             var request = new OpCode139Request(destinationUnit.GetValueOrDefault(DeviceAddress), destinationGroup.GetValueOrDefault(DeviceGroup), sourceUnit.GetValueOrDefault(HostAddress), sourceGroup.GetValueOrDefault(HostGroup), historySegment, 0, historyType, false, new List<byte>(), 0);
             var response = Transport.UnicastMessage<OpCode139Response>(request);
             return response.CurrentIndex;
         }
 
-        public List<byte> GetROCPlusConfiguredHistoryPoints(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historySegment)
+        public List<byte> GetRocPlusConfiguredHistoryPoints(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historySegment)
         {
             var request = new OpCode139Request(destinationUnit.GetValueOrDefault(DeviceAddress), destinationGroup.GetValueOrDefault(DeviceGroup), sourceUnit.GetValueOrDefault(HostAddress), sourceGroup.GetValueOrDefault(HostGroup), historySegment);
             var response = Transport.UnicastMessage<OpCode139Response>(request);
@@ -294,18 +294,18 @@ namespace DeviceSQL.Device.ROC
             return response.AuditLogRecords;
         }
 
-        public List<ROCPlusAlarmRecord> GetROCPlusAlarms(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte count, ushort startIndex)
+        public List<RocPlusAlarmRecord> GetRocPlusAlarms(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte count, ushort startIndex)
         {
             var request = new OpCode118Request(destinationUnit.GetValueOrDefault(DeviceAddress), destinationGroup.GetValueOrDefault(DeviceGroup), sourceUnit.GetValueOrDefault(HostAddress), sourceGroup.GetValueOrDefault(HostGroup), count, startIndex);
             var response = Transport.UnicastMessage<OpCode118Response>(request);
-            return response.ROCPlusAlarms;
+            return response.RocPlusAlarms;
         }
 
-        public List<ROCPlusEventRecord> GetROCPlusEvents(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte count, ushort startIndex)
+        public List<RocPlusEventRecord> GetRocPlusEvents(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte count, ushort startIndex)
         {
             var request = new OpCode119Request(destinationUnit.GetValueOrDefault(DeviceAddress), destinationGroup.GetValueOrDefault(DeviceGroup), sourceUnit.GetValueOrDefault(HostAddress), sourceGroup.GetValueOrDefault(HostGroup), count, startIndex);
             var response = Transport.UnicastMessage<OpCode119Response>(request);
-            return response.ROCPlusEvents;
+            return response.RocPlusEvents;
         }
 
         public List<HistoryRecord> GetHistory(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historicalRamArea, byte historyPointNumber, byte count, ushort startIndex)
@@ -322,14 +322,14 @@ namespace DeviceSQL.Device.ROC
             return response.MeterHistory;
         }
 
-        public List<ROCPlusHistoryRecord> GetROCPlusHistory(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historySegment, ushort historyIndex, byte historyType, byte startingHistoryPoint, byte numberOfHistoryPoints, byte numberOfTimePeriods)
+        public List<RocPlusHistoryRecord> GetRocPlusHistory(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historySegment, ushort historyIndex, byte historyType, byte startingHistoryPoint, byte numberOfHistoryPoints, byte numberOfTimePeriods)
         {
             var request = new OpCode136Request(destinationUnit.GetValueOrDefault(DeviceAddress), destinationGroup.GetValueOrDefault(DeviceGroup), sourceUnit.GetValueOrDefault(HostAddress), sourceGroup.GetValueOrDefault(HostGroup), historySegment, historyIndex, historyType, startingHistoryPoint, numberOfHistoryPoints, numberOfTimePeriods);
             var response = Transport.UnicastMessage<OpCode136Response>(request);
             return response.MeterHistory;
         }
 
-        public List<ROCPlusHistoryRecord> GetROCPlusHistory(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historySegment, ushort historyIndex, byte historyType, bool requestTimeStamps, List<byte> requestedHistoryPoints, byte numberOfTimePeriods)
+        public List<RocPlusHistoryRecord> GetRocPlusHistory(byte? destinationUnit, byte? destinationGroup, byte? sourceUnit, byte? sourceGroup, byte historySegment, ushort historyIndex, byte historyType, bool requestTimeStamps, List<byte> requestedHistoryPoints, byte numberOfTimePeriods)
         {
             var request = new OpCode139Request(destinationUnit.GetValueOrDefault(DeviceAddress), destinationGroup.GetValueOrDefault(DeviceGroup), sourceUnit.GetValueOrDefault(HostAddress), sourceGroup.GetValueOrDefault(HostGroup), historySegment, historyIndex, historyType, requestTimeStamps, requestedHistoryPoints, numberOfTimePeriods);
             var response = Transport.UnicastMessage<OpCode139Response>(request);

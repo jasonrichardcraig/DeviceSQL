@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.MODBUSMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct MODBUSMaster_StringRegisterArray : INullable, IBinarySerialize
+    public struct ModbusMaster_StringRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<MODBUSMaster_StringRegister> stringRegisters;
+        internal List<ModbusMaster_StringRegister> stringRegisters;
 
         #endregion
 
         #region Properties
 
-        internal MODBUSMaster_StringRegister this[int index]
+        internal ModbusMaster_StringRegister this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.MODBUSMaster
 
         #region Helper Methods
 
-        private List<MODBUSMaster_StringRegister> StringRegisters
+        private List<ModbusMaster_StringRegister> StringRegisters
         {
             get
             {
                 if (stringRegisters == null)
                 {
-                    stringRegisters = new List<MODBUSMaster_StringRegister>();
+                    stringRegisters = new List<ModbusMaster_StringRegister>();
                 }
                 return stringRegisters;
             }
         }
 
-        public static MODBUSMaster_StringRegisterArray Null
+        public static ModbusMaster_StringRegisterArray Null
         {
             get
             {
-                return (new MODBUSMaster_StringRegisterArray() { IsNull = true });
+                return (new ModbusMaster_StringRegisterArray() { IsNull = true });
             }
         }
 
@@ -79,42 +79,42 @@ namespace DeviceSQL.Types.MODBUSMaster
             return string.Join("|", StringRegisters.Select(stringRegister => stringRegister.ToString()));
         }
 
-        public MODBUSMaster_StringRegisterArray AddStringRegister(MODBUSMaster_StringRegister stringRegister)
+        public ModbusMaster_StringRegisterArray AddStringRegister(ModbusMaster_StringRegister stringRegister)
         {
             StringRegisters.Add(stringRegister);
             return this;
         }
 
-        public static MODBUSMaster_StringRegisterArray Parse(SqlString stringToParse)
+        public static ModbusMaster_StringRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedStringRegisterArray = new MODBUSMaster_StringRegisterArray()
+            var parsedStringRegisterArray = new ModbusMaster_StringRegisterArray()
             {
-                stringRegisters = new List<MODBUSMaster_StringRegister>()
+                stringRegisters = new List<ModbusMaster_StringRegister>()
             };
 
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedStringRegisterArray.StringRegisters.Add(MODBUSMaster_StringRegister.Parse(parsedString[i]));
+                parsedStringRegisterArray.StringRegisters.Add(ModbusMaster_StringRegister.Parse(parsedString[i]));
             }
 
             return parsedStringRegisterArray;
         }
 
-        public MODBUSMaster_StringRegister GetStringRegister(SqlInt32 index)
+        public ModbusMaster_StringRegister GetStringRegister(SqlInt32 index)
         {
             return StringRegisters[index.Value];
         }
 
-        public static MODBUSMaster_StringRegisterArray Empty()
+        public static ModbusMaster_StringRegisterArray Empty()
         {
-            var stringRegisterArray = new MODBUSMaster_StringRegisterArray() { stringRegisters = new List<MODBUSMaster_StringRegister>() };
+            var stringRegisterArray = new ModbusMaster_StringRegisterArray() { stringRegisters = new List<ModbusMaster_StringRegister>() };
             return stringRegisterArray;
         }
 
@@ -137,7 +137,7 @@ namespace DeviceSQL.Types.MODBUSMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var stringRegister = new MODBUSMaster_StringRegister();
+                    var stringRegister = new ModbusMaster_StringRegister();
                     stringRegister.Read(binaryReader);
                     StringRegisters.Add(stringRegister);
                 }

@@ -1,4 +1,4 @@
-﻿namespace DeviceSQL.Device.MODBUS
+﻿namespace DeviceSQL.Device.Modbus
 {
     internal static class Device
     {
@@ -26,7 +26,7 @@
         public const int MinimumFrameSize = 3;
         public const int MinimumFrameSizeWithExtendedUnitId = 4;
 
-        // MODBUS Functions
+        // Modbus Functions
         public const byte ReadCoils = 1;
         public const byte ReadDiscreteInputs = 2;
         public const byte ReadHoldingRegisters = 3;
@@ -34,10 +34,10 @@
         public const byte WriteSingleCoil = 5;
         public const byte WriteMultipleRegisters = 16;
 
-        // MODBUS slave exception offset that is added to the function code, to flag an exception
+        // Modbus slave exception offset that is added to the function code, to flag an exception
         public const byte ExceptionOffset = 128;
 
-        // MODBUS slave exception codes
+        // Modbus slave exception codes
         public const byte IllegalFunction = 1;
         public const byte IllegalDataAddress = 2;
         public const byte IllegalDataValue = 3;

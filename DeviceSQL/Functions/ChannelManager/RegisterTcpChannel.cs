@@ -1,6 +1,7 @@
 #region Imported Types
 
 using DeviceSQL.IO.Channels;
+using DeviceSQL.Registries;
 using System;
 using System.Data.SqlTypes;
 using System.Diagnostics;
@@ -16,31 +17,28 @@ namespace DeviceSQL.Functions
         [Microsoft.SqlServer.Server.SqlFunction]
         public static SqlBoolean ChannelManager_RegisterTcpChannel(SqlString channelName, SqlString hostName, SqlInt32 hostPort, SqlInt32 connectAttempts, SqlInt32 connectionRetryDelay, SqlInt32 readTimeout, SqlInt32 writeTimeout)
         {
-
-            var channelNameValue = channelName.Value;
-            var channels = DeviceSQL.Watchdog.Worker.Channels;
-
-            if (channelNameValue.Count(c =>
+            if (ServiceRegistry.GetChannel(channelName.Value) == null)
             {
-                switch (c)
+
+                if (channelName.Value.Count(c =>
                 {
-                    case '|':
-                    case ';':
-                    case ',':
-                        return true;
-                    default:
-                        return false;
+                    switch (c)
+                    {
+                        case '|':
+                        case ';':
+                        case ',':
+                            return true;
+                        default:
+                            return false;
+                    }
+                }) > 0)
+                {
+                    throw new ArgumentException("Invalid channel name");
                 }
-            }) > 0)
-            {
-                throw new ArgumentException("Invalid channel name");
-            }
 
-            if (channels.Where(channel => channel.Name == channelNameValue).Count() == 0)
-            {
                 var tcpChannel = new TcpChannel()
                 {
-                    Name = channelNameValue,
+                    Name = channelName.Value,
                     HostName = hostName.Value,
                     HostPort = hostPort.Value,
                     ConnectionAttempts = connectAttempts.Value,
@@ -49,16 +47,14 @@ namespace DeviceSQL.Functions
 
                 var currentConnectAttempts = 0;
 
-                Connect:
+            Connect:
                 currentConnectAttempts++;
 
                 try
                 {
-                    
                     tcpChannel.TcpClient.Connect(tcpChannel.HostName, tcpChannel.HostPort);
-
                 }
-                catch(SocketException socketException)
+                catch (SocketException socketException)
                 {
                     if (currentConnectAttempts > tcpChannel.ConnectionAttempts)
                     {
@@ -70,11 +66,11 @@ namespace DeviceSQL.Functions
                         goto Connect;
                     }
                 }
-                
+
                 tcpChannel.ReadTimeout = readTimeout.Value;
                 tcpChannel.WriteTimeout = writeTimeout.Value;
 
-                channels.Add(tcpChannel);
+                ServiceRegistry.RegisterChannel(tcpChannel);
 
                 return new SqlBoolean(true);
 

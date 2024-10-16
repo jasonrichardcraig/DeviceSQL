@@ -1,7 +1,7 @@
-﻿namespace DeviceSQL.Device.ROC.Message
+﻿namespace DeviceSQL.Device.Roc.Message
 {
-    public interface IROCRequestMessage : IROCMessage
+    public interface IRocRequestMessage : IRocMessage
     {
-        void ValidateResponse(IROCResponseMessage response);
+        void ValidateResponse(IRocResponseMessage response);
     }
 }

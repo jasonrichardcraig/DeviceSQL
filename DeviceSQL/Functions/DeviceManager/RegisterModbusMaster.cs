@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -13,28 +14,25 @@ namespace DeviceSQL.Functions
     public partial class DeviceManager
     {
         [SqlFunction]
-        public static SqlBoolean DeviceManager_RegisterMODBUSMaster(SqlString channelName, SqlString deviceName, SqlInt32 unitId, SqlBoolean useExtendedAddressing, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
+        public static SqlBoolean DeviceManager_RegisterModbusMaster(SqlString channelName, SqlString deviceName, SqlInt32 unitId, SqlBoolean useExtendedAddressing, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
         {
             try
             {
-                var deviceNameValue = deviceName.Value;
-                var devices = DeviceSQL.Watchdog.Worker.Devices;
-                if (devices.Where(device => device.Name == deviceNameValue).Count() == 0)
+                if (ServiceRegistry.GetDevice(deviceName.Value) == null)
                 {
-                    var channelNameValue = channelName.Value;
-                    var MODBUSMaster = new Device.MODBUS.MODBUSMaster(DeviceSQL.Watchdog.Worker.Channels.First(channel => channel.Name == channelNameValue))
+                    var ModbusMaster = new Device.Modbus.ModbusMaster(ServiceRegistry.GetChannel(channelName.Value))
                     {
-                        Name = deviceNameValue,
+                        Name = deviceName.Value,
                         UnitId = Convert.ToUInt16(unitId.Value),
                         UseExtendedAddressing = useExtendedAddressing.Value
                     };
 
-                    MODBUSMaster.Transport.NumberOfRetries = numberOfRetries.Value;
-                    MODBUSMaster.Transport.WaitToRetryMilliseconds = waitToRetry.Value;
-                    MODBUSMaster.Transport.RequestWriteDelayMilliseconds = requestWriteDelay.Value;
-                    MODBUSMaster.Transport.ResponseReadDelayMilliseconds = responseReadDelay.Value;
+                    ModbusMaster.Transport.NumberOfRetries = numberOfRetries.Value;
+                    ModbusMaster.Transport.WaitToRetryMilliseconds = waitToRetry.Value;
+                    ModbusMaster.Transport.RequestWriteDelayMilliseconds = requestWriteDelay.Value;
+                    ModbusMaster.Transport.ResponseReadDelayMilliseconds = responseReadDelay.Value;
 
-                    devices.Add(MODBUSMaster);
+                    ServiceRegistry.RegisterDevice(ModbusMaster);
 
                     return new SqlBoolean(true);
 

@@ -1,1 +1,1 @@
-﻿CREATE SCHEMA [ROCMaster]
+﻿CREATE SCHEMA [RocMaster]

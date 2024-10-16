@@ -6,9 +6,9 @@ using System.Net;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS
+namespace DeviceSQL.Device.Modbus
 {
-    public class MODBUSConverter
+    public class ModbusConverter
     {
         public static ushort[] NetworkBytesToHostUInt16(byte[] networkBytes)
         {

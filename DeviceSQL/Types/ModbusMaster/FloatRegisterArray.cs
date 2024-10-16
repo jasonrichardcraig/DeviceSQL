@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.MODBUSMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct MODBUSMaster_FloatRegisterArray : INullable, IBinarySerialize
+    public struct ModbusMaster_FloatRegisterArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<MODBUSMaster_FloatRegister> floatRegisters;
+        internal List<ModbusMaster_FloatRegister> floatRegisters;
 
         #endregion
 
         #region Properties
 
-        internal MODBUSMaster_FloatRegister this[int index]
+        internal ModbusMaster_FloatRegister this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.MODBUSMaster
 
         #region Helper Methods
 
-        private List<MODBUSMaster_FloatRegister> FloatRegisters
+        private List<ModbusMaster_FloatRegister> FloatRegisters
         {
             get
             {
                 if (floatRegisters == null)
                 {
-                    floatRegisters = new List<MODBUSMaster_FloatRegister>();
+                    floatRegisters = new List<ModbusMaster_FloatRegister>();
                 }
                 return floatRegisters;
             }
         }
 
-        public static MODBUSMaster_FloatRegisterArray Null
+        public static ModbusMaster_FloatRegisterArray Null
         {
             get
             {
-                return (new MODBUSMaster_FloatRegisterArray() { IsNull = true });
+                return (new ModbusMaster_FloatRegisterArray() { IsNull = true });
             }
         }
 
@@ -79,42 +79,42 @@ namespace DeviceSQL.Types.MODBUSMaster
             return string.Join("|", FloatRegisters.Select(floatRegister => floatRegister.ToString()));
         }
 
-        public MODBUSMaster_FloatRegisterArray AddFloatRegister(MODBUSMaster_FloatRegister floatRegister)
+        public ModbusMaster_FloatRegisterArray AddFloatRegister(ModbusMaster_FloatRegister floatRegister)
         {
             FloatRegisters.Add(floatRegister);
             return this;
         }
 
-        public static MODBUSMaster_FloatRegisterArray Parse(SqlString stringToParse)
+        public static ModbusMaster_FloatRegisterArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedFloatRegisterArray = new MODBUSMaster_FloatRegisterArray()
+            var parsedFloatRegisterArray = new ModbusMaster_FloatRegisterArray()
             {
-                floatRegisters = new List<MODBUSMaster_FloatRegister>()
+                floatRegisters = new List<ModbusMaster_FloatRegister>()
             };
 
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedFloatRegisterArray.FloatRegisters.Add(MODBUSMaster_FloatRegister.Parse(parsedString[i]));
+                parsedFloatRegisterArray.FloatRegisters.Add(ModbusMaster_FloatRegister.Parse(parsedString[i]));
             }
 
             return parsedFloatRegisterArray;
         }
 
-        public MODBUSMaster_FloatRegister GetFloatRegister(SqlInt32 index)
+        public ModbusMaster_FloatRegister GetFloatRegister(SqlInt32 index)
         {
             return FloatRegisters[index.Value];
         }
 
-        public static MODBUSMaster_FloatRegisterArray Empty()
+        public static ModbusMaster_FloatRegisterArray Empty()
         {
-            var floatRegisterArray = new MODBUSMaster_FloatRegisterArray() { floatRegisters = new List<MODBUSMaster_FloatRegister>() };
+            var floatRegisterArray = new ModbusMaster_FloatRegisterArray() { floatRegisters = new List<ModbusMaster_FloatRegister>() };
             return floatRegisterArray;
         }
 
@@ -137,7 +137,7 @@ namespace DeviceSQL.Types.MODBUSMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var floatRegister = new MODBUSMaster_FloatRegister();
+                    var floatRegister = new ModbusMaster_FloatRegister();
                     floatRegister.Read(binaryReader);
                     FloatRegisters.Add(floatRegister);
                 }

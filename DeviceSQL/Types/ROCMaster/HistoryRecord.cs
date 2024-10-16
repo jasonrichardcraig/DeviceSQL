@@ -1,6 +1,6 @@
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -8,11 +8,11 @@ using System.IO;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 11)]
-    public struct ROCMaster_HistoryRecord : INullable, IBinarySerialize
+    public struct RocMaster_HistoryRecord : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -29,11 +29,11 @@ namespace DeviceSQL.Types.ROCMaster
             internal set;
         }
 
-        public static ROCMaster_HistoryRecord Null
+        public static RocMaster_HistoryRecord Null
         {
             get
             {
-                return new ROCMaster_HistoryRecord() { IsNull = true };
+                return new RocMaster_HistoryRecord() { IsNull = true };
             }
         }
 
@@ -75,13 +75,13 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        public static ROCMaster_HistoryRecord Parse(SqlString stringToParse)
+        public static RocMaster_HistoryRecord Parse(SqlString stringToParse)
         {
             var parsedHistoryRecord = stringToParse.Value.Split(",".ToCharArray());
             var base64Bytes = Convert.FromBase64String(parsedHistoryRecord[3]);
             if (base64Bytes.Length == 4)
             {
-                return new ROCMaster_HistoryRecord() { Index = ushort.Parse(parsedHistoryRecord[0]), HistorySegment = byte.Parse(parsedHistoryRecord[1]), HistoryPointNumber = byte.Parse(parsedHistoryRecord[2]), value = base64Bytes };
+                return new RocMaster_HistoryRecord() { Index = ushort.Parse(parsedHistoryRecord[0]), HistorySegment = byte.Parse(parsedHistoryRecord[1]), HistoryPointNumber = byte.Parse(parsedHistoryRecord[2]), value = base64Bytes };
             }
             else
             {

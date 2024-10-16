@@ -4,10 +4,10 @@ using System;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS.Message
+namespace DeviceSQL.Device.Modbus.Message
 
 {
-    internal class WriteBooleanResponse : MODBUSMessage, IMODBUSResponseMessage
+    internal class WriteBooleanResponse : ModbusMessage, IModbusResponseMessage
     {
 
         #region Fields
@@ -46,12 +46,12 @@ namespace DeviceSQL.Device.MODBUS.Message
 
         #region Helper Methods
 
-        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
+        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
         {
             base.Initialize(frame, isExtendedUnitId);
         }
 
-        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IMODBUSRequestMessage requestMessage)
+        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IModbusRequestMessage requestMessage)
         {
             base.Initialize(frame, isExtendedUnitId);
 

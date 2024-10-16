@@ -4,7 +4,7 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
     public class UInt16Parameter : Parameter<System.UInt16>
     {

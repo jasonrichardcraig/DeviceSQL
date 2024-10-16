@@ -1,6 +1,6 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.MODBUS.Message;
+using DeviceSQL.Device.Modbus.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +8,9 @@ using System.Text;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS
+namespace DeviceSQL.Device.Modbus
 {
-    public class MODBUSSlaveException : Exception
+    public class ModbusSlaveException : Exception
     {
 
         #region Constants
@@ -27,11 +27,11 @@ namespace DeviceSQL.Device.MODBUS
         {
             get
             {
-                return this.MODBUSErrorResponse.ErrorCode;
+                return this.ModbusErrorResponse.ErrorCode;
             }
         }
 
-        internal MODBUSErrorResponse MODBUSErrorResponse
+        internal ModbusErrorResponse ModbusErrorResponse
         {
             get;
             private set;
@@ -41,7 +41,7 @@ namespace DeviceSQL.Device.MODBUS
         {
             get
             {
-                return String.Concat(base.Message, this.MODBUSErrorResponse != null ? String.Concat(Environment.NewLine, this.MODBUSErrorResponse) : String.Empty);
+                return String.Concat(base.Message, this.ModbusErrorResponse != null ? String.Concat(Environment.NewLine, this.ModbusErrorResponse) : String.Empty);
             }
         }
 
@@ -49,23 +49,23 @@ namespace DeviceSQL.Device.MODBUS
 
         #region Constructor(s)
 
-        public MODBUSSlaveException()
+        public ModbusSlaveException()
         {
         }
 
-        public MODBUSSlaveException(string message)
+        public ModbusSlaveException(string message)
             : base(message)
         {
         }
 
-        public MODBUSSlaveException(string message, Exception innerException)
+        public ModbusSlaveException(string message, Exception innerException)
             : base(message, innerException)
         {
         }
 
-        internal MODBUSSlaveException(MODBUSErrorResponse MODBUSErrorResponse)
+        internal ModbusSlaveException(ModbusErrorResponse ModbusErrorResponse)
         {
-            this.MODBUSErrorResponse = MODBUSErrorResponse;
+            this.ModbusErrorResponse = ModbusErrorResponse;
         }
 
         #endregion

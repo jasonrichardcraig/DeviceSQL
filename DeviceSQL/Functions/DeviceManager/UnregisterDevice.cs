@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -17,20 +18,7 @@ namespace DeviceSQL.Functions
         {
             try
             {
-                var deviceNameValue = deviceName.Value;
-                var devices = DeviceSQL.Watchdog.Worker.Devices;
-                var devicesToRemove = devices.Where(channel => channel.Name == deviceNameValue).ToList();
-                devicesToRemove.ForEach((device) =>
-                {
-                    try
-                    {
-                        devices.TryTake(out device);
-                    }
-                    catch (Exception ex)
-                    {
-                        Trace.TraceError(string.Format("Error unregistering device: {0}", ex.Message));
-                    }
-                });
+                ServiceRegistry.RemoveDevice(deviceName.Value);
             }
             catch (Exception ex)
             {

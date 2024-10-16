@@ -7,11 +7,11 @@ using System.IO;
 
 #endregion
 
-namespace DeviceSQL.Types.MODBUSMaster
+namespace DeviceSQL.Types.ModbusMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 6)]
-    public struct MODBUSMaster_MODBUSAddress : INullable, IBinarySerialize
+    public struct ModbusMaster_ModbusAddress : INullable, IBinarySerialize
     {
 
         #region Properties
@@ -49,11 +49,11 @@ namespace DeviceSQL.Types.MODBUSMaster
             private set;
         }
 
-        public static MODBUSMaster_MODBUSAddress Null
+        public static ModbusMaster_ModbusAddress Null
         {
             get
             {
-                return (new MODBUSMaster_MODBUSAddress() { IsNull = true });
+                return (new ModbusMaster_ModbusAddress() { IsNull = true });
             }
         }
 
@@ -73,16 +73,16 @@ namespace DeviceSQL.Types.MODBUSMaster
             }
         }
 
-        public static MODBUSMaster_MODBUSAddress Parse(SqlString stringToParse)
+        public static ModbusMaster_ModbusAddress Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedMODBUSAddressData = stringToParse.Value.Split(";".ToCharArray());
-            var parsedMODBUSAddress = new MODBUSMaster_MODBUSAddress() { IsZeroBased = bool.Parse(parsedMODBUSAddressData[0]), RelativeAddress = int.Parse(parsedMODBUSAddressData[1]) };
-            return parsedMODBUSAddress;
+            var parsedModbusAddressData = stringToParse.Value.Split(";".ToCharArray());
+            var parsedModbusAddress = new ModbusMaster_ModbusAddress() { IsZeroBased = bool.Parse(parsedModbusAddressData[0]), RelativeAddress = int.Parse(parsedModbusAddressData[1]) };
+            return parsedModbusAddress;
         }
 
         #endregion

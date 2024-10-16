@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_AuditLogRecordArray : INullable, IBinarySerialize
+    public struct RocMaster_AuditLogRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<ROCMaster_AuditLogRecord> auditLogRecords;
+        internal List<RocMaster_AuditLogRecord> auditLogRecords;
 
         #endregion
 
         #region Properties
 
-        internal ROCMaster_AuditLogRecord this[int index]
+        internal RocMaster_AuditLogRecord this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        private List<ROCMaster_AuditLogRecord> AuditLogRecords
+        private List<RocMaster_AuditLogRecord> AuditLogRecords
         {
             get
             {
                 if (auditLogRecords == null)
                 {
-                    auditLogRecords = new List<ROCMaster_AuditLogRecord>();
+                    auditLogRecords = new List<RocMaster_AuditLogRecord>();
                 }
                 return auditLogRecords;
             }
         }
 
-        public static ROCMaster_AuditLogRecordArray Null
+        public static RocMaster_AuditLogRecordArray Null
         {
             get
             {
-                return (new ROCMaster_AuditLogRecordArray() { IsNull = true });
+                return (new RocMaster_AuditLogRecordArray() { IsNull = true });
             }
         }
 
@@ -79,39 +79,39 @@ namespace DeviceSQL.Types.ROCMaster
             return string.Join("|", AuditLogRecords.Select(parameter => parameter.ToString()));
         }
 
-        public ROCMaster_AuditLogRecordArray AddAuditLogRecord(ROCMaster_AuditLogRecord auditLogRecord)
+        public RocMaster_AuditLogRecordArray AddAuditLogRecord(RocMaster_AuditLogRecord auditLogRecord)
         {
             AuditLogRecords.Add(auditLogRecord);
             return this;
         }
 
-        public static ROCMaster_AuditLogRecordArray Parse(SqlString stringToParse)
+        public static RocMaster_AuditLogRecordArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCAuditLogRecords = new ROCMaster_AuditLogRecordArray();
-            parsedROCAuditLogRecords.auditLogRecords = new List<ROCMaster_AuditLogRecord>();
+            var parsedRocAuditLogRecords = new RocMaster_AuditLogRecordArray();
+            parsedRocAuditLogRecords.auditLogRecords = new List<RocMaster_AuditLogRecord>();
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedROCAuditLogRecords.auditLogRecords.Add(ROCMaster_AuditLogRecord.Parse(parsedString[i]));
+                parsedRocAuditLogRecords.auditLogRecords.Add(RocMaster_AuditLogRecord.Parse(parsedString[i]));
             }
 
-            return parsedROCAuditLogRecords;
+            return parsedRocAuditLogRecords;
         }
 
-        public ROCMaster_AuditLogRecord GetAuditLogRecord(SqlInt32 index)
+        public RocMaster_AuditLogRecord GetAuditLogRecord(SqlInt32 index)
         {
             return AuditLogRecords[index.Value];
         }
 
-        public static ROCMaster_AuditLogRecordArray Empty()
+        public static RocMaster_AuditLogRecordArray Empty()
         {
-            var auditLogRecordArray = new ROCMaster_AuditLogRecordArray { auditLogRecords = new List<ROCMaster_AuditLogRecord>() };
+            var auditLogRecordArray = new RocMaster_AuditLogRecordArray { auditLogRecords = new List<RocMaster_AuditLogRecord>() };
             return auditLogRecordArray;
         }
 
@@ -134,7 +134,7 @@ namespace DeviceSQL.Types.ROCMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var auditLogRecord = new ROCMaster_AuditLogRecord();
+                    var auditLogRecord = new RocMaster_AuditLogRecord();
                     auditLogRecord.Read(binaryReader);
                     AuditLogRecords.Add(auditLogRecord);
                 }

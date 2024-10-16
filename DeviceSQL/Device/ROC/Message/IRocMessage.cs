@@ -1,6 +1,6 @@
-﻿namespace DeviceSQL.Device.ROC.Message
+﻿namespace DeviceSQL.Device.Roc.Message
 {
-    public interface IROCMessage : IMessage
+    public interface IRocMessage : IMessage
     {
         byte SourceUnit { get; set; }
         byte SourceGroup { get; set; }

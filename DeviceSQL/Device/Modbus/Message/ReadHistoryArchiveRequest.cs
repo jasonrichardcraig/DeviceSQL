@@ -1,6 +1,6 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.MODBUS.Data;
+using DeviceSQL.Device.Modbus.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,10 +8,10 @@ using System.Net;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS.Message
+namespace DeviceSQL.Device.Modbus.Message
 
 {
-    internal class ReadHistoryArchiveRequest : MODBUSMessage, IMODBUSRequestMessage
+    internal class ReadHistoryArchiveRequest : ModbusMessage, IModbusRequestMessage
     {
 
         #region Properties
@@ -32,7 +32,7 @@ namespace DeviceSQL.Device.MODBUS.Message
             }
         }
 
-        public MODBUSAddress HistoryArchiveAddress
+        public ModbusAddress HistoryArchiveAddress
         {
             get;
             private set;
@@ -71,10 +71,10 @@ namespace DeviceSQL.Device.MODBUS.Message
         {
         }
 
-        public ReadHistoryArchiveRequest(ushort unitId, MODBUSAddress historyArchiveAddress, ushort index, byte recordSize, bool isExtendedUnitId)
+        public ReadHistoryArchiveRequest(ushort unitId, ModbusAddress historyArchiveAddress, ushort index, byte recordSize, bool isExtendedUnitId)
             : base(unitId, Device.ReadHoldingRegisters)
         {
-            this.HistoryArchiveAddress = new MODBUSAddress(historyArchiveAddress.RelativeAddress, historyArchiveAddress.IsZeroBased);
+            this.HistoryArchiveAddress = new ModbusAddress(historyArchiveAddress.RelativeAddress, historyArchiveAddress.IsZeroBased);
             this.Index = index;
             this.RecordSize = recordSize;
             this.IsExtendedUnitId = isExtendedUnitId;
@@ -84,7 +84,7 @@ namespace DeviceSQL.Device.MODBUS.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IMODBUSResponseMessage response)
+        public void ValidateResponse(IModbusResponseMessage response)
         {
             var readHistoryArchiveResponse = response as ReadHistoryArchiveResponse;
             Debug.Assert(readHistoryArchiveResponse != null, "Argument response should be of type ReadHistoryArchiveResponse.");

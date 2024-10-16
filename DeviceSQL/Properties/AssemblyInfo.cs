@@ -8,7 +8,7 @@
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("DeviceSQL")]
 [assembly: AssemblyProduct("DeviceSQL")]
-[assembly: AssemblyCopyright("2017 DeviceSQL")]
+[assembly: AssemblyCopyright("2024 DeviceSQL")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

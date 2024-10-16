@@ -1,4 +1,4 @@
-﻿namespace DeviceSQL.Device.ROC.Message
+﻿namespace DeviceSQL.Device.Roc.Message
 {
     public enum OpCode080Function
     {

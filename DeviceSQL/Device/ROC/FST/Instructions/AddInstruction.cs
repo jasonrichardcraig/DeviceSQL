@@ -1,11 +1,11 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.ROC.FST.Arguments;
+using DeviceSQL.Device.Roc.FST.Arguments;
 using System;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.FST.Instructions
+namespace DeviceSQL.Device.Roc.FST.Instructions
 {
     public class AddInstruction : InstructionBase<DatabasePointOrConstantValueArgument, NullArgument>
     {

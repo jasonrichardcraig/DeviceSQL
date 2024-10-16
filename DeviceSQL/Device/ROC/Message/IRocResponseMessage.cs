@@ -1,8 +1,8 @@
-﻿namespace DeviceSQL.Device.ROC.Message
+﻿namespace DeviceSQL.Device.Roc.Message
 {
-    public interface IROCResponseMessage : IROCMessage
+    public interface IRocResponseMessage : IRocMessage
     {
         void Initialize(byte[] frame);
-        void Initialize(byte[] frame, IROCRequestMessage requestMessage);
+        void Initialize(byte[] frame, IRocRequestMessage requestMessage);
     }
 }

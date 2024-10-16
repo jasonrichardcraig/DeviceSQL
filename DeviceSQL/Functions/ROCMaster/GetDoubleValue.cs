@@ -1,6 +1,7 @@
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -10,14 +11,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static SqlDouble ROCMaster_GetDoubleValue(SqlString deviceName, SqlByte pointType, SqlByte logicalNumber, SqlByte parameterNumber)
+        public static SqlDouble RocMaster_GetDoubleValue(SqlString deviceName, SqlByte pointType, SqlByte logicalNumber, SqlByte parameterNumber)
         {
-            var deviceNameValue = deviceName.Value;
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
             var DoubleParameter = new DoubleParameter(new Tlp(pointType.Value, logicalNumber.Value, parameterNumber.Value));
-            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster).ReadParameter<DoubleParameter>(null, null, null, null, ref DoubleParameter);
+            (device as Device.Roc.RocMaster).ReadParameter<DoubleParameter>(null, null, null, null, ref DoubleParameter);
             return DoubleParameter.NullableValue.HasValue ? DoubleParameter.Value : SqlDouble.Null;
         }
     }

@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -9,14 +10,14 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class MODBUSMaster
+    public partial class ModbusMaster
     {
         [SqlFunction]
-        public static SqlBoolean MODBUSMaster_WriteBoolean(SqlString deviceName, Types.MODBUSMaster.MODBUSMaster_BooleanRegister booleanRegister)
+        public static SqlBoolean ModbusMaster_WriteBoolean(SqlString deviceName, Types.ModbusMaster.ModbusMaster_BooleanRegister booleanRegister)
         {
-            var deviceNameValue = deviceName.Value;
-            var booleanRegisterRaw = new Device.MODBUS.Data.BooleanRegister(new Device.MODBUS.Data.MODBUSAddress(Convert.ToUInt16(booleanRegister.Address.RelativeAddress.Value), booleanRegister.Address.IsZeroBased.Value));
-            (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.MODBUS.MODBUSMaster).WriteBooleanRegister(null, booleanRegisterRaw, null);
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var booleanRegisterRaw = new Device.Modbus.Data.BooleanRegister(new Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(booleanRegister.Address.RelativeAddress.Value), booleanRegister.Address.IsZeroBased.Value));
+            (device as Device.Modbus.ModbusMaster).WriteBooleanRegister(null, booleanRegisterRaw, null);
             return true;
         }
     }

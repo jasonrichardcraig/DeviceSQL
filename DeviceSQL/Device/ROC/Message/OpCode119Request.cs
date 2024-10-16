@@ -7,9 +7,9 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode119Request : ROCMessage, IROCRequestMessage
+    internal class OpCode119Request : RocMessage, IRocRequestMessage
     {
 
         #region Properties
@@ -66,7 +66,7 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IROCResponseMessage response)
+        public void ValidateResponse(IRocResponseMessage response)
         {
             var opCode119Response = response as OpCode119Response;
             Debug.Assert(opCode119Response != null, "Argument response should be of type OpCode119Response.");
@@ -76,7 +76,7 @@ namespace DeviceSQL.Device.ROC.Message
                 throw new FormatException("Number of events recieved does not equal number of events requested.");
             }
 
-            var meterEvents = opCode119Response.ROCPlusEvents;
+            var meterEvents = opCode119Response.RocPlusEvents;
 
             if (meterEvents.Count > 0)
             {

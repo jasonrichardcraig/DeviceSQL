@@ -9,22 +9,22 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_EventRecordArray : INullable, IBinarySerialize
+    public struct RocMaster_EventRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<ROCMaster_EventRecord> eventRecords;
+        internal List<RocMaster_EventRecord> eventRecords;
 
         #endregion
 
         #region Properties
 
-        internal ROCMaster_EventRecord this[int index]
+        internal RocMaster_EventRecord this[int index]
         {
             get
             {
@@ -54,23 +54,23 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        private List<ROCMaster_EventRecord> EventRecords
+        private List<RocMaster_EventRecord> EventRecords
         {
             get
             {
                 if (eventRecords == null)
                 {
-                    eventRecords = new List<ROCMaster_EventRecord>();
+                    eventRecords = new List<RocMaster_EventRecord>();
                 }
                 return eventRecords;
             }
         }
 
-        public static ROCMaster_EventRecordArray Null
+        public static RocMaster_EventRecordArray Null
         {
             get
             {
-                return (new ROCMaster_EventRecordArray() { IsNull = true });
+                return (new RocMaster_EventRecordArray() { IsNull = true });
             }
         }
 
@@ -79,39 +79,39 @@ namespace DeviceSQL.Types.ROCMaster
             return string.Join("|", EventRecords.Select(parameter => parameter.ToString()));
         }
 
-        public ROCMaster_EventRecordArray AddEventRecord(ROCMaster_EventRecord eventRecord)
+        public RocMaster_EventRecordArray AddEventRecord(RocMaster_EventRecord eventRecord)
         {
             EventRecords.Add(eventRecord);
             return this;
         }
 
-        public static ROCMaster_EventRecordArray Parse(SqlString stringToParse)
+        public static RocMaster_EventRecordArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCEventRecords = new ROCMaster_EventRecordArray();
-            parsedROCEventRecords.eventRecords = new List<ROCMaster_EventRecord>();
+            var parsedRocEventRecords = new RocMaster_EventRecordArray();
+            parsedRocEventRecords.eventRecords = new List<RocMaster_EventRecord>();
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedROCEventRecords.eventRecords.Add(ROCMaster_EventRecord.Parse(parsedString[i]));
+                parsedRocEventRecords.eventRecords.Add(RocMaster_EventRecord.Parse(parsedString[i]));
             }
 
-            return parsedROCEventRecords;
+            return parsedRocEventRecords;
         }
 
-        public ROCMaster_EventRecord GetEventRecord(SqlInt32 index)
+        public RocMaster_EventRecord GetEventRecord(SqlInt32 index)
         {
             return EventRecords[index.Value];
         }
 
-        public static ROCMaster_EventRecordArray Empty()
+        public static RocMaster_EventRecordArray Empty()
         {
-            var eventRecordArray = new ROCMaster_EventRecordArray { eventRecords = new List<ROCMaster_EventRecord>() };
+            var eventRecordArray = new RocMaster_EventRecordArray { eventRecords = new List<RocMaster_EventRecord>() };
             return eventRecordArray;
         }
 
@@ -134,7 +134,7 @@ namespace DeviceSQL.Types.ROCMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var eventRecord = new ROCMaster_EventRecord();
+                    var eventRecord = new RocMaster_EventRecord();
                     eventRecord.Read(binaryReader);
                     EventRecords.Add(eventRecord);
                 }

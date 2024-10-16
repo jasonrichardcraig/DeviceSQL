@@ -1,6 +1,6 @@
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -8,11 +8,11 @@ using System.IO;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = 27)]
-    public struct ROCMaster_ArchiveInformation : INullable, IBinarySerialize
+    public struct RocMaster_ArchiveInformation : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -29,11 +29,11 @@ namespace DeviceSQL.Types.ROCMaster
             internal set;
         }
 
-        public static ROCMaster_ArchiveInformation Null
+        public static RocMaster_ArchiveInformation Null
         {
             get
             {
-                return new ROCMaster_ArchiveInformation() { IsNull = true };
+                return new RocMaster_ArchiveInformation() { IsNull = true };
             }
         }
 
@@ -177,12 +177,12 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        public static ROCMaster_ArchiveInformation Parse(SqlString stringToParse)
+        public static RocMaster_ArchiveInformation Parse(SqlString stringToParse)
         {
             var base64Bytes = Convert.FromBase64String(stringToParse.Value);
             if (base64Bytes.Length == 24)
             {
-                return new ROCMaster_ArchiveInformation() { Data = base64Bytes };
+                return new RocMaster_ArchiveInformation() { Data = base64Bytes };
             }
             else
             {

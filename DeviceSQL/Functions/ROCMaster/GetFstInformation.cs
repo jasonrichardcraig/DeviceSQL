@@ -1,6 +1,7 @@
 #region Imported Types
 
-using DeviceSQL.Device.ROC.Data;
+using DeviceSQL.Device.Roc.Data;
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Collections.Generic;
@@ -11,13 +12,13 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static Types.ROCMaster.ROCMaster_FSTInformation ROCMaster_GetFstInformation(SqlString deviceName, SqlByte fstNumber)
+        public static Types.RocMaster.RocMaster_FSTInformation RocMaster_GetFstInformation(SqlString deviceName, SqlByte fstNumber)
         {
-            var deviceNameValue = deviceName.Value;
-            var rocMaster = (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster);
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            var rocMaster = (device as Device.Roc.RocMaster);
 
             var fstHeaderInfo = rocMaster.GetFstHeaderInfo(null, null, null, null, fstNumber.Value);
             var fstSizeParameter = new UInt16Parameter(new Tlp(16, fstNumber.Value, 25));
@@ -32,7 +33,7 @@ namespace DeviceSQL.Functions
                 codeBytes.AddRange(rocMaster.GetFstCodeChunk(null, null, null, null, 0, (byte)codeBytes.Count, (fstSize - codeBytes.Count) > 240 ? (byte)240 : (byte)(fstSize - codeBytes.Count)).CodeBytes);
             }
 
-            return new Types.ROCMaster.ROCMaster_FSTInformation()
+            return new Types.RocMaster.RocMaster_FSTInformation()
             {
                 FSTNumber = fstNumber.Value,
                 Version = fstHeaderInfo.Version,

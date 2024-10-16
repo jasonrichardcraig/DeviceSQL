@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Registries;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -9,13 +10,13 @@ using System.Linq;
 
 namespace DeviceSQL.Functions
 {
-    public partial class ROCMaster
+    public partial class RocMaster
     {
         [SqlFunction]
-        public static int ROCMaster_GetCurrentROCPlusEventIndex(SqlString deviceName)
+        public static int RocMaster_GetCurrentRocPlusEventIndex(SqlString deviceName)
         {
-            var deviceNameValue = deviceName.Value;
-            return (DeviceSQL.Watchdog.Worker.Devices.First(device => (device.Name == deviceNameValue)) as Device.ROC.ROCMaster).GetCurrentROCPlusEventIndex(null, null, null, null);
+            var device = ServiceRegistry.GetDevice(deviceName.Value);
+            return (device as Device.Roc.RocMaster).GetCurrentRocPlusEventIndex(null, null, null, null);
         }
     }
 }

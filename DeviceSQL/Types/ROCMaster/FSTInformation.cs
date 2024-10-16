@@ -7,11 +7,11 @@ using System.IO;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_FSTInformation : INullable, IBinarySerialize
+    public struct RocMaster_FSTInformation : INullable, IBinarySerialize
     {
 
         #region Fields
@@ -31,11 +31,11 @@ namespace DeviceSQL.Types.ROCMaster
             internal set;
         }
 
-        public static ROCMaster_FSTInformation Null
+        public static RocMaster_FSTInformation Null
         {
             get
             {
-                return new ROCMaster_FSTInformation() { IsNull = true };
+                return new RocMaster_FSTInformation() { IsNull = true };
             }
         }
 
@@ -111,14 +111,14 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        public static ROCMaster_FSTInformation Parse(SqlString stringToParse)
+        public static RocMaster_FSTInformation Parse(SqlString stringToParse)
         {
             var parsedString = stringToParse.Value.Split(",".ToCharArray());
             var fstNumber = byte.Parse(parsedString[0]);
             var version = parsedString[1];
             var description = parsedString[2];
             var fstCode = Convert.FromBase64String(parsedString[3]);
-            return new ROCMaster_FSTInformation() { fstNumber = fstNumber, version = version, description = description, fstCode = fstCode };
+            return new RocMaster_FSTInformation() { fstNumber = fstNumber, version = version, description = description, fstCode = fstCode };
         }
 
         public override string ToString()

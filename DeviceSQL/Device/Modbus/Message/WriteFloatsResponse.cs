@@ -1,14 +1,14 @@
 ﻿#region Imported Types
 
-using DeviceSQL.Device.MODBUS.Data;
+using DeviceSQL.Device.Modbus.Data;
 using System;
 
 #endregion
 
-namespace DeviceSQL.Device.MODBUS.Message
+namespace DeviceSQL.Device.Modbus.Message
 
 {
-    internal class WriteFloatsResponse : MODBUSMessage, IMODBUSResponseMessage
+    internal class WriteFloatsResponse : ModbusMessage, IModbusResponseMessage
     {
 
         #region Fields
@@ -36,13 +36,13 @@ namespace DeviceSQL.Device.MODBUS.Message
             }
         }
 
-        public MODBUSAddress StartingAddress
+        public ModbusAddress StartingAddress
         {
             get
             {
                 var absoluteStartingAddress = BitConverter.ToUInt16(new byte[] { data[1], data[0] }, 0);
                 var relativeStartingAddress = !this.isZeroBased ? absoluteStartingAddress : (ushort)(absoluteStartingAddress + (ushort)1);
-                return new MODBUSAddress(relativeStartingAddress, this.isZeroBased);
+                return new ModbusAddress(relativeStartingAddress, this.isZeroBased);
             }
         }
 
@@ -58,12 +58,12 @@ namespace DeviceSQL.Device.MODBUS.Message
 
         #region Helper Methods
 
-        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
+        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId)
         {
             base.Initialize(frame, isExtendedUnitId);
         }
 
-        void IMODBUSResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IMODBUSRequestMessage requestMessage)
+        void IModbusResponseMessage.Initialize(byte[] frame, bool isExtendedUnitId, IModbusRequestMessage requestMessage)
         {
             base.Initialize(frame, isExtendedUnitId);
 

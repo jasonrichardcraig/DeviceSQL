@@ -19,7 +19,7 @@ namespace DeviceSQL.DatabaseSetupUtility.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -83,7 +83,10 @@ namespace DeviceSQL.DatabaseSetupUtility.Properties {
         ///GO
         ///CREATE ASYMMETRIC KEY [DeviceSqlKey] FROM EXECUTABLE FILE = &apos;##_ASYMMETRIC_KEY_EXECUTABLE_FILE#&apos;
         ///CREATE LOGIN [DeviceSqlClrLogin] FROM ASYMMETRIC KEY [DeviceSqlKey]
-        ///GRANT UNSAFE ASSEMBLY TO [DeviceSqlClrLogin].
+        ///GRANT UNSAFE ASSEMBLY TO [DeviceSqlClrLogin]
+        ///GO
+        ///CREATE DATABASE [DeviceSQL] 
+        ///GO.
         /// </summary>
         internal static string DeviceSQL_Install_Script_01 {
             get {
@@ -92,12 +95,7 @@ namespace DeviceSQL.DatabaseSetupUtility.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CREATE DATABASE [DeviceSQL] 
-        ///
-        ///GO 
-        ///USE [DeviceSQL] 
-        ///
-        ///PRINT N&apos;Creating [ChannelManager]...&apos;;
+        ///   Looks up a localized string similar to PRINT N&apos;Creating [ChannelManager]...&apos;;
         ///
         ///
         ///GO
@@ -137,7 +135,8 @@ namespace DeviceSQL.DatabaseSetupUtility.Properties {
         ///
         ///
         ///GO
-        ///CREATE SCHEMA [Wat [rest of string was truncated]&quot;;.
+        ///CREATE SCHEMA [Watchdog]
+        ///     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DeviceSQL_Install_Script_02 {
             get {

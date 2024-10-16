@@ -9,30 +9,30 @@ using System.Linq;
 
 #endregion
 
-namespace DeviceSQL.Types.ROCMaster
+namespace DeviceSQL.Types.RocMaster
 {
     [Serializable()]
     [SqlUserDefinedType(Format.UserDefined, IsByteOrdered = false, IsFixedLength = false, MaxByteSize = -1)]
-    public struct ROCMaster_ROCPlusAlarmRecordArray : INullable, IBinarySerialize
+    public struct RocMaster_RocPlusAlarmRecordArray : INullable, IBinarySerialize
     {
 
         #region Fields
 
-        internal List<ROCMaster_ROCPlusAlarmRecord> rocPlusAlarmRecords;
+        internal List<RocMaster_RocPlusAlarmRecord> rocPlusAlarmRecords;
 
         #endregion
 
         #region Properties
 
-        internal ROCMaster_ROCPlusAlarmRecord this[int index]
+        internal RocMaster_RocPlusAlarmRecord this[int index]
         {
             get
             {
-                return ROCPlusAlarmRecords[index];
+                return RocPlusAlarmRecords[index];
             }
             set
             {
-                ROCPlusAlarmRecords[index] = value;
+                RocPlusAlarmRecords[index] = value;
             }
         }
 
@@ -46,7 +46,7 @@ namespace DeviceSQL.Types.ROCMaster
         {
             get
             {
-                return ROCPlusAlarmRecords.Count;
+                return RocPlusAlarmRecords.Count;
             }
         }
 
@@ -54,64 +54,64 @@ namespace DeviceSQL.Types.ROCMaster
 
         #region Helper Methods
 
-        private List<ROCMaster_ROCPlusAlarmRecord> ROCPlusAlarmRecords
+        private List<RocMaster_RocPlusAlarmRecord> RocPlusAlarmRecords
         {
             get
             {
                 if (rocPlusAlarmRecords == null)
                 {
-                    rocPlusAlarmRecords = new List<ROCMaster_ROCPlusAlarmRecord>();
+                    rocPlusAlarmRecords = new List<RocMaster_RocPlusAlarmRecord>();
                 }
                 return rocPlusAlarmRecords;
             }
         }
 
-        public static ROCMaster_ROCPlusAlarmRecordArray Null
+        public static RocMaster_RocPlusAlarmRecordArray Null
         {
             get
             {
-                return (new ROCMaster_ROCPlusAlarmRecordArray() { IsNull = true });
+                return (new RocMaster_RocPlusAlarmRecordArray() { IsNull = true });
             }
         }
 
         public override string ToString()
         {
-            return string.Join("|", ROCPlusAlarmRecords.Select(parameter => parameter.ToString()));
+            return string.Join("|", RocPlusAlarmRecords.Select(parameter => parameter.ToString()));
         }
 
-        public ROCMaster_ROCPlusAlarmRecordArray AddROCPlusAlarmRecord(ROCMaster_ROCPlusAlarmRecord rocPlusAlarmRecord)
+        public RocMaster_RocPlusAlarmRecordArray AddRocPlusAlarmRecord(RocMaster_RocPlusAlarmRecord rocPlusAlarmRecord)
         {
-            ROCPlusAlarmRecords.Add(rocPlusAlarmRecord);
+            RocPlusAlarmRecords.Add(rocPlusAlarmRecord);
             return this;
         }
 
-        public static ROCMaster_ROCPlusAlarmRecordArray Parse(SqlString stringToParse)
+        public static RocMaster_RocPlusAlarmRecordArray Parse(SqlString stringToParse)
         {
             if (stringToParse.IsNull)
             {
                 return Null;
             }
 
-            var parsedROCPlusAlarmRecords = new ROCMaster_ROCPlusAlarmRecordArray();
-            parsedROCPlusAlarmRecords.rocPlusAlarmRecords = new List<ROCMaster_ROCPlusAlarmRecord>();
+            var parsedRocPlusAlarmRecords = new RocMaster_RocPlusAlarmRecordArray();
+            parsedRocPlusAlarmRecords.rocPlusAlarmRecords = new List<RocMaster_RocPlusAlarmRecord>();
             var parsedString = stringToParse.Value.Split("|".ToCharArray());
 
             for (var i = 0; parsedString.Length > i; i++)
             {
-                parsedROCPlusAlarmRecords.rocPlusAlarmRecords.Add(ROCMaster_ROCPlusAlarmRecord.Parse(parsedString[i]));
+                parsedRocPlusAlarmRecords.rocPlusAlarmRecords.Add(RocMaster_RocPlusAlarmRecord.Parse(parsedString[i]));
             }
 
-            return parsedROCPlusAlarmRecords;
+            return parsedRocPlusAlarmRecords;
         }
 
-        public ROCMaster_ROCPlusAlarmRecord GetROCPlusAlarmRecord(SqlInt32 index)
+        public RocMaster_RocPlusAlarmRecord GetRocPlusAlarmRecord(SqlInt32 index)
         {
-            return ROCPlusAlarmRecords[index.Value];
+            return RocPlusAlarmRecords[index.Value];
         }
 
-        public static ROCMaster_ROCPlusAlarmRecordArray Empty()
+        public static RocMaster_RocPlusAlarmRecordArray Empty()
         {
-            var rocPlusAlarmRecord = new ROCMaster_ROCPlusAlarmRecordArray { rocPlusAlarmRecords = new List<ROCMaster_ROCPlusAlarmRecord>() };
+            var rocPlusAlarmRecord = new RocMaster_RocPlusAlarmRecordArray { rocPlusAlarmRecords = new List<RocMaster_RocPlusAlarmRecord>() };
             return rocPlusAlarmRecord;
         }
 
@@ -121,7 +121,7 @@ namespace DeviceSQL.Types.ROCMaster
 
         public void Read(BinaryReader binaryReader)
         {
-            ROCPlusAlarmRecords.Clear();
+            RocPlusAlarmRecords.Clear();
             IsNull = binaryReader.ReadBoolean();
 
             if (IsNull)
@@ -134,9 +134,9 @@ namespace DeviceSQL.Types.ROCMaster
 
                 for (var i = 0; length > i; i++)
                 {
-                    var rocPLusAlarmRecord = new ROCMaster_ROCPlusAlarmRecord();
+                    var rocPLusAlarmRecord = new RocMaster_RocPlusAlarmRecord();
                     rocPLusAlarmRecord.Read(binaryReader);
-                    ROCPlusAlarmRecords.Add(rocPLusAlarmRecord);
+                    RocPlusAlarmRecords.Add(rocPLusAlarmRecord);
                 }
             }
 
@@ -149,9 +149,9 @@ namespace DeviceSQL.Types.ROCMaster
 
             if (Length > 0)
             {
-                for (var i = 0; ROCPlusAlarmRecords.Count > i; i++)
+                for (var i = 0; RocPlusAlarmRecords.Count > i; i++)
                 {
-                    ROCPlusAlarmRecords[i].Write(binaryWriter);
+                    RocPlusAlarmRecords[i].Write(binaryWriter);
                 }
             }
         }

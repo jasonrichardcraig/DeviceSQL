@@ -1,4 +1,4 @@
-﻿namespace DeviceSQL.Device.ROC.FST.Arguments
+﻿namespace DeviceSQL.Device.Roc.FST.Arguments
 {
     public abstract class ArgumentBase
     {

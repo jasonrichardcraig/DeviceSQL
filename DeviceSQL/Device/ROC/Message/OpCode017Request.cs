@@ -6,9 +6,9 @@ using System.Diagnostics;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Message
+namespace DeviceSQL.Device.Roc.Message
 {
-    internal class OpCode017Request : ROCMessage, IROCRequestMessage
+    internal class OpCode017Request : RocMessage, IRocRequestMessage
     {
 
         #region Enums
@@ -114,7 +114,7 @@ namespace DeviceSQL.Device.ROC.Message
 
         #region Helper Methods
 
-        public void ValidateResponse(IROCResponseMessage response)
+        public void ValidateResponse(IRocResponseMessage response)
         {
             var opCode017Response = response as OpCode017Response;
             Debug.Assert(opCode017Response != null, "Argument response should be of type OpCode017Response.");

@@ -7,9 +7,9 @@ using System.Text;
 
 #endregion
 
-namespace DeviceSQL.Device.ROC.Data
+namespace DeviceSQL.Device.Roc.Data
 {
-    public interface IROCParameterData
+    public interface IRocParameterData
     {
         byte[] Data
         { get; set; }
