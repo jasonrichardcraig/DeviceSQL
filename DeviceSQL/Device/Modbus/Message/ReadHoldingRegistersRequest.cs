@@ -45,7 +45,7 @@ namespace DeviceSQL.Device.Modbus.Message
             {
                 var data = new List<byte>();
 
-                data.AddRange(HoldingRegisters.First().Address.ToArray());
+                data.AddRange(BitConverter.GetBytes(IPAddress.NetworkToHostOrder((short)HoldingRegisters.First().Address.AbsoluteAddress)));
                 data.AddRange(BitConverter.GetBytes(IPAddress.NetworkToHostOrder((short)HoldingRegisters.Count)));
 
                 return data.ToArray();

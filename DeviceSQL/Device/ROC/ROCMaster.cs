@@ -19,13 +19,13 @@ namespace DeviceSQL.Device.Roc
 
         #region Fields
 
-        private Transport transport;
+        private RocTransport transport;
 
         #endregion
 
         #region Properties
 
-        public Transport Transport
+        public RocTransport Transport
         {
             get
             {
@@ -45,7 +45,7 @@ namespace DeviceSQL.Device.Roc
             }
             set
             {
-                transport = value as Transport;
+                transport = value as RocTransport;
             }
         }
 
@@ -93,7 +93,7 @@ namespace DeviceSQL.Device.Roc
 
         public RocMaster(IChannel channel)
         {
-            this.transport = new Transport(channel);
+            this.transport = new RocTransport(channel);
         }
 
         #endregion

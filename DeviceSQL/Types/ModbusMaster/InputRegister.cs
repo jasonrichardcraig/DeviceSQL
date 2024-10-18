@@ -1,5 +1,6 @@
 #region Imported Types
 
+using DeviceSQL.Helpers.DeviceSQL.Helpers;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -56,15 +57,23 @@ namespace DeviceSQL.Types.ModbusMaster
             private set;
         }
 
-        public SqlInt32 Value
+        public SqlInt32 Value // SQL has no UShort type, so we use Int32
         {
             get
             {
-                return new DeviceSQL.Device.Modbus.Data.InputRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value).Value;
+                // Ensure the data array is initialized and has at least 2 bytes
+                if (data == null || data.Length < 2)
+                {
+                    return 0; // Handle null or uninitialized case
+                }
+                return BitConverter.ToUInt16(ByteSwapper.ApplySwaps(data, ByteSwap.Value, false, 2), 0);
             }
             set
             {
-                Data = new DeviceSQL.Device.Modbus.Data.InputRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value) { Value = Convert.ToUInt16((int)value) }.Data;
+                // Convert the value to a 2-byte array (UInt16)
+                var newData = BitConverter.GetBytes((ushort)value.Value);
+
+                data = ByteSwapper.ApplySwaps(newData, ByteSwap.Value, false, 2);
             }
         }
 

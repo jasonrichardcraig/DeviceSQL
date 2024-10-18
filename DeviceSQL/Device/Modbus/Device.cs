@@ -1,11 +1,11 @@
 ﻿namespace DeviceSQL.Device.Modbus
 {
-    internal static class Device
+    public static class Device
     {
 
         #region Enums
 
-        internal enum DataType
+        public enum DataType
         {
             Boolean,
             Short,

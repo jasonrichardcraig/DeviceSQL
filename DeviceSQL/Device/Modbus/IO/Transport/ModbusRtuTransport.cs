@@ -15,7 +15,7 @@ using System.Threading;
 
 namespace DeviceSQL.Device.Modbus.IO
 {
-    public class Transport : ITransport
+    public class ModbusRtuTransport : IModbusTransport
     {
 
         #region Constants
@@ -80,11 +80,11 @@ namespace DeviceSQL.Device.Modbus.IO
 
         #region Constructor(s)
 
-        internal Transport()
+        internal ModbusRtuTransport()
         {
         }
 
-        internal Transport(IChannel channel)
+        internal ModbusRtuTransport(IChannel channel)
         {
             Channel = channel;
         }
@@ -93,8 +93,8 @@ namespace DeviceSQL.Device.Modbus.IO
 
         #region Transport Methods
 
-        internal virtual TResponseMessage UnicastMessage<TResponseMessage>(IModbusRequestMessage requestMessage)
-where TResponseMessage : IModbusResponseMessage, new()
+        public TResponseMessage UnicastMessage<TResponseMessage>(IModbusRequestMessage requestMessage)
+                where TResponseMessage : IModbusResponseMessage, new()
         {
             if (TracingEnabled)
             {

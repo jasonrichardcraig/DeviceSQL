@@ -54,11 +54,11 @@ namespace DeviceSQL.Types.ModbusMaster
         {
             get
             {
-                return new DeviceSQL.Device.Modbus.Data.DiscreteInputRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)).Value;
+                return BitConverter.ToBoolean(data, 0);
             }
             set
             {
-                Data = new DeviceSQL.Device.Modbus.Data.DiscreteInputRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value)) { Value = value.Value }.Data;
+                Data = BitConverter.GetBytes(value.Value);
             }
         }
 

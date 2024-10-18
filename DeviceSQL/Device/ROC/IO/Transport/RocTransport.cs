@@ -16,7 +16,7 @@ using System.Threading;
 
 namespace DeviceSQL.Device.Roc.IO
 {
-    public class Transport : ITransport
+    public class RocTransport : ITransport
     {
 
         #region Fields
@@ -34,11 +34,11 @@ namespace DeviceSQL.Device.Roc.IO
 
         #region Constructor(s)
 
-        internal Transport()
+        internal RocTransport()
         {
         }
 
-        internal Transport(IChannel channel)
+        internal RocTransport(IChannel channel)
         {
             Channel = channel;
         }

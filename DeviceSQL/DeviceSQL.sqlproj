@@ -78,8 +78,6 @@
     <Folder Include="Device\ROC\FST\Instructions" />
     <Folder Include="Schemas" />
     <Folder Include="Deployment" />
-    <Folder Include="Tests" />
-    <Folder Include="Tutorials" />
     <Folder Include="Functions" />
     <Folder Include="Functions\ChannelManager" />
     <Folder Include="Functions\DeviceManager" />
@@ -97,6 +95,7 @@
     <Folder Include="Device\Modbus\IO" />
     <Folder Include="Device\Modbus\IO\Transport" />
     <Folder Include="Registries" />
+    <Folder Include="Helpers" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -154,11 +153,11 @@
     <Compile Include="Device\Modbus\Data\FloatRegister.cs" />
     <Compile Include="Device\Modbus\Data\HistoryArchiveRecord.cs" />
     <Compile Include="Device\Modbus\Data\HoldingRegister.cs" />
-    <Compile Include="Device\Modbus\Data\IMODBUSRegisterData.cs" />
+    <Compile Include="Device\Modbus\Data\IModbusRegisterData.cs" />
     <Compile Include="Device\Modbus\Data\InputRegister.cs" />
     <Compile Include="Device\Modbus\Data\LongRegister.cs" />
-    <Compile Include="Device\Modbus\Data\MODBUSAddress.cs" />
-    <Compile Include="Device\Modbus\Data\MODBUSRegister.cs" />
+    <Compile Include="Device\Modbus\Data\ModbusAddress.cs" />
+    <Compile Include="Device\Modbus\Data\ModbusRegister.cs" />
     <Compile Include="Device\Modbus\Data\ShortRegister.cs" />
     <Compile Include="Device\Modbus\Data\StringRegister.cs" />
     <Compile Include="Device\Modbus\Message\IModbusMessage.cs" />
@@ -259,7 +258,7 @@
     <Compile Include="Functions\DeviceManager\RegisterModbusMaster.cs" />
     <Compile Include="Functions\DeviceManager\UnregisterDevice.cs" />
     <Compile Include="Functions\DeviceManager\GetDevices.cs" />
-    <Compile Include="Types\ModbusMaster\MODBUSAddress.cs" />
+    <Compile Include="Types\ModbusMaster\ModbusAddress.cs" />
     <Compile Include="Types\ModbusMaster\CoilRegister.cs" />
     <Compile Include="Types\ModbusMaster\CoilRegisterArray.cs" />
     <Compile Include="Types\ModbusMaster\DiscreteInputRegister.cs" />
@@ -362,9 +361,14 @@
     <Compile Include="IO\Channels\SerialPortMuxChannel.cs" />
     <Compile Include="IO\Channels\IMuxChannel.cs" />
     <Compile Include="IO\Channels\TcpMuxChannel.cs" />
-    <Compile Include="Device\ROC\IO\Transport\Transport.cs" />
-    <Compile Include="Device\Modbus\IO\Transport\Transport.cs" />
+    <Compile Include="Device\ROC\IO\Transport\RocTransport.cs" />
+    <Compile Include="Device\Modbus\IO\Transport\ModbusRtuTransport.cs" />
     <Compile Include="Registries\ServiceRegistry.cs" />
+    <Compile Include="Device\Modbus\IO\Transport\ModbusTcpTransport.cs" />
+    <Compile Include="Device\Modbus\IO\Transport\IModbusTransport.cs" />
+    <Compile Include="Device\ROC\IO\Transport\IRocTransport.cs" />
+    <Compile Include="Device\Modbus\IModbusDevice.cs" />
+    <Compile Include="Helpers\ByteSwapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

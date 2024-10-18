@@ -54,7 +54,7 @@ namespace DeviceSQL.Types.ModbusMaster
 
         #region Helper Methods
 
-        private List<ModbusMaster_LongRegister> LongRegisters
+        public List<ModbusMaster_LongRegister> LongRegisters
         {
             get
             {

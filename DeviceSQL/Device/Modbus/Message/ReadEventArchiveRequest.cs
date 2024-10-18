@@ -4,6 +4,7 @@ using DeviceSQL.Device.Modbus.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net;
 
 #endregion
@@ -50,7 +51,7 @@ namespace DeviceSQL.Device.Modbus.Message
             {
                 var data = new List<byte>();
 
-                data.AddRange(EventArchiveAddress.ToArray());
+                data.AddRange(BitConverter.GetBytes(IPAddress.NetworkToHostOrder((short)EventArchiveAddress.AbsoluteAddress)));
                 data.AddRange(BitConverter.GetBytes(IPAddress.NetworkToHostOrder((short)Index)));
 
                 return data.ToArray();

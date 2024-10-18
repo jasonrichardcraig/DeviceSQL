@@ -1,5 +1,7 @@
 #region Imported Types
 
+using DeviceSQL.Helpers;
+using DeviceSQL.Helpers.DeviceSQL.Helpers;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -28,7 +30,7 @@ namespace DeviceSQL.Types.ModbusMaster
             {
                 if (data == null)
                 {
-                    data = new byte[4];
+                    data = new byte[8];
                 }
                 return data;
             }
@@ -62,17 +64,30 @@ namespace DeviceSQL.Types.ModbusMaster
             private set;
         }
 
-        public SqlInt32 Value
+        public SqlInt64 Value // SQL has no ULong type, so we use Int64
         {
             get
             {
-                return new DeviceSQL.Device.Modbus.Data.LongRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value).Value;
+                // Ensure the data array is initialized and has at least 8 bytes for a 64-bit long
+                if (data == null || data.Length < 8)
+                {
+                    return 0; // Handle null or uninitialized case
+                }
+
+                byte[] processedData = (byte[])data.Clone(); // Clone the data to avoid modifying the original array
+
+                return BitConverter.ToInt64(ByteSwapper.ApplySwaps(data, ByteSwap.Value, WordSwap.Value, 8), 0);
+
             }
             set
             {
-                Data = new DeviceSQL.Device.Modbus.Data.LongRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), ByteSwap.Value, WordSwap.Value) { Value = Convert.ToUInt16(value) }.Data;
+                // Convert the value to a byte array (Int64 is 8 bytes)
+                var newData = BitConverter.GetBytes(value.Value);
+
+                data = ByteSwapper.ApplySwaps(newData, ByteSwap.Value, WordSwap.Value, 8);
             }
         }
+
 
         public static ModbusMaster_LongRegister Null
         {

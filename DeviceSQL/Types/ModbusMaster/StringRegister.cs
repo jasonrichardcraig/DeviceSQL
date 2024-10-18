@@ -61,11 +61,11 @@ namespace DeviceSQL.Types.ModbusMaster
         {
             get
             {
-                return new DeviceSQL.Device.Modbus.Data.StringRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), Length.Value).Value;
+                return System.Text.Encoding.ASCII.GetString(Data.Value);
             }
             set
             {
-                Data = new DeviceSQL.Device.Modbus.Data.StringRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(Address.RelativeAddress), Address.IsZeroBased.Value), Length.Value) { Value = value.Value }.Data;
+                Data = System.Text.Encoding.ASCII.GetBytes(value.Value);
             }
         }
 

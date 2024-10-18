@@ -14,17 +14,17 @@ namespace DeviceSQL.Functions
     public partial class DeviceManager
     {
         [SqlFunction]
-        public static SqlBoolean DeviceManager_RegisterModbusMaster(SqlString channelName, SqlString deviceName, SqlInt32 unitId, SqlBoolean useExtendedAddressing, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
+        public static SqlBoolean DeviceManager_RegisterModbusMaster(SqlString channelName, SqlString deviceName, SqlBoolean useMbapHeaders, SqlBoolean useExtendedAddressing, SqlInt32 unitId, SqlInt32 numberOfRetries, SqlInt32 waitToRetry, SqlInt32 requestWriteDelay, SqlInt32 responseReadDelay)
         {
             try
             {
                 if (ServiceRegistry.GetDevice(deviceName.Value) == null)
                 {
-                    var ModbusMaster = new Device.Modbus.ModbusMaster(ServiceRegistry.GetChannel(channelName.Value))
+                    var ModbusMaster = new Device.Modbus.ModbusMaster(ServiceRegistry.GetChannel(channelName.Value), useMbapHeaders.Value)
                     {
                         Name = deviceName.Value,
-                        UnitId = Convert.ToUInt16(unitId.Value),
-                        UseExtendedAddressing = useExtendedAddressing.Value
+                        UseExtendedAddressing = useExtendedAddressing.Value,
+                        UnitId = Convert.ToUInt16(unitId.Value)
                     };
 
                     ModbusMaster.Transport.NumberOfRetries = numberOfRetries.Value;

@@ -1,5 +1,4 @@
-﻿#region Imported Types
-
+﻿using DeviceSQL.Device;
 using DeviceSQL.Device.Modbus.Data;
 using DeviceSQL.Device.Modbus.IO;
 using DeviceSQL.Device.Modbus.Message;
@@ -9,68 +8,43 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-#endregion
-
 namespace DeviceSQL.Device.Modbus
 {
-    public class ModbusMaster : IDevice
+    public class ModbusMaster : IModbusDevice
     {
-
         #region Fields
 
-        private Transport transport;
+        private IModbusTransport transport;
 
         #endregion
 
         #region Properties
 
-        public Transport Transport
+        public IModbusTransport Transport
         {
-            get
-            {
-                return transport;
-            }
-            set
-            {
-                transport = value;
-            }
+            get { return transport; }
+            set { transport = value; }
         }
 
-        public string Name
-        {
-            get;
-            set;
-        }
+        public string Name { get; set; }
 
-        public ushort UnitId
-        {
-            get; set;
+        public ushort UnitId { get; set; }
 
-        }
+        public bool UseExtendedAddressing { get; set; }
 
-        public bool UseExtendedAddressing
-        {
-            get;
-            set;
-        }
+        public bool UseMbapHeaders { get; set; }
 
         ITransport IDevice.Transport
         {
-            get
-            {
-                return transport;
-            }
-            set
-            {
-                transport = value as Transport;
-            }
+            get { return transport; }
+            set { transport = (IModbusTransport)value; }
         }
 
         public string Address
         {
             get
             {
-                return string.Format("Device Address={0};Use Extended Addressing={1}", UnitId.ToString(), UseExtendedAddressing.ToString());
+                return $"Device Address={UnitId};Use Extended Addressing={UseExtendedAddressing}";
             }
         }
 
@@ -82,9 +56,18 @@ namespace DeviceSQL.Device.Modbus
         {
         }
 
-        public ModbusMaster(IChannel channel)
+        public ModbusMaster(IChannel channel, bool useMbapHeaders)
         {
-            this.transport = new Transport(channel);
+            if (useMbapHeaders)
+            {
+                UseMbapHeaders = true;
+                this.transport = new ModbusTcpTransport(channel);
+            }
+            else
+            {
+                UseMbapHeaders = false;
+                this.transport = new ModbusRtuTransport(channel);
+            }
         }
 
         #endregion
@@ -93,33 +76,21 @@ namespace DeviceSQL.Device.Modbus
 
         internal bool RegisterListIsContiguous<T>(List<T> registers) where T : ModbusRegister
         {
-            var registerCount = registers.Count;
-
-            if (registerCount > 0)
-            {
-                var registerQuery = from r in registers
-                                    orderby r.Address.AbsoluteAddress
-                                    select r;
-
-                var registerArray = registerQuery.ToArray();
-
-                ushort previousAddress = registerQuery.First().Address.AbsoluteAddress;
-
-                for (int i = 1; i <= registerCount - 1; i++)
-                {
-                    if (previousAddress != (registerArray[i].Address.AbsoluteAddress - 1))
-                    {
-                        return false;
-                    }
-                    previousAddress = registerArray[i].Address.AbsoluteAddress;
-                }
-                return true;
-            }
-            else
+            if (registers.Count == 0)
             {
                 throw new ArgumentException("Register list cannot be empty");
             }
 
+            var orderedRegisters = registers.OrderBy(r => r.Address.AbsoluteAddress).ToList();
+            for (int i = 1; i < orderedRegisters.Count; i++)
+            {
+                if (orderedRegisters[i - 1].Address.AbsoluteAddress + 1 != orderedRegisters[i].Address.AbsoluteAddress)
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         public void ReadFloatRegisters(ushort? unitId, ref List<FloatRegister> floatRegisters, bool? isExtendedUnitId)
@@ -249,6 +220,5 @@ namespace DeviceSQL.Device.Modbus
         }
 
         #endregion
-
     }
 }

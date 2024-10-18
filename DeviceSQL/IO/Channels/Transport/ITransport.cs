@@ -1,3 +1,5 @@
+using DeviceSQL.Device.Modbus.Message;
+
 namespace DeviceSQL.IO.Channels.Transport
 {
     public interface ITransport

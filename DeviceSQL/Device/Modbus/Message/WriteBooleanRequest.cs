@@ -4,6 +4,7 @@ using DeviceSQL.Device.Modbus.Data;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Net;
 
 #endregion
 
@@ -43,7 +44,7 @@ namespace DeviceSQL.Device.Modbus.Message
             {
                 var data = new List<byte>();
 
-                data.AddRange(BooleanRegister.Address.ToArray());
+                data.AddRange(BitConverter.GetBytes(IPAddress.NetworkToHostOrder((short)BooleanRegister.Address.AbsoluteAddress)));
 
                 if(BooleanRegister)
                 {
