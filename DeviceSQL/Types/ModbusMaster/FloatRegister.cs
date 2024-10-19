@@ -1,6 +1,6 @@
 #region Imported Types
 
-using DeviceSQL.Helpers.DeviceSQL.Helpers;
+using DeviceSQL.Helpers;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -67,23 +67,17 @@ namespace DeviceSQL.Types.ModbusMaster
         {
             get
             {
-                // Ensure the data array is initialized and has at least 8 bytes for a 64-bit long
-                if (data == null || data.Length < 8)
+                // Ensure the data array is initialized and has at least 4 bytes for a 32-bit Single
+                if (data == null || data.Length < 4)
                 {
                     return 0; // Handle null or uninitialized case
                 }
 
-                byte[] processedData = (byte[])data.Clone(); // Clone the data to avoid modifying the original array
-
-                return BitConverter.ToSingle(ByteSwapper.ApplySwaps(data, ByteSwap.Value, WordSwap.Value, 8), 0);
-
+                return BitConverter.ToSingle(ByteSwapper.ApplySwaps(data, ByteSwap.Value, WordSwap.Value, 2), 0);
             }
             set
             {
-                // Convert the value to a byte array (Int64 is 8 bytes)
-                var newData = BitConverter.GetBytes(value.Value);
-
-                data = ByteSwapper.ApplySwaps(newData, ByteSwap.Value, WordSwap.Value, 8);
+                data = ByteSwapper.ApplySwaps(BitConverter.GetBytes(value.Value), ByteSwap.Value, WordSwap.Value, 2);
             }
         }
 
@@ -133,7 +127,9 @@ namespace DeviceSQL.Types.ModbusMaster
 
             if (!IsNull)
             {
-                Address.Read(binaryReader);
+                var address = new ModbusMaster_ModbusAddress();
+                address.Read(binaryReader);
+                Address = address;
                 ByteSwap = binaryReader.ReadBoolean();
                 WordSwap = binaryReader.ReadBoolean();
                 Data = binaryReader.ReadBytes(4);

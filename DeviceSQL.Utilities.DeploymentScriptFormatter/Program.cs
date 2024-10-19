@@ -29,11 +29,11 @@ namespace DeviceSQL.Utilities.DeploymentScriptFormatter
                                      "GO \r\n" +
                                      "USE [DeviceSQL] \r\n" +
                                      "\r\n" +
-                                     $"{installScriptText.Substring(installScriptText.IndexOf("PRINT N'Creating [ChannelManager]...';"))}";
+                                     $"{installScriptText.Substring(installScriptText.IndexOf("PRINT N'Creating Schema [ChannelManager]...';"))}";
 
                 installScriptText = installScriptText.Substring(0, installScriptText.IndexOf("DECLARE @VarDecimalSupported AS BIT;"));
 
-                installScriptText = installScriptText.Replace("[dbo].[Watchdog_", "[Watchdog].[").Replace("[dbo].[ChannelManager_", "[ChannelManager].[").Replace("[dbo].[DeviceManager_", "[DeviceManager].[").Replace("[dbo].[MODBUSMaster_", "[MODBUSMaster].[").Replace("[dbo].[ROCMaster_", "[ROCMaster].[");
+                installScriptText = installScriptText.Replace("[dbo].[ChannelManager_", "[ChannelManager].[").Replace("[dbo].[DeviceManager_", "[DeviceManager].[").Replace("[dbo].[ModbusMaster_", "[ModbusMaster].[").Replace("[dbo].[RocMaster_", "[RocMaster].[");
 
                 File.WriteAllText(installScriptFolderName + "Install Script.sql", installScriptText);
 

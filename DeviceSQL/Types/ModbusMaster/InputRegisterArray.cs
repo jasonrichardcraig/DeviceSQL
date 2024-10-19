@@ -72,31 +72,46 @@ namespace DeviceSQL.Types.ModbusMaster
 
         }
 
-        public SqlInt16 GetShort(SqlByte registerIndex, SqlBoolean byteSwap)
+        public SqlInt32 GetShort(SqlByte registerIndex, SqlBoolean byteSwap)
         {
             var address = InputRegisters[registerIndex.Value].Address;
-            return new DeviceSQL.Device.Modbus.Data.ShortRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, Data = inputRegisters[Convert.ToByte(registerIndex.Value)].data }.Value;
+            return (new ModbusMaster_ShortRegister() { Address = new ModbusMaster_ModbusAddress() { RelativeAddress = address.RelativeAddress, IsZeroBased = true }, ByteSwap = byteSwap, Data = inputRegisters[Convert.ToByte(registerIndex.Value)].data.ToArray() }).Value;
         }
 
         public SqlSingle GetFloat(SqlByte registerIndex, SqlBoolean byteSwap, SqlBoolean wordSwap)
         {
             var address = InputRegisters[registerIndex.Value].Address;
-            var floatRegisterValue = new DeviceSQL.Device.Modbus.Data.FloatRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = inputRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(inputRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.NullableValue;
-            return floatRegisterValue ?? SqlSingle.Null;
+            return (new ModbusMaster_FloatRegister() { Address = new ModbusMaster_ModbusAddress() { RelativeAddress = address.RelativeAddress, IsZeroBased = true }, ByteSwap = byteSwap, WordSwap = wordSwap, Data = inputRegisters[Convert.ToByte(registerIndex.Value + 1)].data.Concat(inputRegisters[Convert.ToByte(registerIndex.Value)].data).ToArray() }).Value;
         }
 
-        public SqlInt32 GetLong(SqlByte registerIndex, SqlBoolean byteSwap, SqlBoolean wordSwap)
+        public SqlInt64 GetLong(SqlByte registerIndex, SqlBoolean byteSwap, SqlBoolean wordSwap)
         {
             var address = InputRegisters[registerIndex.Value].Address;
-            return new DeviceSQL.Device.Modbus.Data.LongRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value)) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = inputRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(inputRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.Value;
+            return (new ModbusMaster_LongRegister() { Address = new ModbusMaster_ModbusAddress() { RelativeAddress = address.RelativeAddress, IsZeroBased = true }, ByteSwap = byteSwap, WordSwap = wordSwap, Data = inputRegisters[Convert.ToByte(registerIndex.Value + 1)].data.Concat(inputRegisters[Convert.ToByte(registerIndex.Value)].data).ToArray() }).Value;
         }
 
-        public SqlString GetString(SqlByte registerIndex, SqlBoolean byteSwap, SqlBoolean wordSwap, SqlByte length)
+        public SqlString GetString(SqlByte registerIndex, SqlByte length)
         {
-            var address = InputRegisters[registerIndex.Value].Address;
-            return new DeviceSQL.Device.Modbus.Data.StringRegister(new DeviceSQL.Device.Modbus.Data.ModbusAddress(Convert.ToUInt16(address.RelativeAddress.Value), address.IsZeroBased.Value), length.Value) { ByteSwap = byteSwap.Value, WordSwap = wordSwap.Value, Data = inputRegisters[Convert.ToByte(registerIndex.Value)].data.Concat(inputRegisters[Convert.ToByte(registerIndex.Value + 1)].data).ToArray(), }.Value;
-        }
+            var data = new List<byte>();
 
+            // Iterate through the registers and extract the appropriate number of bytes
+            for (int i = registerIndex.Value; i < registerIndex.Value + (length.Value / 2); i++)
+            {
+                // Add both bytes from the 16-bit register, swapping the byte order (little-endian to big-endian)
+                data.Add(inputRegisters[i].data[1]); // Swap: Add second byte (low byte) first
+                data.Add(inputRegisters[i].data[0]); // Swap: Add first byte (high byte) second
+            }
+
+            // Handle the case where length is odd (add 1 more byte from the next register)
+            if (length.Value % 2 != 0)
+            {
+                // Add the first byte (low byte) of the next register
+                data.Add(inputRegisters[registerIndex.Value + (length.Value / 2)].data[1]);
+            }
+
+            // Convert the byte list to a string (ModbusMaster_StringRegister) and return
+            return new ModbusMaster_StringRegister { Data = data.ToArray() }.Value;
+        }
         private List<ModbusMaster_InputRegister> InputRegisters
         {
             get

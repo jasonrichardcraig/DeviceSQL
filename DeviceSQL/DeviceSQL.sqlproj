@@ -26,7 +26,7 @@
     <PermissionSet>UNSAFE</PermissionSet>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>DeviceSQL-Key.pfx</AssemblyOriginatorKeyFile>
-    <GenerateSqlClrSymbols>False</GenerateSqlClrSymbols>
+    <GenerateSqlClrSymbols>True</GenerateSqlClrSymbols>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">

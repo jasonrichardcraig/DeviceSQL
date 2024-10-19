@@ -86,7 +86,7 @@ namespace DeviceSQL.Device.Modbus.Message
 
                 for (int i = 1; i < data.Length; i += 2)
                 {
-                    var shortData = new byte[] { data[i], data[i + 1] };
+                    var shortData = new byte[] { data[i + 1], data[i] };
                     ((IModbusRegisterData)this.ShortRegisters[((i - 1) / 2)]).Data = shortData;
                 }
 

@@ -263,7 +263,22 @@ namespace DeviceSQL.Device.Modbus.IO
                     response = ModbusMessageFactory.CreateModbusResponseMessage<ReadInputRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
                     break;
                 case Device.ReadHoldingRegisters:
-                    response = ModbusMessageFactory.CreateModbusResponseMessage<ReadHoldingRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    if (requestMessage is ReadShortsRequest)
+                    {
+                        response = ModbusMessageFactory.CreateModbusResponseMessage<ReadShortsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    }
+                    else if(requestMessage is ReadFloatsRequest)
+                    {
+                        response = ModbusMessageFactory.CreateModbusResponseMessage<ReadFloatsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    }
+                    else if(requestMessage is ReadLongsRequest)
+                    {
+                        response = ModbusMessageFactory.CreateModbusResponseMessage<ReadLongsResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    }
+                    else
+                    {
+                        response = ModbusMessageFactory.CreateModbusResponseMessage<ReadHoldingRegistersResponse>(frame, requestMessage.IsExtendedUnitId, requestMessage);
+                    }
                     break;
                 default:
                     throw new FormatException($"Unknown Function Code ({functionCode}).");

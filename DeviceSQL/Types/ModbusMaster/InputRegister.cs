@@ -1,6 +1,6 @@
 #region Imported Types
 
-using DeviceSQL.Helpers.DeviceSQL.Helpers;
+using DeviceSQL.Helpers;
 using Microsoft.SqlServer.Server;
 using System;
 using System.Data.SqlTypes;
@@ -123,7 +123,9 @@ namespace DeviceSQL.Types.ModbusMaster
 
             if (!IsNull)
             {
-                Address.Read(binaryReader);
+                var address = new ModbusMaster_ModbusAddress();
+                address.Read(binaryReader);
+                Address = address;
                 ByteSwap = binaryReader.ReadBoolean();
                 Data = binaryReader.ReadBytes(2);
             }

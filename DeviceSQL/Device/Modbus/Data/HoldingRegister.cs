@@ -1,6 +1,7 @@
 ﻿#region Imported Types
 
 using System;
+using System.Net;
 
 #endregion
 
@@ -44,38 +45,11 @@ namespace DeviceSQL.Device.Modbus.Data
         {
             get
             {
-                var word = ushort.MinValue;
-
-                if (!ByteSwap)
-                {
-                    var words = ModbusConverter.NetworkBytesToHostUInt16(base.Data);
-                    word = words[0];
-                }
-                else
-                {
-                    word = BitConverter.ToUInt16(base.Data, 0);
-                }
-
-                return Convert.ToUInt16(word);
-
+                return Convert.ToUInt16(BitConverter.ToInt16(Data, 0));
             }
             set
             {
-                var valueBytes = BitConverter.GetBytes(value);
-
-                var word = ushort.MinValue;
-
-                if (!ByteSwap)
-                {
-                    var words = ModbusConverter.NetworkBytesToHostUInt16(valueBytes);
-                    word = words[0];
-                }
-                else
-                {
-                    word = BitConverter.ToUInt16(valueBytes, 0);
-                }
-
-                base.Data = BitConverter.GetBytes(word);
+                Data = BitConverter.GetBytes(value);
             }
         }
 

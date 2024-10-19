@@ -108,7 +108,9 @@ namespace DeviceSQL.Types.ModbusMaster
 
             if (!IsNull)
             {
-                Address.Read(binaryReader);
+                var address = new ModbusMaster_ModbusAddress();
+                address.Read(binaryReader);
+                Address = address;
                 Data = binaryReader.ReadBytes(1);
             }
 
