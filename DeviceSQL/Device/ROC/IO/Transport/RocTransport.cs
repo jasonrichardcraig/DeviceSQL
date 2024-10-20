@@ -1,5 +1,6 @@
 ﻿#region Imported Types
 
+using DeviceSQL.Device.Modbus.Message;
 using DeviceSQL.Device.Roc.Message;
 using DeviceSQL.Device.Roc.Utility;
 using DeviceSQL.IO.Channels;
@@ -104,7 +105,6 @@ namespace DeviceSQL.Device.Roc.IO
             var transactionStopWatch = Stopwatch.StartNew();
             IRocResponseMessage responseMessage = default(TResponseMessage);
             int attempt = 0;
-            bool success = false;
             object channelLock = Channel.LockObject;
             lock (channelLock)
             {
@@ -113,60 +113,41 @@ namespace DeviceSQL.Device.Roc.IO
                     try
                     {
                         attempt++;
-                        if (RequestWriteDelayMilliseconds > 0)
-                        {
-                            if (TracingEnabled)
-                            {
-                                Trace.WriteLine(string.Format("RocMaster.Transport,WriteDelay,{0},{1}", requestMessage.OpCode.ToString(), RequestWriteDelayMilliseconds.ToString("0.0")));
-                            }
-                            TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
-                        }
+
+                        HandleWriteDelay(requestMessage); // Handle write delay with tracing
+
                         Write(requestMessage);
-                        if (ResponseReadDelayMilliseconds > 0)
-                        {
-                            if (TracingEnabled)
-                            {
-                                Trace.WriteLine(string.Format("RocMaster.Transport,ReadDelay,{0},{1}", requestMessage.OpCode.ToString(), ResponseReadDelayMilliseconds.ToString("0.0")));
-                            }
-                            TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
-                        }
+                        HandleReadDelay(requestMessage); // Handle read delay with tracing
+
                         responseMessage = ReadResponse<TResponseMessage>(requestMessage);
-                        if (responseMessage.OpCode == 255)
+
+                        if (responseMessage is OpCode255Response)
                         {
-                            var opCode255Response = responseMessage as OpCode255Response;
-                            if (opCode255Response != null)
-                            {
-                                throw new OpCode255Exception(opCode255Response);
-                            }
+                            throw new OpCode255Exception(responseMessage as OpCode255Response);
                         }
                         else
                         {
                             ValidateResponse(requestMessage, responseMessage);
+
                             transactionStopWatch.Stop();
+
                             if (TracingEnabled)
                             {
                                 Trace.WriteLine(string.Format("RocMaster.Transport,Read,{0},{1},{3},{4}", requestMessage.OpCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString(), HexConverter.ToHexString(requestMessage.ProtocolDataUnit), HexConverter.ToHexString(responseMessage.ProtocolDataUnit), ""));
                             }
+
                             return (TResponseMessage)responseMessage;
                         }
                     }
                     catch (Exception e)
                     {
                         lastException = e;
-                        Trace.WriteLine(string.Format("RocMaster.Transport.Error,{0},{1}", requestMessage.OpCode.ToString(), e.Message), "Transport");
-                        if (e is FormatException ||
-                            e is NotImplementedException ||
-                            e is TimeoutException ||
-                            e is IOException)
+
+                        Channel.FlushBuffer(); // Flush the buffer after communication error
+
+                        if (IsRetryableException(e) && attempt <= NumberOfRetries)
                         {
-                            if (attempt > NumberOfRetries)
-                            {
-                                goto Finish;
-                            }
-                            else
-                            {
-                                TimedThreadBlocker.Wait(WaitToRetryMilliseconds);
-                            }
+                            TimedThreadBlocker.Wait(WaitToRetryMilliseconds); // Wait before retrying
                         }
                         else
                         {
@@ -177,11 +158,39 @@ namespace DeviceSQL.Device.Roc.IO
                     {
                         Trace.WriteLine(string.Format("RocMaster.Transport.Warning,Retry,{0},{1}", requestMessage.OpCode.ToString(), attempt.ToString()));
                     }
-                } while (!success && NumberOfRetries > attempt);
+                } while (attempt <= NumberOfRetries);
             }
-        Finish:
             throw new TimeoutException("Device not responding to requests", lastException);
         }
+
+        #region Supporting Methods
+
+        private void HandleWriteDelay(IRocRequestMessage requestMessage)
+        {
+            if (RequestWriteDelayMilliseconds > 0 && TracingEnabled)
+            {
+                Trace.WriteLine($"Function {requestMessage.OpCode} Request Write Delay: {RequestWriteDelayMilliseconds}ms", "Transport");
+            }
+
+            TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
+        }
+
+        private void HandleReadDelay(IRocRequestMessage requestMessage)
+        {
+            if (ResponseReadDelayMilliseconds > 0 && TracingEnabled)
+            {
+                Trace.WriteLine($"Function {requestMessage.OpCode} Request Read Delay: {ResponseReadDelayMilliseconds}ms", "Transport");
+            }
+
+            TimedThreadBlocker.Wait(ResponseReadDelayMilliseconds);
+        }
+
+        private bool IsRetryableException(Exception e)
+        {
+            return e is FormatException || e is NotImplementedException || e is TimeoutException || e is IOException;
+        }
+
+        #endregion
 
         internal virtual IRocResponseMessage CreateResponse<TResponseMessage>(byte[] frame, IRocRequestMessage requestMessage)
             where TResponseMessage : IRocResponseMessage, new()

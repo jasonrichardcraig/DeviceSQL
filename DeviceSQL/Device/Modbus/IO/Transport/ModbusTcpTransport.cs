@@ -1,6 +1,5 @@
 ﻿using DeviceSQL.Device.Modbus.Message;
 using DeviceSQL.IO.Channels;
-using DeviceSQL.IO.Channels.Transport;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -56,7 +55,6 @@ namespace DeviceSQL.Device.Modbus.IO
             var transactionStopWatch = Stopwatch.StartNew();
             IModbusResponseMessage response = default(TResponseMessage);
             int attempt = 0;
-
             lock (channelLock)
             {
                 do
@@ -95,7 +93,9 @@ namespace DeviceSQL.Device.Modbus.IO
                     {
                         lastException = e;
                         Trace.WriteLine($"Function {requestMessage.FunctionCode} Request Error: {e.Message}", "Transport");
-
+                        
+                        Channel.FlushBuffer(); // Flush the buffer after communication error
+                        
                         if (IsRetryableException(e) && attempt <= NumberOfRetries)
                         {
                             TimedThreadBlocker.Wait(WaitToRetryMilliseconds); // Wait before retrying

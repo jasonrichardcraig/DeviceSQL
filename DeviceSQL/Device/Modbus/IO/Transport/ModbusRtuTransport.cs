@@ -104,7 +104,6 @@ namespace DeviceSQL.Device.Modbus.IO
             var transactionStopWatch = Stopwatch.StartNew();
             IModbusResponseMessage response = default(TResponseMessage);
             int attempt = 0;
-            bool success = false;
             lock (channelLock)
             {
                 do
@@ -112,57 +111,40 @@ namespace DeviceSQL.Device.Modbus.IO
                     try
                     {
                         attempt++;
-                        if (RequestWriteDelayMilliseconds > 0)
-                        {
-                            if (TracingEnabled)
-                            {
-                                Trace.WriteLine(string.Format("Function {0} Request Write Delay: {1}ms", requestMessage.FunctionCode.ToString(), RequestWriteDelayMilliseconds.ToString("0.0")), "Transport");
-                            }
-                            TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
-                        }
+
+                        HandleWriteDelay(requestMessage); // Handle write delay with tracing
+
                         Write(requestMessage);
-                        if (ResponseReadDelayMilliseconds > 0)
-                        {
-                            if (TracingEnabled)
-                            {
-                                Trace.WriteLine(string.Format("Function {0} Request Read Delay: {1}", requestMessage.FunctionCode.ToString(), ResponseReadDelayMilliseconds.ToString("0.0")), "Transport");
-                            }
-                            TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
-                        }
+
+                        HandleReadDelay(requestMessage); // Handle read delay with tracing
+
                         response = ReadResponse<TResponseMessage>(requestMessage);
+
                         if (response is ModbusErrorResponse)
                         {
                             throw new ModbusSlaveException(response as ModbusErrorResponse);
                         }
-                        else
-                        {
-                            ValidateResponse(requestMessage, response);
-                            transactionStopWatch.Stop();
-                            if (TracingEnabled)
-                            {
-                                Trace.WriteLine(string.Format("Function {0} Request Completed in: {1}ms", requestMessage.FunctionCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString()), "Transport");
-                            }
 
-                            return (TResponseMessage)response;
+                        ValidateResponse(requestMessage, response);
+
+                        transactionStopWatch.Stop();
+
+                        if (TracingEnabled)
+                        {
+                            Trace.WriteLine(string.Format("Function {0} Request Completed in: {1}ms", requestMessage.FunctionCode.ToString(), transactionStopWatch.Elapsed.TotalMilliseconds.ToString()), "Transport");
                         }
+
+                        return (TResponseMessage)response;
                     }
                     catch (Exception e)
                     {
                         lastException = e;
-                        Trace.WriteLine(string.Format("Function {0} Request Error: {1}", requestMessage.FunctionCode.ToString(), e.Message), "Transport");
-                        if (e is FormatException ||
-                            e is NotImplementedException ||
-                            e is TimeoutException ||
-                            e is IOException)
+
+                        Channel.FlushBuffer(); // Flush the buffer after communication error
+
+                        if (IsRetryableException(e) && attempt <= NumberOfRetries)
                         {
-                            if (attempt > NumberOfRetries)
-                            {
-                                goto Finish;
-                            }
-                            else
-                            {
-                                TimedThreadBlocker.Wait(WaitToRetryMilliseconds);
-                            }
+                            TimedThreadBlocker.Wait(WaitToRetryMilliseconds); // Wait before retrying
                         }
                         else
                         {
@@ -173,11 +155,39 @@ namespace DeviceSQL.Device.Modbus.IO
                     {
                         Trace.WriteLine(string.Format("Function {0} Request Retry Number {1}", requestMessage.FunctionCode.ToString(), attempt.ToString()), "Transport");
                     }
-                } while (!success && NumberOfRetries > attempt);
+                } while (attempt <= NumberOfRetries);
             }
-            Finish:
             throw new TimeoutException("Device not responding to requests", lastException);
         }
+
+        #region Supporting Methods
+
+        private void HandleWriteDelay(IModbusRequestMessage requestMessage)
+        {
+            if (RequestWriteDelayMilliseconds > 0 && TracingEnabled)
+            {
+                Trace.WriteLine($"Function {requestMessage.FunctionCode} Request Write Delay: {RequestWriteDelayMilliseconds}ms", "Transport");
+            }
+
+            TimedThreadBlocker.Wait(RequestWriteDelayMilliseconds);
+        }
+
+        private void HandleReadDelay(IModbusRequestMessage requestMessage)
+        {
+            if (ResponseReadDelayMilliseconds > 0 && TracingEnabled)
+            {
+                Trace.WriteLine($"Function {requestMessage.FunctionCode} Request Read Delay: {ResponseReadDelayMilliseconds}ms", "Transport");
+            }
+
+            TimedThreadBlocker.Wait(ResponseReadDelayMilliseconds);
+        }
+
+        private bool IsRetryableException(Exception e)
+        {
+            return e is FormatException || e is NotImplementedException || e is TimeoutException || e is IOException;
+        }
+
+        #endregion
 
         internal virtual IModbusResponseMessage CreateResponse<TResponseMessage>(byte[] frame, IModbusRequestMessage requestMessage)
                 where TResponseMessage : IModbusResponseMessage, new()

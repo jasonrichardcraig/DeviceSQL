@@ -199,6 +199,20 @@ namespace DeviceSQL.IO.Channels
 
         }
 
+        public void FlushBuffer()
+        {
+            if (serialPort.IsOpen)
+            {
+                serialPort.DiscardInBuffer();  // Clears the input buffer
+                serialPort.DiscardOutBuffer(); // Clears the output buffer
+
+                if (TracingEnabled)
+                {
+                    Trace.WriteLine("SerialPortChannel Buffers Flushed");
+                }
+            }
+        }
+
         #endregion
 
         #region Helper Methods

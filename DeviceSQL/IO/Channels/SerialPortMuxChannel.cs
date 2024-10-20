@@ -81,7 +81,7 @@ namespace DeviceSQL.IO.Channels
         }
 
         #endregion
-
+      
         #region Mux Methods
 
         public void Run()

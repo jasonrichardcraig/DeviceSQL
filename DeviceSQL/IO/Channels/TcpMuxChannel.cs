@@ -4,6 +4,7 @@ using DeviceSQL.Registries;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO.Ports;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading;

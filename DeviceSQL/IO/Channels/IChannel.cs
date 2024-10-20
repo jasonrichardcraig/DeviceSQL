@@ -17,6 +17,7 @@ namespace DeviceSQL.IO.Channels
         int WriteTimeout { get; set; }
         int Read(ref byte[] buffer, int offset, int count, int sequence);
         void Write(ref byte[] buffer, int offset, int count);
+        void FlushBuffer();
     }
 
 }

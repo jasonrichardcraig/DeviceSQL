@@ -29,15 +29,13 @@ DECLARE @HoldingRegisterArray [ModbusMaster].[HoldingRegisterArray] = [ModbusMas
 
 SET @HoldingRegisterArray = @HoldingRegisterArray.AddHoldingRegister(@HoldingRegister);
 
-PRINT @HoldingRegisterArray.ToString();
-
 PRINT [ChannelManager].[RegisterTcpChannel] (@channelName, @hostName, @hostPort, @connectAttempts, @connectionRetryDelay, @readTimeout, @writeTimeout);
 PRINT [DeviceManager].[RegisterModbusMaster] (@ChannelName, @DeviceName, @UseMbapHeaders, @UseExtendedAddressing, @UnitId, @NumberOfRetries, @WaitToRetry, @RequestWriteDelay, @ResponseReadDelay);
 	WHILE (@samples < @maxSamples)
 	BEGIN
 		WAITFOR DELAY @delay
 		SET @HoldingRegisterArray = [ModbusMaster].[ReadHoldings](@deviceName, @HoldingRegisterArray);
-		INSERT INTO [ModbusValues].[dbo].[HoldingResgisterValues]
+		INSERT INTO [ModbusValues].[dbo].[HoldingRegisterValues]
            ([DateTime]
            ,[Value])
 	    VALUES

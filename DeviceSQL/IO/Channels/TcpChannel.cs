@@ -334,6 +334,19 @@ namespace DeviceSQL.IO.Channels
             }
         }
 
+        public void FlushBuffer()
+        {
+            if (TcpClient != null && TcpClient.Connected)
+            {
+                var networkStream = TcpClient.GetStream();
+                while (networkStream.DataAvailable)
+                {
+                    // Read and discard any remaining data in the buffer
+                    networkStream.ReadByte();
+                }
+            }
+        }
+
         #endregion
 
         #region Helper Methods
