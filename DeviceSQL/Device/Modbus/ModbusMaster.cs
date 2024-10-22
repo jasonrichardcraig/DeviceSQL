@@ -117,6 +117,18 @@ namespace DeviceSQL.Device.Modbus
             longRegisters = response.LongRegisters;
         }
 
+        public void ReadULongRegisters(ushort? unitId, ref List<ULongRegister> uLongRegisters, bool? isExtendedUnitId)
+        {
+            if (!RegisterListIsContiguous(uLongRegisters))
+            {
+                throw new Exception("Register list must be contiguous and contain no duplicates.");
+            }
+
+            var request = new ReadULongsRequest(unitId.HasValue ? unitId.Value : UnitId, uLongRegisters, isExtendedUnitId.HasValue ? isExtendedUnitId.Value : UseExtendedAddressing);
+            var response = Transport.UnicastMessage<ReadULongsResponse>(request);
+            uLongRegisters = response.ULongRegisters;
+        }
+
         public void ReadStringRegister(ushort? unitId, bool? isExtendedUnitId, ref StringRegister stringRegister)
         {
             var request = new ReadStringRequest(unitId.HasValue ? unitId.Value : UnitId, stringRegister, isExtendedUnitId.HasValue ? isExtendedUnitId.Value : UseExtendedAddressing);

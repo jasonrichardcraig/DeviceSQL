@@ -369,6 +369,12 @@
     <Compile Include="Device\ROC\IO\Transport\IRocTransport.cs" />
     <Compile Include="Device\Modbus\IModbusDevice.cs" />
     <Compile Include="Helpers\ByteSwapper.cs" />
+    <Compile Include="Device\MODBUS\Message\ReadULongsRequest.cs" />
+    <Compile Include="Device\MODBUS\Message\ReadULongsResponse.cs" />
+    <Compile Include="Device\MODBUS\Data\ULongRegister.cs" />
+    <Compile Include="Types\ModbusMaster\ULongRegister.cs" />
+    <Compile Include="Types\ModbusMaster\ULongRegisterArray.cs" />
+    <Compile Include="Functions\ModbusMaster\ReadULongs.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

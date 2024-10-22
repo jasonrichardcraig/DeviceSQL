@@ -63,20 +63,20 @@ namespace DeviceSQL.Types.ModbusMaster
             private set;
         }
 
-        public SqlInt64 Value // SQL has no ULong type, so we use Int64
+        public SqlInt32 Value // SQL has no ULong type, so we use Int64
         {
             get
             {
-                // Ensure the data array is initialized and has at least 8 bytes for a 64-bit long
+                // Ensure the data array is initialized and has at least 4 bytes for a 64-bit long
                 if (data == null || data.Length < 4)
                 {
                     return 0; // Handle null or uninitialized case
                 }
-                return BitConverter.ToUInt32(ByteSwapper.ApplySwaps(data, ByteSwap.Value, WordSwap.Value, 2), 0);
+                return BitConverter.ToInt32(ByteSwapper.ApplySwaps(data, ByteSwap.Value, WordSwap.Value, 2), 0);
             }
             set
             {
-                data = ByteSwapper.ApplySwaps(BitConverter.GetBytes(Convert.ToUInt32(value.Value)), ByteSwap.Value, WordSwap.Value, 2);
+                data = ByteSwapper.ApplySwaps(BitConverter.GetBytes(value.Value), ByteSwap.Value, WordSwap.Value, 2);
             }
         }
 

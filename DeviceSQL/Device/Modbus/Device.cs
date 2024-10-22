@@ -11,6 +11,7 @@
             Short,
             UShort,
             Long,
+            ULong,
             Float,
             String,
             HistoryArchive,
