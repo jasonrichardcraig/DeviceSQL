@@ -16,5 +16,11 @@
 ##### CREATE ASYMMETRIC KEY [DeviceSqlKey] FROM EXECUTABLE FILE = 'C:\DLLTemp\DeviceSQL.dll'
 ##### CREATE LOGIN [DeviceSqlClrLogin] FROM ASYMMETRIC KEY [DeviceSqlKey]
 ##### GRANT UNSAFE ASSEMBLY TO [DeviceSqlClrLogin]
+##### OR
+##### CREATE ASYMMETRIC KEY [DeviceSqlKey]
+##### AUTHORIZATION dbo
+##### FROM FILE = '../DeviceSQL-Key.snk' -- Path to Key (Found in the DeviceSQL Project Folder)
+##### CREATE LOGIN [DeviceSqlClrLogin] FROM ASYMMETRIC KEY [DeviceSqlKey]
+##### GRANT UNSAFE ASSEMBLY TO [DeviceSqlClrLogin]
 
 
